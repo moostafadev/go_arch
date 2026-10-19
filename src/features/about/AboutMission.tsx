@@ -1,17 +1,14 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Image from "next/image";
 
 export const AboutMission = () => {
   return (
-    // أضفنا overflow-hidden هنا كحماية إضافية
     <section className="py-24 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-          {/* Text Content */}
-          <motion.div
-            // تم التعديل: استخدام y بدلاً من x
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -55,11 +52,9 @@ export const AboutMission = () => {
                 <p className="text-sm text-foreground-second">Project Based</p>
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
-          {/* Image */}
-          <motion.div
-            // تم التعديل: استخدام y بدلاً من x
+          <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -73,7 +68,7 @@ export const AboutMission = () => {
               className="object-cover grayscale transition-all duration-700 hover:grayscale-0"
             />
             <div className="absolute inset-0 bg-background/10" />
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

@@ -7,7 +7,6 @@ import {
   useMemo,
   useState,
 } from "react";
-
 import { AccordionContextValue, AccordionProps } from "./types";
 
 const AccordionContext = createContext<AccordionContextValue | null>(null);

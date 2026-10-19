@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import { FaInstagram, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
@@ -40,12 +40,11 @@ const socials = [
 export const ContactInfo = () => {
   return (
     <div className="flex flex-col gap-10">
-      {/* Contact Cards */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {contactDetails.map((item, index) => {
           const Icon = item.icon;
           return (
-            <motion.a
+            <m.a
               key={item.title}
               href={item.href}
               initial={{ opacity: 0, y: 20 }}
@@ -59,13 +58,12 @@ export const ContactInfo = () => {
                 {item.title}
               </h3>
               <p className="text-sm text-foreground-second">{item.value}</p>
-            </motion.a>
+            </m.a>
           );
         })}
       </div>
 
-      {/* Socials */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -94,7 +92,7 @@ export const ContactInfo = () => {
             );
           })}
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 };

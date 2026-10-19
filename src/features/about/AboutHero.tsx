@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export const AboutHero = () => {
   return (
@@ -9,7 +9,7 @@ export const AboutHero = () => {
       <div className="absolute left-1/2 top-0 h-75 w-150 -translate-x-1/2 bg-accent/10 blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -19,9 +19,9 @@ export const AboutHero = () => {
           <span className="text-xs font-semibold uppercase tracking-wider text-accent">
             Our Story
           </span>
-        </motion.div>
+        </m.div>
 
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -31,9 +31,9 @@ export const AboutHero = () => {
           <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-red-400">
             Architectural Education.
           </span>
-        </motion.h1>
+        </m.h1>
 
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -41,7 +41,7 @@ export const AboutHero = () => {
         >
           We bridge the gap between academic theory and real-world practice. GO
           ARCH is built by architects, for the next generation of architects.
-        </motion.p>
+        </m.p>
       </div>
     </section>
   );

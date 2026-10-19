@@ -10,7 +10,6 @@ interface Props {
 
 export default async function CourseDetailsPage({ params }: Props) {
   const resolvedParams = await params;
-
   const course = allCourses.find((c) => c.id === resolvedParams.id);
 
   if (!course) {
@@ -27,9 +26,8 @@ export default async function CourseDetailsPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-10 pb-10">
+    <div className="min-h-screen bg-background pt-24 pb-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Breadcrumb / Back */}
         <Link
           href="/courses"
           className="mb-8 inline-flex items-center gap-2 text-sm text-foreground-second hover:text-accent transition-colors"
@@ -39,7 +37,6 @@ export default async function CourseDetailsPage({ params }: Props) {
         </Link>
 
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-          {/* Main Content (Left) */}
           <div className="lg:col-span-2">
             <h1 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
               {course.title}
@@ -55,6 +52,7 @@ export default async function CourseDetailsPage({ params }: Props) {
                 src={course.image}
                 alt={course.title}
                 fill
+                sizes="(max-width: 1024px) 100vw, 66vw"
                 className="object-cover"
                 priority
               />
@@ -81,7 +79,6 @@ export default async function CourseDetailsPage({ params }: Props) {
             </ul>
           </div>
 
-          {/* Sidebar (Right) - Enrollment Card */}
           <div className="lg:col-span-1">
             <EnrollCard
               courseTitle={course.title}

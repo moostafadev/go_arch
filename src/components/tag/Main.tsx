@@ -1,5 +1,6 @@
 "use client";
 
+import { memo } from "react";
 import { getColor, getSize } from "./lib";
 import { TagProps } from "./types";
 
@@ -19,4 +20,4 @@ const Tag = ({
   );
 };
 
-export default Tag;
+export default memo(Tag);

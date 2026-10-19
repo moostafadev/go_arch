@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export const ContactHero = () => {
   return (
@@ -9,7 +9,7 @@ export const ContactHero = () => {
       <div className="absolute left-1/2 top-0 h-75 w-150 -translate-x-1/2 bg-accent/10 blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -19,9 +19,9 @@ export const ContactHero = () => {
           <span className="text-xs font-semibold uppercase tracking-wider text-accent">
             Get in touch
           </span>
-        </motion.div>
+        </m.div>
 
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -31,9 +31,9 @@ export const ContactHero = () => {
           <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-red-400">
             Architectural Future.
           </span>
-        </motion.h1>
+        </m.h1>
 
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -42,7 +42,7 @@ export const ContactHero = () => {
           Have a question about our courses, mentorship, or need help choosing
           the right path? Send us a message and we&apos;ll get back to you
           within 24 hours.
-        </motion.p>
+        </m.p>
       </div>
     </section>
   );

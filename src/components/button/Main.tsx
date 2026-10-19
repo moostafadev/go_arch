@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef } from "react";
+import { forwardRef, memo } from "react";
 import { Check } from "lucide-react";
 
 import Spin from "../icons/Spin";
@@ -48,4 +48,4 @@ const Button = forwardRef<HTMLButtonElement, IProps>(
 
 Button.displayName = "Button";
 
-export default Button;
+export default memo(Button);

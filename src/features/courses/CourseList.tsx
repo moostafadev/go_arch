@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/button";
 import { Tag } from "@/components/tag";
 import { allCourses, courseCategories } from "@/constants/courses";
@@ -18,7 +18,8 @@ export const CourseList = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-24">
-      <motion.div
+      {/* Filters */}
+      <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
@@ -39,12 +40,13 @@ export const CourseList = () => {
             {category}
           </Button>
         ))}
-      </motion.div>
+      </m.div>
 
+      {/* Course Grid */}
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {filteredCourses.map((course, index) => (
-            <motion.div
+            <m.div
               key={course.id}
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -57,6 +59,7 @@ export const CourseList = () => {
                   src={course.image}
                   alt={course.title}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute left-4 top-4 z-10">
@@ -89,16 +92,10 @@ export const CourseList = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </AnimatePresence>
       </div>
-
-      {filteredCourses.length === 0 && (
-        <div className="py-20 text-center text-foreground-second">
-          No courses found in this category.
-        </div>
-      )}
     </div>
   );
 };

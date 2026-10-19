@@ -3,14 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { m, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/button";
 import { allCourses } from "@/constants/courses";
 
-// التصنيفات التي ستظهر في الصفحة الرئيسية
 const tabs = ["All Courses", "Diplomas", "Courses", "Workshops"];
-
-// خريطة لربط اسم التاب بالتصنيف في البيانات
 const categoryMap: Record<string, string> = {
   "All Courses": "All",
   Diplomas: "Diploma",
@@ -41,7 +38,6 @@ export const FeaturedCourses = () => {
           </p>
         </div>
 
-        {/* Tabs */}
         <div className="mb-12 flex w-full flex-col gap-2 sm:flex-row">
           {tabs.map((tab) => (
             <Button
@@ -60,11 +56,10 @@ export const FeaturedCourses = () => {
           ))}
         </div>
 
-        {/* Course Grid */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filteredCourses.map((course, index) => (
-              <motion.div
+              <m.div
                 key={course.id}
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -81,6 +76,7 @@ export const FeaturedCourses = () => {
                     src={course.image}
                     alt={course.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
@@ -106,7 +102,7 @@ export const FeaturedCourses = () => {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </m.div>
             ))}
           </AnimatePresence>
         </div>

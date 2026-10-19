@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-
 import { toLogicalScrollLeft, toNativeScrollLeft } from "./rtlScroll";
 
 interface UseCarouselProps {
@@ -39,36 +38,36 @@ export const useCarousel = ({
   const totalMoves = maxIndex + 1;
 
   const updateCarousel = useCallback(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    requestAnimationFrame(() => {
+      const container = containerRef.current;
+      if (!container) return;
 
-    const items = Array.from(container.children) as HTMLElement[];
-    if (!items.length) {
-      setTotalItems(0);
-      setVisibleItems(1);
-      setCurrentIndex(0);
-      return;
-    }
+      const items = Array.from(container.children) as HTMLElement[];
+      if (!items.length) {
+        setTotalItems(0);
+        setVisibleItems(1);
+        setCurrentIndex(0);
+        return;
+      }
 
-    const firstItem = items[0];
-    if (!firstItem) return;
+      const firstItem = items[0];
+      if (!firstItem) return;
 
-    const containerWidth = container.clientWidth;
-    const itemWidth = firstItem.getBoundingClientRect().width;
+      const containerWidth = container.clientWidth;
+      const itemWidth = firstItem.getBoundingClientRect().width;
+      const styles = getComputedStyle(container);
+      const gap = parseFloat(styles.columnGap || styles.gap || "0");
 
-    const styles = getComputedStyle(container);
-    const gap = parseFloat(styles.columnGap || styles.gap || "0");
+      const visible = Math.max(
+        1,
+        Math.round((containerWidth + gap) / (itemWidth + gap)),
+      );
+      const nextMaxIndex = Math.max(0, items.length - visible);
 
-    const visible = Math.max(
-      1,
-      Math.round((containerWidth + gap) / (itemWidth + gap)),
-    );
-
-    const nextMaxIndex = Math.max(0, items.length - visible);
-
-    setTotalItems(items.length);
-    setVisibleItems(visible);
-    setCurrentIndex((previous) => Math.min(previous, nextMaxIndex));
+      setTotalItems(items.length);
+      setVisibleItems(visible);
+      setCurrentIndex((previous) => Math.min(previous, nextMaxIndex));
+    });
   }, [containerRef]);
 
   useEffect(() => {
@@ -168,7 +167,7 @@ export const useCarousel = ({
         const max = Math.max(0, totalItems - visibleItems);
 
         setCurrentIndex(Math.max(0, Math.min(nearestIndex, max)));
-      }, 120);
+      }, 200);
     };
 
     const handleScrollEnd = () => {

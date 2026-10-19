@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 
 export const CoursesHeader = () => {
   return (
@@ -9,16 +9,16 @@ export const CoursesHeader = () => {
       <div className="absolute left-1/2 top-0 h-75 w-150 -translate-x-1/2 bg-accent/10 blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-        <motion.h1
+        <m.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           className="mb-4 text-4xl font-black uppercase tracking-tight text-foreground sm:text-5xl lg:text-6xl"
         >
           Explore Our <span className="text-accent">Courses</span>
-        </motion.h1>
+        </m.h1>
 
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
@@ -26,7 +26,7 @@ export const CoursesHeader = () => {
         >
           Choose your path. Whether you want to master a single tool or become a
           complete professional architect, we have the right program for you.
-        </motion.p>
+        </m.p>
       </div>
     </section>
   );
