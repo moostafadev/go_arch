@@ -61,7 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       dir="ltr"
       className={`${centuryGothic.variable} h-full antialiased`}
     >
-      <body className="flex min-h-screen flex-col bg-background font-sans text-foreground">
+      <body className="flex min-h-screen flex-col bg-background font-sans text-foreground overflow-x-hidden">
         <ToastProvider>
           <DialogProvider>
             <Header />

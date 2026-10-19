@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Hero } from "@/features/home/hero";
+import { FeaturedCourses } from "@/features/home/FeaturedCourses";
 import { Accordion, AccordionItem } from "@/components/accordion";
 import { Carousel, CarouselItem } from "@/components/carousel";
-import { Button } from "@/components/button";
 
 const features = [
   {
@@ -25,30 +25,6 @@ const features = [
     num: "04",
     title: "Learn to produce high-quality results",
     desc: "Learn to produce high-quality 2D/3D visualizations and presentations that make you stand out for global competitions.",
-  },
-];
-
-const courses = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=800&auto=format&fit=crop",
-    title: "Architectural Competitions Work shop",
-    desc: "The Competition Design Studio is designed to develop architectural thinking, master parametric design tools, and create professional projects ready for global competitions.",
-    price: "$299",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
-    title: "Rhino and Grasshopper course & AI rendering",
-    desc: "The Rhino and Grasshopper course is designed to develop architectural thinking, master parametric design, and create innovative architectural projects from scratch.",
-    price: "$199",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop",
-    title: "Architecture Photoshop Masterclass",
-    desc: "The Photoshop course is designed to enhance architectural visualization skills, master professional post-production techniques, and create stunning architectural presentations.",
-    price: "$149",
   },
 ];
 
@@ -134,84 +110,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Courses Section */}
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
-            <h2 className="mb-2 text-3xl font-bold text-foreground sm:text-4xl">
-              Diplomas & courses
-            </h2>
-            <p className="text-foreground-second">
-              Diplomas & courses give you the full path, courses let you pick
-              one topic.
-            </p>
-          </div>
-
-          {/* Tabs */}
-          <div className="mb-12 flex w-full flex-col gap-2 sm:flex-row">
-            <Button variant="solid" color="MAIN" className="w-full sm:w-auto">
-              All courses
-            </Button>
-            <Button
-              variant="outline"
-              color="SECONDARY"
-              className="w-full border-border bg-transparent text-foreground sm:w-auto"
-            >
-              Diplomas
-            </Button>
-            <Button
-              variant="outline"
-              color="SECONDARY"
-              className="w-full border-border bg-transparent text-foreground sm:w-auto"
-            >
-              Mentorship
-            </Button>
-          </div>
-
-          {/* Course Grid */}
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {courses.map((course, idx) => (
-              <div
-                key={idx}
-                className="flex flex-col border border-border bg-card"
-              >
-                <div className="relative aspect-video w-full overflow-hidden border-b border-border">
-                  <Image
-                    src={course.image}
-                    alt={course.title}
-                    fill
-                    className="object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="mb-3 text-lg font-bold text-foreground">
-                    {course.title}
-                  </h3>
-                  <p className="mb-6 flex-1 text-sm leading-relaxed text-foreground-second">
-                    {course.desc}
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <Button
-                      variant="solid"
-                      color="NEUTRAL"
-                      className="flex-1 bg-foreground text-background hover:bg-foreground/90"
-                    >
-                      View Details
-                    </Button>
-                    <Button
-                      variant="outline"
-                      color="SECONDARY"
-                      className="flex-1 border-border bg-transparent text-foreground"
-                    >
-                      {course.price}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* 2. Courses Section - المكون الجديد المفلتر */}
+      <FeaturedCourses />
 
       {/* 3. Students Work Section */}
       <section className="border-t border-border bg-card py-24">
