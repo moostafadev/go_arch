@@ -75,7 +75,6 @@ export default function Home() {
     <div className="flex flex-col w-full bg-background">
       <Hero />
 
-      {/* 1. Features Section */}
       <section className="border-t border-border bg-card py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 max-w-3xl">
@@ -110,10 +109,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 2. Courses Section - المكون الجديد المفلتر */}
       <FeaturedCourses />
 
-      {/* 3. Students Work Section */}
       <section className="border-t border-border bg-card py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="mb-10 text-3xl font-bold text-foreground sm:text-4xl">
@@ -129,6 +126,7 @@ export default function Home() {
                   src={`https://images.unsplash.com/photo-${i === 1 ? "1487958449943-2429e8be8625" : i === 2 ? "1511818966892-d7d671e672a2" : "1600585154340-be6161a56a0c"}?q=80&w=800&auto=format&fit=crop`}
                   alt={`Student Project ${i}`}
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover grayscale transition-all duration-500 hover:grayscale-0"
                 />
               </div>
@@ -137,7 +135,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4. Testimonials Section */}
       <section className="py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="mb-10 text-3xl font-bold text-foreground sm:text-4xl">
@@ -165,7 +162,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 5. FAQ Section */}
       <section className="border-t border-border py-24">
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
           <h2 className="mb-10 text-3xl font-bold text-foreground sm:text-4xl">
@@ -185,7 +181,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. Bottom CTA Section */}
       <section className="relative overflow-hidden border-t border-border bg-card py-24 text-center">
         <div className="absolute inset-0 bg-arch-grid opacity-20" />
         <div className="absolute left-1/2 top-0 h-75 w-150 -translate-x-1/2 bg-accent/10 blur-[100px]" />

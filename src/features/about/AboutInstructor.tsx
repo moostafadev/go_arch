@@ -6,10 +6,9 @@ import { CheckCircle2 } from "lucide-react";
 
 export const AboutInstructor = () => {
   return (
-    <section className="border-t border-border bg-card py-10">
+    <section className="border-t border-border bg-card py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-          {/* Image */}
           <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -21,11 +20,11 @@ export const AboutInstructor = () => {
               src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop"
               alt="Founder and Lead Architect"
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover grayscale transition-all duration-700 hover:grayscale-0"
             />
           </m.div>
 
-          {/* Text Content */}
           <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

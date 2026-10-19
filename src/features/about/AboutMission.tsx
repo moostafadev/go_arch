@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export const AboutMission = () => {
   return (
-    <section className="py-24 overflow-hidden">
+    <section className="overflow-hidden py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
           <m.div
@@ -65,6 +65,7 @@ export const AboutMission = () => {
               src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1000&auto=format&fit=crop"
               alt="Architectural sketching and design"
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover grayscale transition-all duration-700 hover:grayscale-0"
             />
             <div className="absolute inset-0 bg-background/10" />
