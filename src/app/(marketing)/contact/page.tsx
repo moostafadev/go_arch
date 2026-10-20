@@ -1,5 +1,9 @@
+import {
+  ContactHero,
+  ContactForm,
+  ContactInfo,
+} from "@/features/client/contact";
 import type { Metadata } from "next";
-import { ContactHero, ContactForm, ContactInfo } from "@/features/contact";
 
 export const metadata: Metadata = {
   title: "Contact Us | GO ARCH",

@@ -6,6 +6,7 @@ import { Send } from "lucide-react";
 import { Form } from "@/components/form";
 import { Input } from "@/components/input";
 import { Select } from "@/components/select";
+import { Textarea } from "@/components/textarea";
 import { Button } from "@/components/button";
 import { useToast } from "@/components/toaster";
 import { courseOptions, allCourses } from "@/constants/courses";
@@ -25,21 +26,12 @@ interface ContactFormProps {
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
 };
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 15 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, ease: "easeOut" },
-  },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
 };
 
 export const ContactForm = ({ courseId, courseTitle }: ContactFormProps) => {
@@ -51,14 +43,10 @@ export const ContactForm = ({ courseId, courseTitle }: ContactFormProps) => {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
-
-    console.log("Lead Data for Dashboard:", data);
+    console.log("Lead Data:", data);
     await new Promise((resolve) => setTimeout(resolve, 1500));
-
     setIsSubmitting(false);
-    toast.success(
-      "Request received! Our team will contact you on WhatsApp shortly.",
-    );
+    toast.success("Request received! Our team will contact you shortly.");
   };
 
   return (
@@ -127,18 +115,12 @@ export const ContactForm = ({ courseId, courseTitle }: ContactFormProps) => {
           )}
         </m.div>
 
-        <m.div variants={itemVariants} className="flex flex-col gap-1">
-          <label
-            htmlFor="message"
-            className="text-sm font-medium text-foreground"
-          >
-            Additional Notes (Optional)
-          </label>
-          <textarea
-            id="message"
-            rows={3}
+        <m.div variants={itemVariants}>
+          <Textarea<ContactFormData>
+            name="message"
+            label="Additional Notes (Optional)"
             placeholder="Any specific questions?"
-            className="w-full resize-none border border-border bg-background p-3 text-sm text-foreground placeholder:text-foreground-second outline-none transition-all duration-200 focus:border-accent focus:shadow-md focus:ring-2 focus:ring-accent/15"
+            rows={3}
           />
         </m.div>
 

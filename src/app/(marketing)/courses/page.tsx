@@ -1,5 +1,5 @@
+import { CoursesHeader, CourseList } from "@/features/client/courses";
 import type { Metadata } from "next";
-import { CoursesHeader, CourseList } from "@/features/courses";
 
 export const metadata: Metadata = {
   title: "Courses & Diplomas | GO ARCH",

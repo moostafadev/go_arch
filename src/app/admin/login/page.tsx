@@ -3,36 +3,38 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/button";
-import { LockKeyhole, Mail } from "lucide-react";
+import { Form } from "@/components/form";
+import { Input } from "@/components/input";
+import { useToast } from "@/components/toaster";
 import { m } from "framer-motion";
+
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: LoginFormData) => {
     setLoading(true);
-    setError("");
-
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(data),
       });
 
       if (res.ok) {
         router.push("/admin");
         router.refresh();
       } else {
-        setError("Invalid email or password");
+        toast.error("Invalid email or password");
       }
     } catch (err) {
-      setError("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -60,46 +62,26 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form onSubmit={handleLogin} className="flex flex-col gap-5">
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-foreground">
-              Email Address
-            </label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-foreground-second" />
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full border border-border bg-background py-2.5 pl-10 pr-3 text-sm text-foreground outline-none transition-all focus:border-accent focus:ring-1 focus:ring-accent/50"
-                placeholder="admin@goarch.com"
-              />
-            </div>
-          </div>
+        <Form<LoginFormData>
+          onSubmit={onSubmit}
+          defaultValues={{ email: "", password: "" }}
+          className="flex flex-col gap-5"
+        >
+          <Input<LoginFormData>
+            name="email"
+            label="Email Address"
+            placeholder="admin@goarch.com"
+            type="email"
+            showIconLabel={true}
+          />
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium text-foreground">
-              Password
-            </label>
-            <div className="relative">
-              <LockKeyhole className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-foreground-second" />
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full border border-border bg-background py-2.5 pl-10 pr-3 text-sm text-foreground outline-none transition-all focus:border-accent focus:ring-1 focus:ring-accent/50"
-                placeholder="••••••••"
-              />
-            </div>
-          </div>
-
-          {error && (
-            <div className="border border-accent/50 bg-accent/10 p-3 text-center text-xs font-medium text-accent">
-              {error}
-            </div>
-          )}
+          <Input<LoginFormData>
+            name="password"
+            label="Password"
+            placeholder="••••••••"
+            type="password"
+            showIconLabel={true}
+          />
 
           <Button
             type="submit"
@@ -110,7 +92,7 @@ export default function LoginPage() {
           >
             Sign In
           </Button>
-        </form>
+        </Form>
       </m.div>
     </div>
   );

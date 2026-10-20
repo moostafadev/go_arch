@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
 import {
   AboutHero,
   AboutMission,
   AboutInstructor,
   AboutStats,
-} from "@/features/about";
+} from "@/features/client/about";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "About Us | GO ARCH",

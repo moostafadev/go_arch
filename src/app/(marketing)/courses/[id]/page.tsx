@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CheckCircle2, ArrowLeft } from "lucide-react";
 import { allCourses } from "@/constants/courses";
-import { EnrollCard } from "@/features/courses/EnrollCard";
+import { EnrollCard } from "@/features/client/courses/EnrollCard";
 
 interface Props {
   params: Promise<{ id: string }>;

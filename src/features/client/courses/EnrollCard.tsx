@@ -2,8 +2,8 @@
 
 import { Button } from "@/components/button";
 import { useDialog } from "@/components/dialog";
-import { ContactForm } from "@/features/contact/ContactForm";
 import { MessageCircle } from "lucide-react";
+import { ContactForm } from "../contact";
 
 interface EnrollCardProps {
   courseTitle: string;

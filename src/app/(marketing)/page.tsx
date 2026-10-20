@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Hero } from "@/features/home/hero";
-import { FeaturedCourses } from "@/features/home/FeaturedCourses";
 import { Accordion, AccordionItem } from "@/components/accordion";
 import { Carousel, CarouselItem } from "@/components/carousel";
+import { Hero } from "@/features/client/home/hero";
+import { FeaturedCourses } from "@/features/client/home/FeaturedCourses";
 
 const features = [
   {
