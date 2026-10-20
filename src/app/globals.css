@@ -2,12 +2,12 @@
 
 :root {
   color-scheme: dark;
-  --background: #121212;
+  --background: #0a0a0a;
   --foreground: #ffffff;
   --foreground-second: #9ca3af;
-  --card: #1a1a1a;
-  --card-hover: #262626;
-  --border: #2d2d2d;
+  --card: #121212;
+  --card-hover: #1f1f1f;
+  --border: #262626;
 
   --accent: #ce2a2e;
   --accent-hover: #a82124;
@@ -53,7 +53,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark Theme Scrollbar */
+@utility bg-arch-grid-fade {
+  background-size: 40px 40px;
+  background-position: 0 0;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    black 40%,
+    transparent 80%
+  );
+}
+
+@keyframes float-glow {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(30px, -30px);
+  }
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -66,12 +88,4 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--foreground-second);
-}
-
-/* Architectural Grid Pattern */
-.bg-arch-grid {
-  background-size: 40px 40px;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }

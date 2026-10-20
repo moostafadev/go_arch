@@ -5,8 +5,11 @@ import { m } from "framer-motion";
 export const ContactHero = () => {
   return (
     <section className="relative overflow-hidden border-b border-border bg-card py-16 pt-28 lg:py-24 lg:pt-32">
-      <div className="absolute inset-0 bg-arch-grid opacity-20 pointer-events-none" />
-      <div className="absolute left-1/2 top-0 h-75 w-150 -translate-x-1/2 bg-accent/10 blur-[100px] pointer-events-none" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/2 h-px w-3/4 -translate-x-1/2 bg-linear-to-r from-transparent via-accent/50 to-transparent" />
+        <div className="absolute inset-0 bg-arch-grid-fade" />
+        <div className="absolute left-1/2 top-0 h-75 w-150 -translate-x-1/2 bg-accent/10 blur-[100px] animate-[float-glow_12s_ease-in-out_infinite_alternate]" />
+      </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
         <m.div
