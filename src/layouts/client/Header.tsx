@@ -3,10 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { m, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 
 const navLinks = [
   { label: "Home", href: "/" },

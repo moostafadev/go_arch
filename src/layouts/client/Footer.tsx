@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { CopyrightYear } from "./CopyrightYear";
 import { FaInstagram, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { CopyrightYear } from "./CopyrightYear";
 
 const platformLinks = [
   { label: "Home", href: "/" },
@@ -25,9 +25,7 @@ export const Footer = () => {
   return (
     <footer className="border-t border-border bg-card pt-16 pb-28 lg:pb-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Main Footer Grid */}
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 mb-12">
-          {/* Brand Column */}
           <div className="flex flex-col gap-4">
             <Link
               href="/"
@@ -56,7 +54,6 @@ export const Footer = () => {
             </div>
           </div>
 
-          {/* Platform Links */}
           <div className="flex flex-col gap-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
               Platform
@@ -75,7 +72,6 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal Links */}
           <div className="flex flex-col gap-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
               Legal
@@ -94,7 +90,6 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div className="flex flex-col gap-4">
             <h3 className="text-sm font-bold uppercase tracking-wider text-foreground">
               Contact
@@ -121,7 +116,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Copyright Bar */}
         <div className="border-t border-border pt-8 flex flex-col items-center justify-between gap-4 md:flex-row text-xs text-foreground-second">
           <p>
             <Suspense
