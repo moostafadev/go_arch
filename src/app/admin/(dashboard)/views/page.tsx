@@ -1,12 +1,12 @@
+import type { Metadata } from "next";
+
+import { ViewsMain } from "@/features/admin/views";
+
+export const metadata: Metadata = {
+  title: "Page Views | GO ARCH Admin",
+  robots: { index: false, follow: false },
+};
+
 export default function PageViews() {
-  return (
-    <div>
-      <h1 className="mb-6 text-2xl font-bold text-foreground">
-        Page Views Analytics
-      </h1>
-      <div className="border border-border bg-card p-8 text-center text-foreground-second">
-        Page view tracking data will be displayed here.
-      </div>
-    </div>
-  );
+  return <ViewsMain />;
 }
