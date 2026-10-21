@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { m, Variants } from "framer-motion";
+import { m, type Variants } from "framer-motion";
 import { Send } from "lucide-react";
+import type { UseFormReturn } from "react-hook-form";
+
+import { Button } from "@/components/button";
 import { Form } from "@/components/form";
 import { Input } from "@/components/input";
 import { Select } from "@/components/select";
 import { Textarea } from "@/components/textarea";
-import { Button } from "@/components/button";
 import { useToast } from "@/components/toaster";
-import { courseOptions, allCourses } from "@/constants/courses";
+import { allCourses, courseOptions } from "@/constants/courses";
 
 interface ContactFormData {
   name: string;
@@ -22,6 +24,7 @@ interface ContactFormData {
 interface ContactFormProps {
   courseId?: string;
   courseTitle?: string;
+  onSuccess?: () => void;
 }
 
 const containerVariants: Variants = {
@@ -31,27 +34,69 @@ const containerVariants: Variants = {
 
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 15 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
 };
 
-export const ContactForm = ({ courseId, courseTitle }: ContactFormProps) => {
+export const ContactForm = ({
+  courseId,
+  courseTitle,
+  onSuccess,
+}: ContactFormProps) => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [methods, setMethods] = useState<UseFormReturn<ContactFormData> | null>(
+    null,
+  );
 
-  const selectedCourse =
-    courseTitle || allCourses.find((c) => c.id === courseId)?.title;
+  const fixedCourseTitle =
+    courseTitle || allCourses.find((course) => course.id === courseId)?.title;
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
-    console.log("Lead Data:", data);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setIsSubmitting(false);
-    toast.success("Request received! Our team will contact you shortly.");
+
+    try {
+      const resolvedCourse = courseId
+        ? (fixedCourseTitle ?? data.course)
+        : (allCourses.find((course) => course.id === data.course)?.title ??
+          data.course);
+
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: data.name,
+          phone: data.phone,
+          email: data.email || null,
+          course: resolvedCourse,
+          message: data.message || null,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Submission failed");
+      }
+
+      toast.success("Request received! Our team will contact you shortly.");
+      methods?.reset();
+
+      if (onSuccess) {
+        onSuccess();
+      }
+    } catch {
+      toast.error("Failed to submit your request. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <Form<ContactFormData>
       onSubmit={onSubmit}
+      onFormReady={setMethods}
       defaultValues={{
         name: "",
         email: "",
@@ -75,6 +120,7 @@ export const ContactForm = ({ courseId, courseTitle }: ContactFormProps) => {
             label="Full Name"
             placeholder="John Doe"
             showIconLabel={true}
+            rules={{ required: "Name is required" }}
           />
           <Input<ContactFormData>
             name="phone"
@@ -82,6 +128,13 @@ export const ContactForm = ({ courseId, courseTitle }: ContactFormProps) => {
             placeholder="+20 123 456 7890"
             type="tel"
             showIconLabel={true}
+            rules={{
+              required: "Phone number is required",
+              minLength: {
+                value: 8,
+                message: "Please enter a valid phone number",
+              },
+            }}
           />
         </m.div>
 
@@ -92,6 +145,12 @@ export const ContactForm = ({ courseId, courseTitle }: ContactFormProps) => {
             placeholder="john@example.com"
             type="email"
             showIconLabel={true}
+            rules={{
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Please enter a valid email address",
+              },
+            }}
           />
         </m.div>
 
@@ -102,7 +161,7 @@ export const ContactForm = ({ courseId, courseTitle }: ContactFormProps) => {
                 Selected Course
               </label>
               <div className="border border-accent/30 bg-accent/10 px-3 py-2 text-sm font-semibold text-accent">
-                {selectedCourse}
+                {fixedCourseTitle}
               </div>
             </div>
           ) : (

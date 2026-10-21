@@ -1,8 +1,10 @@
 "use client";
 
+import { MessageCircle } from "lucide-react";
+
 import { Button } from "@/components/button";
 import { useDialog } from "@/components/dialog";
-import { MessageCircle } from "lucide-react";
+
 import { ContactForm } from "../contact";
 
 interface EnrollCardProps {
@@ -16,7 +18,7 @@ export const EnrollCard = ({
   price,
   courseId,
 }: EnrollCardProps) => {
-  const { openDialog } = useDialog();
+  const { openDialog, closeDialog } = useDialog();
 
   const handleOpenForm = () => {
     openDialog({
@@ -24,7 +26,11 @@ export const EnrollCard = ({
       size: "md",
       children: (
         <div className="pt-2">
-          <ContactForm courseId={courseId} courseTitle={courseTitle} />
+          <ContactForm
+            courseId={courseId}
+            courseTitle={courseTitle}
+            onSuccess={closeDialog}
+          />
         </div>
       ),
     });
