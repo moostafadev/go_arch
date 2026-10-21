@@ -2,8 +2,48 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { m } from "framer-motion";
+import { m, type Variants } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+
+const heroContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.2, delayChildren: 0.15 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const titleContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.06, delayChildren: 0.05 },
+  },
+};
+
+const wordVariants: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const buttonGroup: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
+};
+
+const line1Words = "Get ready to become".split(" ");
+const line2Words = "a Real Architect.".split(" ");
 
 export const Hero = () => {
   return (
@@ -17,11 +57,14 @@ export const Hero = () => {
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-12 px-4 sm:px-6 lg:flex-row lg:justify-between lg:gap-8 lg:px-8">
-        <div className="flex max-w-2xl flex-col items-center text-center lg:items-start lg:text-left">
+        <m.div
+          variants={heroContainer}
+          initial="hidden"
+          animate="visible"
+          className="flex max-w-2xl flex-col items-center text-center lg:items-start lg:text-left"
+        >
           <m.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            variants={itemVariants}
             className="mb-6 flex items-center gap-2 border border-accent/30 bg-accent/5 px-3 py-1 backdrop-blur-sm"
           >
             <span className="flex h-2 w-2 animate-pulse bg-accent" />
@@ -31,21 +74,32 @@ export const Hero = () => {
           </m.div>
 
           <m.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            variants={titleContainer}
             className="mb-6 text-4xl font-black uppercase leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl"
           >
-            Get ready to become <br />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-accent to-red-400">
-              a Real Architect.
-            </span>
+            {line1Words.map((word, index) => (
+              <m.span
+                key={`l1-${index}`}
+                variants={wordVariants}
+                className="inline-block mr-[0.25em]"
+              >
+                {word}
+              </m.span>
+            ))}
+            <br />
+            {line2Words.map((word, index) => (
+              <m.span
+                key={`l2-${index}`}
+                variants={wordVariants}
+                className="inline-block mr-[0.25em] last:mr-0 bg-clip-text text-transparent bg-linear-to-r from-accent to-red-400"
+              >
+                {word}
+              </m.span>
+            ))}
           </m.h1>
 
           <m.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            variants={itemVariants}
             className="mb-8 max-w-xl text-sm text-foreground-second sm:text-base lg:text-lg"
           >
             The definitive A-Z program in architectural design. Master
@@ -54,33 +108,36 @@ export const Hero = () => {
           </m.p>
 
           <m.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.7 }}
+            variants={buttonGroup}
             className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4"
           >
-            <Link
-              href="/courses"
-              className="group flex items-center justify-center gap-2 bg-accent px-8 py-3.5 text-sm font-bold text-white transition-all hover:bg-accent-hover sm:py-4"
-            >
-              Get Full Courses
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <Link
-              href="/portfolio"
-              className="group flex items-center justify-center gap-2 border border-border bg-background/50 backdrop-blur-sm px-8 py-3.5 text-sm font-bold text-foreground transition-all hover:bg-card sm:py-4"
-            >
-              <Play className="size-4" />
-              Watch Students&apos; Work
-            </Link>
+            <m.div variants={itemVariants} className="w-full sm:w-auto">
+              <Link
+                href="/courses"
+                className="group flex w-full items-center justify-center gap-2 bg-accent px-8 py-3.5 text-sm font-bold text-white transition-all hover:bg-accent-hover sm:py-4"
+              >
+                Get Full Courses
+                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </m.div>
+
+            <m.div variants={itemVariants} className="w-full sm:w-auto">
+              <Link
+                href="/portfolio"
+                className="group flex w-full items-center justify-center gap-2 border border-border bg-background/50 backdrop-blur-sm px-8 py-3.5 text-sm font-bold text-foreground transition-all hover:bg-card sm:py-4"
+              >
+                <Play className="size-4" />
+                Watch Students&apos; Work
+              </Link>
+            </m.div>
           </m.div>
-        </div>
+        </m.div>
 
         <m.div
           className="relative w-full max-w-md lg:max-w-none lg:flex-1"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="absolute -inset-1 bg-linear-to-tr from-accent/30 to-transparent blur-sm" />
           <div className="relative aspect-4/3 w-full overflow-hidden border border-border bg-card sm:aspect-square lg:aspect-4/5 lg:max-h-[75vh]">

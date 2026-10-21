@@ -23,9 +23,9 @@ const socialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="border-t border-border bg-card pt-16 pb-28 lg:pb-12">
+    <footer className="border-t border-border bg-card pt-10 pb-24 lg:pb-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 mb-12">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 mb-8">
           <div className="flex flex-col gap-4">
             <Link
               href="/"
@@ -116,7 +116,7 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border pt-8 flex flex-col items-center justify-between gap-4 md:flex-row text-xs text-foreground-second">
+        <div className="border-t border-border pt-6 flex flex-col items-center justify-between gap-4 md:flex-row text-xs text-foreground-second">
           <p>
             <Suspense
               fallback={

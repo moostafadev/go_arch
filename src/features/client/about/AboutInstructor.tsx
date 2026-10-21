@@ -8,7 +8,7 @@ export const AboutInstructor = () => {
   return (
     <section className="border-t border-border bg-card py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 sm:gap-16">
+        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
           <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -34,17 +34,17 @@ export const AboutInstructor = () => {
             <div className="mb-2 text-sm font-bold uppercase tracking-widest text-accent">
               Meet the Founder
             </div>
-            <h2 className="mb-4 text-3xl font-bold text-foreground sm:mb-6 sm:text-4xl">
+            <h2 className="mb-6 text-3xl font-bold text-foreground sm:text-4xl">
               Taught by an Architect who actually practices.
             </h2>
-            <p className="mb-4 text-foreground-second sm:mb-6">
+            <p className="mb-6 text-foreground-second">
               You won&apos;t be learning from just a theoretical instructor. Our
               lead mentor is an award-winning practicing architect who applies
               the exact same techniques taught in our courses to win
               international competitions and deliver real projects.
             </p>
 
-            <ul className="mb-6 space-y-3 sm:mb-8">
+            <ul className="mb-8 space-y-3">
               {[
                 "Winner of multiple international architectural competitions.",
                 "Over a decade of experience in parametric and sustainable design.",

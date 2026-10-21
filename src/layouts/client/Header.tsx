@@ -19,11 +19,7 @@ export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -31,14 +27,18 @@ export const Header = () => {
 
   return (
     <header
-      className={`fixed z-50 w-full border-border transition-all duration-500 ease-in-out
-        ${isOpen ? "bottom-0 top-0 h-screen bg-background" : "bottom-0 top-auto lg:top-0 lg:bottom-auto border-t lg:border-t-0 lg:border-b bg-background/60 backdrop-blur-md"}`}
+      className={`fixed z-40 w-full border-border transition-colors duration-300
+        ${
+          isOpen
+            ? "bottom-0 bg-background"
+            : "bottom-0 lg:top-0 lg:bottom-auto border-t lg:border-t-0 lg:border-b bg-background/60 backdrop-blur-md"
+        }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2 z-50"
           onClick={() => setIsOpen(false)}
+          className="flex shrink-0 items-center gap-2"
         >
           <Image
             src="/logo.png"
@@ -55,7 +55,9 @@ export const Header = () => {
             <Link
               key={link.href}
               href={link.href}
-              className={`text-sm font-medium transition-colors hover:text-accent ${pathname === link.href ? "text-accent" : "text-foreground/80"}`}
+              className={`text-sm font-medium transition-colors hover:text-accent ${
+                pathname === link.href ? "text-accent" : "text-foreground/80"
+              }`}
             >
               {link.label}
             </Link>
@@ -71,38 +73,42 @@ export const Header = () => {
           </Link>
         </div>
 
-        <nav className="flex items-center gap-5 lg:hidden z-50">
-          {!isOpen &&
-            navLinks.slice(0, 2).map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-xs font-medium transition-colors ${pathname === link.href ? "text-accent" : "text-foreground-second"}`}
-              >
-                {link.label}
-              </Link>
-            ))}
+        <div className="flex items-center gap-2 lg:hidden">
+          {!isOpen && (
+            <Link
+              href="/courses"
+              className="bg-accent px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-accent-hover sm:px-5 sm:text-sm"
+            >
+              Get Started
+            </Link>
+          )}
 
           <button
+            type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex size-10 items-center justify-center bg-card border border-border text-foreground active:scale-95 transition-transform"
-            aria-label="Toggle Menu"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+            className={`flex size-10 shrink-0 items-center justify-center border transition-all active:scale-95 ${
+              isOpen
+                ? "border-accent bg-accent text-white hover:bg-accent-hover"
+                : "border-border bg-card text-foreground hover:bg-card-hover"
+            }`}
           >
             {isOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
-        </nav>
+        </div>
       </div>
 
       <AnimatePresence>
         {isOpen && (
           <m.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-x-0 top-16 bottom-0 flex flex-col justify-between overflow-y-auto bg-background px-6 pb-8 pt-4 lg:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 top-0 bottom-16 flex flex-col overflow-y-auto bg-background px-4 pt-4 pb-4 sm:px-6 lg:hidden"
           >
-            <nav className="flex flex-col gap-2 mt-4">
+            <nav className="flex flex-col gap-2 mt-2">
               {navLinks.map((link, i) => (
                 <m.div
                   key={link.href}
@@ -113,11 +119,19 @@ export const Header = () => {
                   <Link
                     href={link.href}
                     onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between border-b border-border/50 py-4 text-2xl font-bold uppercase tracking-tight transition-colors ${pathname === link.href ? "text-accent" : "text-foreground hover:text-accent"}`}
+                    className={`flex items-center justify-between border-b border-border/50 py-4 text-2xl font-bold uppercase tracking-tight transition-colors ${
+                      pathname === link.href
+                        ? "text-accent"
+                        : "text-foreground hover:text-accent"
+                    }`}
                   >
                     {link.label}
                     <ArrowRight
-                      className={`size-5 transition-transform ${pathname === link.href ? "opacity-100" : "opacity-0 -translate-x-2"}`}
+                      className={`size-5 transition-transform ${
+                        pathname === link.href
+                          ? "opacity-100"
+                          : "opacity-0 -translate-x-2"
+                      }`}
                     />
                   </Link>
                 </m.div>
@@ -128,7 +142,7 @@ export const Header = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="mt-8 flex flex-col gap-6"
+              className="mt-auto pt-6"
             >
               <Link
                 href="/courses"

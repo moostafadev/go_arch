@@ -26,7 +26,7 @@ export default async function CourseDetailsPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-24">
+    <div className="min-h-screen bg-background py-8 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Link
           href="/courses"
@@ -61,7 +61,7 @@ export default async function CourseDetailsPage({ params }: Props) {
             <h2 className="mb-4 text-2xl font-bold text-foreground">
               What you&apos;ll learn
             </h2>
-            <ul className="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {[
                 "Master advanced architectural software.",
                 "Develop a professional portfolio.",

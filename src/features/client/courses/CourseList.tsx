@@ -17,7 +17,7 @@ export const CourseList = () => {
       : allCourses.filter((course) => course.category === activeCategory);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-24">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8 lg:pb-10">
       <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
