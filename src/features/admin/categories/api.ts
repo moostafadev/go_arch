@@ -29,6 +29,11 @@ export const updateCategory = async (id: string, data: CategoryFormData) => {
 
 export const deleteCategory = async (id: string) => {
   const res = await fetch(`/api/categories/${id}`, { method: "DELETE" });
-  if (!res.ok) throw new Error("Failed to delete category");
+
+  if (!res.ok) {
+    const payload = await res.json().catch(() => null);
+    throw new Error(payload?.error ?? "Failed to delete category");
+  }
+
   return res.json();
 };

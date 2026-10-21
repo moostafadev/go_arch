@@ -1,14 +1,20 @@
 "use client";
 
 import { useState } from "react";
+
 import { Button } from "@/components/button";
 
 interface DeleteDialogProps {
+  courseCount: number;
   onConfirm: () => Promise<void>;
   onCancel: () => void;
 }
 
-export const DeleteDialog = ({ onConfirm, onCancel }: DeleteDialogProps) => {
+export const DeleteDialog = ({
+  courseCount,
+  onConfirm,
+  onCancel,
+}: DeleteDialogProps) => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
@@ -23,6 +29,20 @@ export const DeleteDialog = ({ onConfirm, onCancel }: DeleteDialogProps) => {
         Are you sure you want to delete this category? This action cannot be
         undone.
       </p>
+
+      {courseCount > 0 && (
+        <div className="border border-danger/30 bg-danger/10 p-3 text-sm text-danger sm:p-4">
+          <p className="font-semibold">
+            {courseCount} {courseCount === 1 ? "course" : "courses"} will also
+            be deleted.
+          </p>
+          <p className="mt-1 text-xs text-danger/80">
+            Categories linked to existing sales cannot be deleted until those
+            sales are removed first.
+          </p>
+        </div>
+      )}
+
       <div className="flex items-center justify-end gap-3">
         <Button
           variant="outline"
@@ -33,6 +53,7 @@ export const DeleteDialog = ({ onConfirm, onCancel }: DeleteDialogProps) => {
         >
           Cancel
         </Button>
+
         <Button
           variant="solid"
           color="DANGER"

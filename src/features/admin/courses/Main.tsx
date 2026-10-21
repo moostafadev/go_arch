@@ -13,6 +13,7 @@ import { DeleteDialog } from "./DeleteDialog";
 import { CoursesSkeleton } from "./Skeleton";
 import { getCourses, deleteCourse } from "./api";
 import { Course, CategoryOption } from "./types";
+import { Price } from "@/components/price";
 
 export const CoursesMain = () => {
   const { openDialog, closeDialog } = useDialog();
@@ -124,7 +125,7 @@ export const CoursesMain = () => {
         <CoursesSkeleton />
       ) : (
         <div className="border border-border bg-card overflow-x-auto w-full [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-border [&::-webkit-scrollbar-thumb]:rounded-none hover:[&::-webkit-scrollbar-thumb]:bg-foreground-second">
-          <table className="w-full text-left border-collapse min-w-[600px]">
+          <table className="w-full text-left border-collapse min-w-150">
             <thead>
               <tr className="border-b border-border bg-background/50">
                 <th className="p-3 text-xs font-bold text-foreground sm:p-4 sm:text-sm">
@@ -195,40 +196,32 @@ export const CoursesMain = () => {
                         </Tag>
                       </td>
                       <td className="p-3 sm:p-4">
-                        <div className="flex flex-col">
-                          {course.discountPrice ? (
-                            <>
-                              <span className="text-xs font-bold text-accent sm:text-sm">
-                                {course.discountPrice}
-                              </span>
-                              <span className="text-[10px] text-foreground-second line-through sm:text-xs">
-                                {course.price}
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-xs font-medium text-foreground sm:text-sm">
-                              {course.price}
-                            </span>
-                          )}
-                        </div>
+                        <Price
+                          price={course.price}
+                          discountPrice={course.discountPrice}
+                          size="sm"
+                          className="flex-col items-start"
+                        />
                       </td>
-                      <td className="p-3 flex items-center justify-end gap-1 sm:p-4 sm:gap-2">
-                        <Button
-                          onClick={() => handleOpenForm(course)}
-                          size="icon"
-                          variant="ghost"
-                          className="size-7 text-foreground-second hover:text-accent sm:size-8"
-                        >
-                          <Edit className="size-3.5 sm:size-4" />
-                        </Button>
-                        <Button
-                          onClick={() => handleDelete(course.id)}
-                          size="icon"
-                          variant="ghost"
-                          className="size-7 text-foreground-second hover:text-danger sm:size-8"
-                        >
-                          <Trash2 className="size-3.5 sm:size-4" />
-                        </Button>
+                      <td className="p-3 sm:p-4">
+                        <div className="flex items-center justify-end gap-1 sm:gap-2">
+                          <Button
+                            onClick={() => handleOpenForm(course)}
+                            size="icon"
+                            variant="ghost"
+                            className="size-7 text-foreground-second hover:text-accent sm:size-8"
+                          >
+                            <Edit className="size-3.5 sm:size-4" />
+                          </Button>
+                          <Button
+                            onClick={() => handleDelete(course.id)}
+                            size="icon"
+                            variant="ghost"
+                            className="size-7 text-foreground-second hover:text-danger sm:size-8"
+                          >
+                            <Trash2 className="size-3.5 sm:size-4" />
+                          </Button>
+                        </div>
                       </td>
                     </m.tr>
                   ))

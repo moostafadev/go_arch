@@ -22,6 +22,7 @@ import { DashboardSkeleton } from "./Skeleton";
 import { getDashboard } from "./api";
 import { getPageMeta } from "./pageLabels";
 import { DashboardData } from "./types";
+import { formatPrice } from "@/lib/format";
 
 const formatCurrency = (value: number) => `${value.toLocaleString()} EGP`;
 
@@ -378,7 +379,7 @@ export const DashboardMain = () => {
                       </div>
                       <div className="flex flex-col items-end gap-1">
                         <span className="text-sm font-bold text-accent">
-                          {sale.amount}
+                          {formatPrice(sale.amount)}
                         </span>
                         <span className="text-[10px] text-foreground-second">
                           {formatDate(sale.createdAt)}

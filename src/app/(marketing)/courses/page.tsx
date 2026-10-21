@@ -1,5 +1,7 @@
-import { CoursesHeader, CourseList } from "@/features/client/courses";
 import type { Metadata } from "next";
+
+import { CourseList, CoursesHeader } from "@/features/client/courses";
+import { fetchClientCourses } from "@/lib/courses";
 
 export const metadata: Metadata = {
   title: "Courses & Diplomas | GO ARCH",
@@ -7,13 +9,14 @@ export const metadata: Metadata = {
     "Master architectural design, parametric tools, and visualization through our professional courses and diplomas.",
 };
 
-export default function CoursesPage() {
+export default async function CoursesPage() {
+  const courses = await fetchClientCourses();
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-background">
       <CoursesHeader />
-
       <div className="pt-12">
-        <CourseList />
+        <CourseList courses={courses} />
       </div>
     </div>
   );

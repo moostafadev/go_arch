@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { m, type Variants } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 
 const heroContainer: Variants = {
   hidden: {},
@@ -123,11 +123,11 @@ export const Hero = () => {
 
             <m.div variants={itemVariants} className="w-full sm:w-auto">
               <Link
-                href="/portfolio"
+                href="/contact"
                 className="group flex w-full items-center justify-center gap-2 border border-border bg-background/50 backdrop-blur-sm px-8 py-3.5 text-sm font-bold text-foreground transition-all hover:bg-card sm:py-4"
               >
-                <Play className="size-4" />
-                Watch Students&apos; Work
+                <MessageCircle className="size-4" />
+                Message Us
               </Link>
             </m.div>
           </m.div>

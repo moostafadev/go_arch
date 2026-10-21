@@ -3,14 +3,16 @@
 import { useEffect, useState, useCallback } from "react";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { m, AnimatePresence } from "framer-motion";
+
 import { Button } from "@/components/button";
 import { useDialog } from "@/components/dialog";
 import { useToast } from "@/components/toaster";
 import { Tag } from "@/components/tag";
+
 import { CategoryForm } from "./Form";
 import { DeleteDialog } from "./DeleteDialog";
 import { CategoriesSkeleton } from "./Skeleton";
-import { getCategories, deleteCategory } from "./api";
+import { deleteCategory, getCategories } from "./api";
 import { Category } from "./types";
 
 export const CategoriesMain = () => {
@@ -23,7 +25,7 @@ export const CategoriesMain = () => {
     try {
       const data = await getCategories();
       setCategories(data);
-    } catch (error) {
+    } catch {
       toast.error("Failed to load categories");
     } finally {
       setLoading(false);
@@ -40,7 +42,7 @@ export const CategoriesMain = () => {
           setCategories(data);
           setLoading(false);
         }
-      } catch (error) {
+      } catch {
         if (!ignore) {
           toast.error("Failed to load categories");
           setLoading(false);
@@ -55,21 +57,26 @@ export const CategoriesMain = () => {
     };
   }, [toast]);
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (category: Category) => {
     openDialog({
       title: "Delete Category",
       size: "md",
       children: (
         <DeleteDialog
+          courseCount={category._count.courses}
           onCancel={closeDialog}
           onConfirm={async () => {
             try {
-              await deleteCategory(id);
-              toast.success("Category deleted successfully");
+              await deleteCategory(category.id);
+              toast.success("Category and its courses deleted");
               closeDialog();
               loadData();
-            } catch (error) {
-              toast.error("Failed to delete category");
+            } catch (err) {
+              toast.error(
+                err instanceof Error
+                  ? err.message
+                  : "Failed to delete category",
+              );
             }
           }}
         />
@@ -178,7 +185,7 @@ export const CategoriesMain = () => {
                           <Edit className="size-3.5 sm:size-4" />
                         </Button>
                         <Button
-                          onClick={() => handleDelete(category.id)}
+                          onClick={() => handleDelete(category)}
                           size="icon"
                           variant="ghost"
                           className="size-7 text-foreground-second hover:text-danger sm:size-8"

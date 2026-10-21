@@ -1,30 +1,69 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { m, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/button";
-import { Tag } from "@/components/tag";
-import { allCourses, courseCategories } from "@/constants/courses";
+import { Clock } from "lucide-react";
 
-export const CourseList = () => {
+import { Button } from "@/components/button";
+import { Price } from "@/components/price";
+import { Tag } from "@/components/tag";
+import { Tooltip } from "@/components/tooltip";
+
+import { ClientCourse } from "./types";
+
+interface CourseListProps {
+  courses: ClientCourse[];
+}
+
+export const CourseList = ({ courses }: CourseListProps) => {
   const [activeCategory, setActiveCategory] = useState("All Courses");
 
-  const filteredCourses =
-    activeCategory === "All Courses"
-      ? allCourses
-      : allCourses.filter((course) => course.category === activeCategory);
+  const categories = useMemo(
+    () => [
+      "All Courses",
+      ...Array.from(new Set(courses.map((course) => course.categoryName))),
+    ],
+    [courses],
+  );
+
+  const filteredCourses = useMemo(
+    () =>
+      activeCategory === "All Courses"
+        ? courses
+        : courses.filter((course) => course.categoryName === activeCategory),
+    [courses, activeCategory],
+  );
+
+  if (courses.length === 0) {
+    return (
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="border border-border bg-card p-8 text-center sm:p-12">
+          <p className="mb-2 text-lg font-bold text-foreground">
+            No courses available yet
+          </p>
+          <p className="text-sm text-foreground-second">
+            Our team is preparing new courses. Check back soon — or{" "}
+            <Link href="/contact" className="text-accent hover:underline">
+              get in touch
+            </Link>{" "}
+            to hear first.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-8 lg:pb-10">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="mb-12 flex flex-wrap gap-3"
+        className="flex flex-wrap gap-3"
       >
-        {courseCategories.map((category) => (
+        {categories.map((category) => (
           <Button
             key={category}
             variant={activeCategory === category ? "solid" : "outline"}
@@ -60,11 +99,29 @@ export const CourseList = () => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
+
                 <div className="absolute left-4 top-4 z-10">
                   <Tag variant="solid" color="MAIN" size="sm">
-                    {course.category}
+                    {course.categoryName}
                   </Tag>
                 </div>
+
+                {course.hours && (
+                  <div className="absolute right-4 top-4 z-10">
+                    <Tooltip
+                      content={`Course duration: ${course.hours}`}
+                      side="left"
+                      focusable={false}
+                    >
+                      <div className="flex items-center gap-1 border border-border bg-background/90 px-2 py-1 backdrop-blur-sm">
+                        <Clock className="size-3 text-accent" />
+                        <span className="text-[11px] font-bold text-foreground">
+                          {course.hours}
+                        </span>
+                      </div>
+                    </Tooltip>
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-1 flex-col p-4 sm:p-6">
@@ -76,7 +133,7 @@ export const CourseList = () => {
                 </p>
 
                 <div className="mt-auto flex items-center justify-between gap-4">
-                  <Link href={`/courses/${course.id}`} className="flex-1">
+                  <Link href={`/courses/${course.slug}`} className="flex-1">
                     <Button
                       variant="solid"
                       color="NEUTRAL"
@@ -85,8 +142,12 @@ export const CourseList = () => {
                       View Details
                     </Button>
                   </Link>
-                  <div className="flex items-center justify-center border border-border bg-background px-4 py-2 text-sm font-bold text-foreground">
-                    {course.price}
+                  <div className="flex items-center justify-center border border-border bg-background px-4 py-2">
+                    <Price
+                      price={course.price}
+                      discountPrice={course.discountPrice}
+                      size="sm"
+                    />
                   </div>
                 </div>
               </div>

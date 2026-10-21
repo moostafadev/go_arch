@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+
 import { Accordion, AccordionItem } from "@/components/accordion";
 import { Carousel, CarouselItem } from "@/components/carousel";
 import { Hero } from "@/features/client/home/hero";
 import { FeaturedCourses } from "@/features/client/home/FeaturedCourses";
+import { fetchClientCourses } from "@/lib/courses";
 
 const features = [
   {
@@ -70,7 +72,9 @@ const faqs = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const courses = await fetchClientCourses();
+
   return (
     <div className="flex flex-col w-full bg-background">
       <Hero />
@@ -109,7 +113,7 @@ export default function Home() {
         </div>
       </section>
 
-      <FeaturedCourses />
+      <FeaturedCourses courses={courses} />
 
       <section className="border-t border-border bg-card py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

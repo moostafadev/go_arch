@@ -4,18 +4,21 @@ import { MessageCircle } from "lucide-react";
 
 import { Button } from "@/components/button";
 import { useDialog } from "@/components/dialog";
+import { Price } from "@/components/price";
 
 import { ContactForm } from "../contact";
 
 interface EnrollCardProps {
   courseTitle: string;
   price: string;
+  discountPrice?: string | null;
   courseId: string;
 }
 
 export const EnrollCard = ({
   courseTitle,
   price,
+  discountPrice,
   courseId,
 }: EnrollCardProps) => {
   const { openDialog, closeDialog } = useDialog();
@@ -39,8 +42,9 @@ export const EnrollCard = ({
   return (
     <div className="sticky top-24 border border-border bg-card p-3 sm:p-4 md:p-6">
       <h3 className="mb-2 text-lg font-bold text-foreground">Enrollment</h3>
-      <div className="mb-4 flex items-baseline gap-2 sm:mb-6">
-        <span className="text-4xl font-black text-foreground">{price}</span>
+
+      <div className="mb-4 flex flex-wrap items-baseline gap-2 sm:mb-6">
+        <Price price={price} discountPrice={discountPrice} size="xl" />
         <span className="text-sm text-foreground-second">/ one-time</span>
       </div>
 

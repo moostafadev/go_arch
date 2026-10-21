@@ -14,6 +14,7 @@ import { SaleForm } from "./Form";
 import { SalesSkeleton } from "./Skeleton";
 import { deleteSale, getSales } from "./api";
 import { Sale } from "./types";
+import { formatPrice } from "@/lib/format";
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("en-GB", {
@@ -163,7 +164,7 @@ export const SalesMain = () => {
         </div>
       ) : (
         <div className="w-full overflow-x-auto border border-border bg-card [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-border hover:[&::-webkit-scrollbar-thumb]:bg-foreground-second">
-          <table className="w-full min-w-[900px] border-collapse text-left">
+          <table className="w-full min-w-225 border-collapse text-left">
             <thead>
               <tr className="border-b border-border bg-background/50">
                 <th className="p-3 text-xs font-bold text-foreground sm:p-4">
@@ -203,7 +204,7 @@ export const SalesMain = () => {
                     </td>
 
                     <td className="p-3 sm:p-4">
-                      <div className="flex max-w-[280px] flex-wrap gap-1">
+                      <div className="flex max-w-70 flex-wrap gap-1">
                         {sale.courses.map((course) => (
                           <Tag
                             key={course.id}
@@ -218,7 +219,7 @@ export const SalesMain = () => {
                     </td>
 
                     <td className="whitespace-nowrap p-3 text-sm font-bold text-accent sm:p-4">
-                      {sale.amount}
+                      {formatPrice(sale.amount)}
                     </td>
 
                     <td className="p-3 sm:p-4">
@@ -229,7 +230,7 @@ export const SalesMain = () => {
                           </span>
                         )}
                         {sale.email && (
-                          <span className="max-w-[160px] truncate">
+                          <span className="max-w-40 truncate">
                             {sale.email}
                           </span>
                         )}

@@ -1,17 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { m, type Variants } from "framer-motion";
-import { Send } from "lucide-react";
-import type { UseFormReturn } from "react-hook-form";
+import { Check, Send } from "lucide-react";
+import { Controller, type UseFormReturn } from "react-hook-form";
 
 import { Button } from "@/components/button";
 import { Form } from "@/components/form";
 import { Input } from "@/components/input";
-import { Select } from "@/components/select";
+import { Price } from "@/components/price";
 import { Textarea } from "@/components/textarea";
 import { useToast } from "@/components/toaster";
-import { allCourses, courseOptions } from "@/constants/courses";
+
+interface ContactCourse {
+  id: string;
+  title: string;
+  price: string;
+  discountPrice?: string | null;
+}
 
 interface ContactFormData {
   name: string;
@@ -24,6 +30,7 @@ interface ContactFormData {
 interface ContactFormProps {
   courseId?: string;
   courseTitle?: string;
+  courses?: ContactCourse[];
   onSuccess?: () => void;
 }
 
@@ -44,6 +51,7 @@ const itemVariants: Variants = {
 export const ContactForm = ({
   courseId,
   courseTitle,
+  courses,
   onSuccess,
 }: ContactFormProps) => {
   const { toast } = useToast();
@@ -52,17 +60,19 @@ export const ContactForm = ({
     null,
   );
 
-  const fixedCourseTitle =
-    courseTitle || allCourses.find((course) => course.id === courseId)?.title;
+  const availableCourses = useMemo(() => courses ?? [], [courses]);
+
+  const hasFixedCourse = Boolean(courseId);
+  const hasCourseList = availableCourses.length > 0;
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
 
     try {
-      const resolvedCourse = courseId
-        ? (fixedCourseTitle ?? data.course)
-        : (allCourses.find((course) => course.id === data.course)?.title ??
-          data.course);
+      const resolvedCourse = hasFixedCourse
+        ? (courseTitle ?? "General Inquiry")
+        : (availableCourses.find((course) => course.id === data.course)
+            ?.title ?? "General Inquiry");
 
       const res = await fetch("/api/leads", {
         method: "POST",
@@ -155,22 +165,95 @@ export const ContactForm = ({
         </m.div>
 
         <m.div variants={itemVariants}>
-          {courseId ? (
+          {hasFixedCourse ? (
             <div className="flex flex-col gap-1">
               <label className="text-sm font-medium text-foreground">
                 Selected Course
               </label>
               <div className="border border-accent/30 bg-accent/10 px-3 py-2 text-sm font-semibold text-accent">
-                {fixedCourseTitle}
+                {courseTitle}
               </div>
             </div>
-          ) : (
-            <Select<ContactFormData>
+          ) : hasCourseList ? (
+            <Controller
               name="course"
-              label="Which course are you interested in?"
-              placeholder="Select a course..."
-              options={courseOptions}
+              rules={{
+                validate: (value) => Boolean(value) || "Please select a course",
+              }}
+              render={({ field, fieldState }) => (
+                <div className="flex flex-col gap-1">
+                  <label className="text-sm font-medium text-foreground">
+                    Which course are you interested in?
+                  </label>
+
+                  <div className="grid max-h-64 grid-cols-1 gap-2 overflow-y-auto sm:grid-cols-2">
+                    {availableCourses.map((course) => {
+                      const checked = field.value === course.id;
+
+                      return (
+                        <label
+                          key={course.id}
+                          className={`flex cursor-pointer items-center gap-2 border p-3 transition-colors sm:p-4 ${
+                            checked
+                              ? "border-accent bg-accent/10 text-accent"
+                              : "border-border bg-background text-foreground hover:border-accent/40"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name={field.name}
+                            value={course.id}
+                            checked={checked}
+                            onChange={() => {
+                              field.onChange(course.id);
+                              field.onBlur();
+                            }}
+                            className="sr-only"
+                          />
+
+                          <span
+                            className={`flex size-4 shrink-0 items-center justify-center rounded-full border ${
+                              checked
+                                ? "border-accent bg-accent"
+                                : "border-border"
+                            }`}
+                          >
+                            {checked && <Check className="size-3 text-white" />}
+                          </span>
+
+                          <span className="min-w-0 flex-1 truncate text-sm">
+                            {course.title}
+                          </span>
+
+                          <Price
+                            price={course.price}
+                            discountPrice={course.discountPrice}
+                            size="sm"
+                            className="shrink-0 flex-col items-end sm:flex-row sm:items-baseline"
+                          />
+                        </label>
+                      );
+                    })}
+                  </div>
+
+                  {fieldState.error && (
+                    <span className="text-xs font-medium text-accent">
+                      {fieldState.error.message}
+                    </span>
+                  )}
+                </div>
+              )}
             />
+          ) : (
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-medium text-foreground">
+                Course
+              </label>
+              <div className="border border-border bg-background p-3 text-sm text-foreground-second sm:p-4">
+                No courses listed yet. Send us a message and we&apos;ll match
+                you with the right program personally.
+              </div>
+            </div>
           )}
         </m.div>
 

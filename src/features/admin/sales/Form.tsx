@@ -16,6 +16,8 @@ import { useToast } from "@/components/toaster";
 
 import { createSale, getCourseOptions, updateSale } from "./api";
 import { CourseOption, Sale, SaleFormData } from "./types";
+import { formatPrice } from "@/lib/format";
+import { Price } from "@/components/price";
 
 const parsePrice = (price: string): number => {
   const numeric = price.replace(/[^\d.]/g, "");
@@ -72,12 +74,17 @@ export const SaleForm = ({
   }, [toast]);
 
   const onSubmit = async (data: SaleFormData) => {
+    const normalized: SaleFormData = {
+      ...data,
+      amount: formatPrice(data.amount),
+    };
+
     try {
       if (initialData) {
-        await updateSale(initialData.id, data);
+        await updateSale(initialData.id, normalized);
         toast.success("Sale updated successfully");
       } else {
-        await createSale(data, prefillLead?.id);
+        await createSale(normalized, prefillLead?.id);
         toast.success(
           prefillLead ? "Lead converted to sale" : "Sale created successfully",
         );
@@ -200,7 +207,6 @@ const SaleFormFields = ({
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {courses.map((course) => {
                   const checked = field.value.includes(course.id);
-                  const hasDiscount = Boolean(course.discountPrice);
 
                   return (
                     <label
@@ -237,21 +243,13 @@ const SaleFormFields = ({
                         {course.title}
                       </span>
 
-                      <span className="flex shrink-0 flex-col items-end text-xs leading-tight">
-                        {hasDiscount ? (
-                          <>
-                            <span className="font-semibold text-accent">
-                              {course.discountPrice}
-                            </span>
-                            <span className="text-foreground-second line-through">
-                              {course.price}
-                            </span>
-                          </>
-                        ) : (
-                          <span className="text-foreground-second">
-                            {course.price}
-                          </span>
-                        )}
+                      <span className="flex shrink-0 items-end">
+                        <Price
+                          price={course.price}
+                          discountPrice={course.discountPrice}
+                          size="sm"
+                          className="flex-col items-end"
+                        />
                       </span>
                     </label>
                   );
