@@ -57,7 +57,7 @@ const Toaster = ({
   };
 
   return (
-    <div className="pointer-events-none fixed inset-x-4 top-3 lg:top-auto lg:bottom-4 z-9999 flex flex-col gap-3 sm:left-auto sm:right-4 sm:w-full sm:max-w-md">
+    <div className="pointer-events-none fixed inset-x-3 top-3 lg:top-auto lg:bottom-4 z-9999 flex flex-col gap-3 sm:inset-x-4 sm:left-auto sm:right-4 sm:w-full sm:max-w-md">
       {toasts.map((toast) => {
         const item = config[toast.type];
         const Icon = item.icon;
@@ -106,7 +106,7 @@ const Toaster = ({
                   ? "all 300ms ease-in"
                   : "transform 300ms ease",
               }}
-              className={`pointer-events-auto relative flex w-full select-none touch-none cursor-grab items-start gap-3 overflow-hidden border p-4 shadow-lg backdrop-blur-md transition-transform duration-300 active:cursor-grabbing ${item.className}`}
+              className={`pointer-events-auto relative flex w-full select-none touch-none cursor-grab items-start gap-3 overflow-hidden border p-3 shadow-lg backdrop-blur-md transition-transform duration-300 active:cursor-grabbing sm:p-4 ${item.className}`}
             >
               <div
                 className={`flex size-10 shrink-0 items-center justify-center ${item.iconClass}`}

@@ -13,7 +13,7 @@ export const AboutStats = () => {
   return (
     <section className="border-t border-border py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 sm:gap-8">
           {stats.map((stat, index) => (
             <m.div
               key={stat.label}
@@ -21,7 +21,7 @@ export const AboutStats = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex flex-col items-center justify-center border-l border-border pl-6 text-center md:border-none md:pl-0"
+              className="flex flex-col items-center justify-center border-l border-border pl-3 text-center sm:pl-6 md:border-none md:pl-0"
             >
               <div className="mb-2 text-4xl font-black text-foreground sm:text-5xl">
                 {stat.value}

@@ -53,13 +53,13 @@ export const LoginForm = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="relative z-10 w-full max-w-md border border-border bg-card p-8 shadow-2xl"
+      className="relative z-10 w-full max-w-md border border-border bg-card p-4 shadow-2xl sm:p-8"
     >
       <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.4, delay: 0.1 }}
-        className="mb-8 text-center"
+        className="mb-6 text-center sm:mb-8"
       >
         <h1 className="mb-2 text-2xl font-black uppercase tracking-tight text-foreground">
           Admin <span className="text-accent">Access</span>
@@ -77,7 +77,7 @@ export const LoginForm = () => {
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="flex flex-col gap-5"
+          className="flex flex-col gap-4 sm:gap-5"
         >
           <m.div variants={itemVariants}>
             <Input<LoginFormData>

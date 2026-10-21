@@ -7,7 +7,7 @@ export const AboutMission = () => {
   return (
     <section className="overflow-hidden py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 sm:gap-16">
           <m.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -38,7 +38,7 @@ export const AboutMission = () => {
               </p>
             </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-4 border-t border-border pt-8">
+            <div className="mt-6 grid grid-cols-2 gap-3 border-t border-border pt-6 sm:mt-8 sm:gap-4 sm:pt-8">
               <div>
                 <h4 className="text-2xl font-bold text-foreground">100%</h4>
                 <p className="text-sm text-foreground-second">

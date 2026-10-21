@@ -37,9 +37,9 @@ export const EnrollCard = ({
   };
 
   return (
-    <div className="sticky top-24 border border-border bg-card p-6">
+    <div className="sticky top-24 border border-border bg-card p-3 sm:p-4 md:p-6">
       <h3 className="mb-2 text-lg font-bold text-foreground">Enrollment</h3>
-      <div className="mb-6 flex items-baseline gap-2">
+      <div className="mb-4 flex items-baseline gap-2 sm:mb-6">
         <span className="text-4xl font-black text-foreground">{price}</span>
         <span className="text-sm text-foreground-second">/ one-time</span>
       </div>

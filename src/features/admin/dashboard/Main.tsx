@@ -50,7 +50,7 @@ interface KpiCardProps {
 const KpiCard = ({ label, value, hint, icon: Icon, href }: KpiCardProps) => (
   <Link
     href={href}
-    className="group flex flex-col border border-border bg-card p-4 transition-colors hover:border-accent/50 hover:bg-card-hover"
+    className="group flex flex-col border border-border bg-card p-3 transition-colors hover:border-accent/50 hover:bg-card-hover sm:p-4"
   >
     <div className="flex items-center justify-between">
       <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground-second">
@@ -116,7 +116,7 @@ export const DashboardMain = () => {
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between gap-4 sm:mb-6">
+      <div className="mb-3 flex items-center justify-between gap-3 sm:mb-4 sm:gap-4">
         <div>
           <h1 className="text-xl font-bold text-foreground sm:text-2xl">
             Dashboard Overview
@@ -142,12 +142,12 @@ export const DashboardMain = () => {
       {loading ? (
         <DashboardSkeleton />
       ) : !data ? (
-        <div className="border border-border bg-card p-12 text-center text-foreground-second">
+        <div className="border border-border bg-card p-3 text-center text-foreground-second sm:p-4">
           <p className="text-sm">Failed to load dashboard data.</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="flex flex-col gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 sm:gap-4">
             <KpiCard
               label="Revenue"
               value={formatCurrency(data.stats.lifetimeRevenue)}
@@ -178,9 +178,9 @@ export const DashboardMain = () => {
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-            <div className="border border-border bg-card p-4 lg:col-span-2">
-              <div className="mb-4 flex items-center justify-between">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-3">
+            <div className="border border-border bg-card p-3 sm:p-4 lg:col-span-2">
+              <div className="mb-3 flex items-center justify-between sm:mb-4">
                 <div>
                   <h2 className="text-sm font-bold text-foreground">
                     Sales Trend
@@ -239,8 +239,8 @@ export const DashboardMain = () => {
               )}
             </div>
 
-            <div className="border border-border bg-card p-4">
-              <div className="mb-4 flex items-center justify-between">
+            <div className="border border-border bg-card p-3 sm:p-4">
+              <div className="mb-3 flex items-center justify-between sm:mb-4">
                 <div>
                   <h2 className="text-sm font-bold text-foreground">
                     Leads by Status
@@ -252,11 +252,11 @@ export const DashboardMain = () => {
               </div>
 
               {data.leadsByStatus.length === 0 ? (
-                <p className="py-6 text-center text-xs text-foreground-second">
+                <p className="py-4 text-center text-xs text-foreground-second sm:py-6">
                   No leads captured yet.
                 </p>
               ) : (
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-3 sm:gap-4">
                   {data.leadsByStatus.map((item) => {
                     const percentage =
                       totalLeads > 0 ? (item.count / totalLeads) * 100 : 0;
@@ -285,9 +285,9 @@ export const DashboardMain = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2">
             <div className="border border-border bg-card">
-              <div className="flex items-center justify-between border-b border-border p-4">
+              <div className="flex items-center justify-between border-b border-border p-3 sm:p-4">
                 <h2 className="text-sm font-bold text-foreground">
                   Recent Leads
                 </h2>
@@ -301,7 +301,7 @@ export const DashboardMain = () => {
               </div>
 
               {data.recentLeads.length === 0 ? (
-                <p className="py-6 text-center text-xs text-foreground-second">
+                <p className="py-4 text-center text-xs text-foreground-second sm:py-6">
                   No leads captured yet.
                 </p>
               ) : (
@@ -309,7 +309,7 @@ export const DashboardMain = () => {
                   {data.recentLeads.map((lead) => (
                     <li
                       key={lead.id}
-                      className="flex items-center justify-between gap-3 border-b border-border/50 p-3 last:border-0"
+                      className="flex items-center justify-between gap-3 border-b border-border/50 p-3 last:border-0 sm:p-4"
                     >
                       <div className="min-w-0">
                         <p className="truncate text-sm font-medium text-foreground">
@@ -344,7 +344,7 @@ export const DashboardMain = () => {
             </div>
 
             <div className="border border-border bg-card">
-              <div className="flex items-center justify-between border-b border-border p-4">
+              <div className="flex items-center justify-between border-b border-border p-3 sm:p-4">
                 <h2 className="text-sm font-bold text-foreground">
                   Recent Sales
                 </h2>
@@ -358,7 +358,7 @@ export const DashboardMain = () => {
               </div>
 
               {data.recentSales.length === 0 ? (
-                <p className="py-6 text-center text-xs text-foreground-second">
+                <p className="py-4 text-center text-xs text-foreground-second sm:py-6">
                   No sales recorded yet.
                 </p>
               ) : (
@@ -366,7 +366,7 @@ export const DashboardMain = () => {
                   {data.recentSales.map((sale) => (
                     <li
                       key={sale.id}
-                      className="flex items-center justify-between gap-3 border-b border-border/50 p-3 last:border-0"
+                      className="flex items-center justify-between gap-3 border-b border-border/50 p-3 last:border-0 sm:p-4"
                     >
                       <div className="min-w-0">
                         <p className="truncate text-sm font-medium text-foreground">
@@ -392,7 +392,7 @@ export const DashboardMain = () => {
           </div>
 
           <div className="border border-border bg-card">
-            <div className="flex items-center justify-between border-b border-border p-4">
+            <div className="flex items-center justify-between border-b border-border p-3 sm:p-4">
               <div>
                 <h2 className="text-sm font-bold text-foreground">Top Pages</h2>
                 <p className="text-[11px] text-foreground-second">
@@ -409,7 +409,7 @@ export const DashboardMain = () => {
             </div>
 
             {data.topPages.length === 0 ? (
-              <p className="py-6 text-center text-xs text-foreground-second">
+              <p className="py-4 text-center text-xs text-foreground-second sm:py-6">
                 No page views recorded yet.
               </p>
             ) : (
@@ -425,7 +425,7 @@ export const DashboardMain = () => {
                         href={meta.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-between gap-3 p-3 transition-colors hover:bg-card-hover"
+                        className="flex items-center justify-between gap-3 p-3 transition-colors hover:bg-card-hover sm:p-4"
                       >
                         <div className="min-w-0">
                           <p className="truncate text-sm font-medium text-foreground">
@@ -446,10 +446,10 @@ export const DashboardMain = () => {
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
             <Link
               href="/admin/leads"
-              className="flex items-center justify-between border border-border bg-card p-3 text-xs text-foreground transition-colors hover:border-accent/50 hover:bg-card-hover"
+              className="flex items-center justify-between border border-border bg-card p-3 text-xs text-foreground transition-colors hover:border-accent/50 hover:bg-card-hover sm:p-4"
             >
               <span className="flex items-center gap-2">
                 <Users className="size-3.5 text-foreground-second" />
@@ -459,7 +459,7 @@ export const DashboardMain = () => {
             </Link>
             <Link
               href="/admin/sales"
-              className="flex items-center justify-between border border-border bg-card p-3 text-xs text-foreground transition-colors hover:border-accent/50 hover:bg-card-hover"
+              className="flex items-center justify-between border border-border bg-card p-3 text-xs text-foreground transition-colors hover:border-accent/50 hover:bg-card-hover sm:p-4"
             >
               <span className="flex items-center gap-2">
                 <Wallet className="size-3.5 text-foreground-second" />
@@ -469,7 +469,7 @@ export const DashboardMain = () => {
             </Link>
             <Link
               href="/admin/courses"
-              className="flex items-center justify-between border border-border bg-card p-3 text-xs text-foreground transition-colors hover:border-accent/50 hover:bg-card-hover"
+              className="flex items-center justify-between border border-border bg-card p-3 text-xs text-foreground transition-colors hover:border-accent/50 hover:bg-card-hover sm:p-4"
             >
               <span className="flex items-center gap-2">
                 <BookOpen className="size-3.5 text-foreground-second" />

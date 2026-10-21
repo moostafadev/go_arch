@@ -80,7 +80,7 @@ export const FeaturedCourses = () => {
                     className="object-cover transition-transform duration-500 hover:scale-105"
                   />
                 </div>
-                <div className="flex flex-1 flex-col p-6">
+                <div className="flex flex-1 flex-col p-4 sm:p-6">
                   <h3 className="mb-3 text-lg font-bold text-foreground">
                     {course.title}
                   </h3>

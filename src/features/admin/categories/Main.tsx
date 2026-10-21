@@ -95,8 +95,8 @@ export const CategoriesMain = () => {
 
   return (
     <div>
-      <div className="mb-4 sm:mb-6 flex items-center justify-between">
-        <h1 className="text-xl sm:text-2xl font-bold text-foreground">
+      <div className="mb-4 flex items-center justify-between sm:mb-6">
+        <h1 className="text-xl font-bold text-foreground sm:text-2xl">
           Course Categories
         </h1>
         <Button
@@ -105,7 +105,7 @@ export const CategoriesMain = () => {
           size="sm"
           className="bg-accent text-white sm:px-6 sm:py-2"
         >
-          <Plus className="size-3.5 sm:size-4 sm:mr-2" />
+          <Plus className="size-3.5 sm:mr-2 sm:size-4" />
           <span className="hidden sm:inline">Add Category</span>
         </Button>
       </div>
@@ -117,16 +117,16 @@ export const CategoriesMain = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-border bg-background/50">
-                <th className="p-2 sm:p-4 text-xs sm:text-sm font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4 sm:text-sm">
                   Name
                 </th>
-                <th className="p-2 sm:p-4 text-xs sm:text-sm font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4 sm:text-sm">
                   Slug
                 </th>
-                <th className="p-2 sm:p-4 text-xs sm:text-sm font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4 sm:text-sm">
                   Courses
                 </th>
-                <th className="p-2 sm:p-4 text-xs sm:text-sm font-bold text-foreground text-right">
+                <th className="p-3 text-right text-xs font-bold text-foreground sm:p-4 sm:text-sm">
                   Actions
                 </th>
               </tr>
@@ -137,7 +137,7 @@ export const CategoriesMain = () => {
                   <tr>
                     <td
                       colSpan={4}
-                      className="p-4 text-xs sm:text-sm text-center text-foreground-second"
+                      className="p-8 text-center text-xs text-foreground-second sm:p-12 sm:text-sm"
                     >
                       No categories found.
                     </td>
@@ -152,13 +152,13 @@ export const CategoriesMain = () => {
                       transition={{ duration: 0.2, delay: index * 0.05 }}
                       className="border-b border-border/50 hover:bg-card-hover transition-colors"
                     >
-                      <td className="p-2 sm:p-4 text-xs sm:text-sm text-foreground font-medium max-w-[120px] sm:max-w-none truncate">
+                      <td className="p-3 text-xs font-medium text-foreground max-w-30 truncate sm:p-4 sm:max-w-none sm:text-sm">
                         {category.name}
                       </td>
-                      <td className="p-2 sm:p-4 text-xs sm:text-sm text-foreground-second max-w-[100px] sm:max-w-none truncate">
+                      <td className="p-3 text-xs text-foreground-second max-w-25 truncate sm:p-4 sm:max-w-none sm:text-sm">
                         {category.slug}
                       </td>
-                      <td className="p-2 sm:p-4">
+                      <td className="p-3 sm:p-4">
                         <Tag
                           variant="soft"
                           color="NEUTRAL"
@@ -168,12 +168,12 @@ export const CategoriesMain = () => {
                           {category._count.courses}
                         </Tag>
                       </td>
-                      <td className="p-2 sm:p-4 flex items-center justify-end gap-1 sm:gap-2">
+                      <td className="p-3 flex items-center justify-end gap-1 sm:p-4 sm:gap-2">
                         <Button
                           onClick={() => handleOpenForm(category)}
                           size="icon"
                           variant="ghost"
-                          className="size-7 sm:size-8 text-foreground-second hover:text-accent"
+                          className="size-7 text-foreground-second hover:text-accent sm:size-8"
                         >
                           <Edit className="size-3.5 sm:size-4" />
                         </Button>
@@ -181,7 +181,7 @@ export const CategoriesMain = () => {
                           onClick={() => handleDelete(category.id)}
                           size="icon"
                           variant="ghost"
-                          className="size-7 sm:size-8 text-foreground-second hover:text-danger"
+                          className="size-7 text-foreground-second hover:text-danger sm:size-8"
                         >
                           <Trash2 className="size-3.5 sm:size-4" />
                         </Button>

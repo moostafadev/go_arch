@@ -144,12 +144,12 @@ export const ViewsMain = () => {
       {loading ? (
         <ViewsSkeleton />
       ) : !data ? (
-        <div className="border border-border bg-card p-12 text-center text-foreground-second">
+        <div className="border border-border bg-card p-8 text-center text-foreground-second sm:p-12">
           <p className="text-sm">No data available.</p>
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
-          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="flex flex-col gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 sm:gap-4">
             {statCards.map((stat, index) => {
               const Icon = stat.icon;
               return (
@@ -158,7 +158,7 @@ export const ViewsMain = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.05 }}
-                  className="border border-border bg-card p-4"
+                  className="border border-border bg-card p-3 sm:p-4"
                 >
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-semibold uppercase tracking-wider text-foreground-second">
@@ -174,14 +174,14 @@ export const ViewsMain = () => {
             })}
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-2">
             <div className="border border-border bg-card">
-              <div className="border-b border-border p-4">
+              <div className="border-b border-border p-3 sm:p-4">
                 <h2 className="text-sm font-bold text-foreground">Top Pages</h2>
               </div>
 
               {data.topPages.length === 0 ? (
-                <p className="p-6 text-center text-sm text-foreground-second">
+                <p className="py-4 text-center text-sm text-foreground-second sm:py-6">
                   No views recorded yet.
                 </p>
               ) : (
@@ -194,7 +194,7 @@ export const ViewsMain = () => {
                           key={page.path}
                           className="border-b border-border/50 transition-colors last:border-0 hover:bg-card-hover"
                         >
-                          <td className="p-3">
+                          <td className="p-3 sm:p-4">
                             <a
                               href={meta.href}
                               target="_blank"
@@ -209,7 +209,7 @@ export const ViewsMain = () => {
                               </span>
                             </a>
                           </td>
-                          <td className="whitespace-nowrap p-3 text-right font-semibold text-foreground-second">
+                          <td className="whitespace-nowrap p-3 text-right font-semibold text-foreground-second sm:p-4">
                             {page.count.toLocaleString()}
                           </td>
                         </tr>
@@ -221,14 +221,14 @@ export const ViewsMain = () => {
             </div>
 
             <div className="border border-border bg-card">
-              <div className="border-b border-border p-4">
+              <div className="border-b border-border p-3 sm:p-4">
                 <h2 className="text-sm font-bold text-foreground">
                   Recent Views
                 </h2>
               </div>
 
               {data.recent.length === 0 ? (
-                <p className="p-6 text-center text-sm text-foreground-second">
+                <p className="py-4 text-center text-sm text-foreground-second sm:py-6">
                   No views recorded yet.
                 </p>
               ) : (
@@ -242,7 +242,7 @@ export const ViewsMain = () => {
                             key={view.id}
                             className="border-b border-border/50 transition-colors last:border-0 hover:bg-card-hover"
                           >
-                            <td className="p-3">
+                            <td className="p-3 sm:p-4">
                               <a
                                 href={meta.href}
                                 target="_blank"
@@ -257,7 +257,7 @@ export const ViewsMain = () => {
                                 </span>
                               </a>
                             </td>
-                            <td className="whitespace-nowrap p-3 text-foreground-second">
+                            <td className="whitespace-nowrap p-3 text-foreground-second sm:p-4">
                               {formatDate(view.createdAt)}
                             </td>
                           </tr>

@@ -89,8 +89,8 @@ export const LeadDetails = ({ lead, onConverted }: LeadDetailsProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-4 pt-2">
-      <div className="flex items-start justify-between gap-3 border-b border-border pb-4">
+    <div className="flex flex-col gap-3 pt-2 sm:gap-4">
+      <div className="flex items-start justify-between gap-3 border-b border-border pb-3 sm:pb-4">
         <div className="min-w-0">
           <h3 className="truncate text-lg font-bold text-foreground">
             {lead.name}
@@ -125,13 +125,13 @@ export const LeadDetails = ({ lead, onConverted }: LeadDetailsProps) => {
         <span className="text-[10px] font-medium uppercase tracking-wider text-foreground-second">
           Message
         </span>
-        <p className="whitespace-pre-wrap border border-border bg-background p-3 text-sm text-foreground">
+        <p className="whitespace-pre-wrap border border-border bg-background p-3 text-sm text-foreground sm:p-4">
           {lead.message || "No additional notes provided."}
         </p>
       </div>
 
       {lead.saleId ? (
-        <div className="flex items-center gap-2 border border-success/30 bg-success/10 p-3 text-sm text-success">
+        <div className="flex items-center gap-2 border border-success/30 bg-success/10 p-3 text-sm text-success sm:p-4">
           <CheckCircle2 className="size-4" />
           This lead has been converted to a sale.
         </div>
@@ -147,7 +147,7 @@ export const LeadDetails = ({ lead, onConverted }: LeadDetailsProps) => {
         </Button>
       )}
 
-      <div className="flex items-center gap-2 border-t border-border pt-4">
+      <div className="flex items-center gap-2 border-t border-border pt-3 sm:pt-4">
         <a
           href={whatsappUrl}
           target="_blank"

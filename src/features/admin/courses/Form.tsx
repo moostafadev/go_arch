@@ -62,7 +62,7 @@ export const CourseForm = ({
         image: initialData?.image || "",
         categoryId: initialData?.categoryId || "",
       }}
-      className="flex flex-col gap-4 pt-2 max-h-[75vh] overflow-y-auto pr-2 pb-4"
+      className="flex flex-col gap-3 pt-2 max-h-[75vh] overflow-y-auto pr-2 pb-4 sm:gap-4"
     >
       <CourseFormFields
         isSubmitting={isSubmitting}
@@ -114,7 +114,7 @@ const CourseFormFields = ({
         rows={3}
       />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
         <Input<CourseFormData>
           name="price"
           label="Price"
@@ -127,7 +127,7 @@ const CourseFormFields = ({
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
         <Input<CourseFormData>
           name="hours"
           label="Hours (Optional)"

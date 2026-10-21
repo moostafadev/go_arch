@@ -103,7 +103,7 @@ export const SaleForm = ({
         phone: initialData?.phone || prefillLead?.phone || "",
         email: initialData?.email || prefillLead?.email || "",
       }}
-      className="flex flex-col gap-4 pt-2 max-h-[75vh] overflow-y-auto pr-2 pb-4"
+      className="flex flex-col gap-3 pt-2 max-h-[75vh] overflow-y-auto pr-2 pb-4 sm:gap-4"
     >
       <SaleFormFields
         initialData={initialData}
@@ -188,12 +188,12 @@ const SaleFormFields = ({
             </label>
 
             {loadingCourses ? (
-              <div className="flex items-center justify-center gap-2 border border-border bg-background p-6 text-sm text-foreground-second">
+              <div className="flex items-center justify-center gap-2 border border-border bg-background p-3 text-sm text-foreground-second sm:p-4">
                 <Loader2 className="size-4 animate-spin" />
                 Loading courses...
               </div>
             ) : courses.length === 0 ? (
-              <div className="border border-border bg-background p-6 text-center text-sm text-foreground-second">
+              <div className="border border-border bg-background p-3 text-center text-sm text-foreground-second sm:p-4">
                 No courses available. Create a course first.
               </div>
             ) : (
@@ -205,7 +205,7 @@ const SaleFormFields = ({
                   return (
                     <label
                       key={course.id}
-                      className={`flex cursor-pointer items-center gap-2 border p-2 transition-colors ${
+                      className={`flex cursor-pointer items-center gap-2 border p-3 transition-colors sm:p-4 ${
                         checked
                           ? "border-accent bg-accent/10 text-accent"
                           : "border-border bg-background text-foreground hover:border-accent/40"
@@ -299,7 +299,7 @@ const SaleFormFields = ({
         )}
       </div>
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
         <Input<SaleFormData>
           name="phone"
           label="Phone (Optional)"

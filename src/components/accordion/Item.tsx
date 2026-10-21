@@ -26,7 +26,7 @@ const AccordionItem = ({
         disabled={disabled}
         onClick={() => toggle(value)}
         aria-expanded={open}
-        className={`cursor-pointer flex w-full items-center justify-between gap-3 p-3 text-start transition-colors duration-200 hover:bg-card-hover disabled:cursor-not-allowed disabled:opacity-60 lg:p-4 ${triggerClassName}`}
+        className={`cursor-pointer flex w-full items-center justify-between gap-3 p-3 text-start transition-colors duration-200 hover:bg-card-hover disabled:cursor-not-allowed disabled:opacity-60 sm:p-4 ${triggerClassName}`}
       >
         <div className="min-w-0 flex-1 text-foreground">{trigger}</div>
         <ChevronDown

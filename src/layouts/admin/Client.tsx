@@ -15,7 +15,7 @@ const ClientAdmin = ({ children }: IProps) => {
       <SidebarAdmin isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <main className="min-h-screen pt-16 duration-300 lg:pl-64">
-        <article className="p-4 lg:p-8">{children}</article>
+        <article className="p-3 lg:p-4">{children}</article>
       </main>
     </div>
   );

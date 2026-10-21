@@ -55,10 +55,10 @@ const Dialog = ({ title, children, size = "md", onClose }: Props) => {
         exit="exit"
         transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
         onMouseDown={(e) => e.stopPropagation()}
-        className={`relative w-full shrink-0 ${sizes[size]} border border-border bg-card p-4 shadow-lg`}
+        className={`relative w-full shrink-0 ${sizes[size]} border border-border bg-card p-3 shadow-lg sm:p-4`}
       >
         {title && (
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-3 lg:gap-4">
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-3 sm:mb-4 lg:gap-4">
             <h2 className="font-bold text-foreground lg:text-lg">{title}</h2>
 
             <Button

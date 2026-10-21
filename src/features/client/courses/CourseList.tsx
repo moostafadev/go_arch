@@ -18,7 +18,6 @@ export const CourseList = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-24">
-      {/* Filters */}
       <m.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -42,7 +41,6 @@ export const CourseList = () => {
         ))}
       </m.div>
 
-      {/* Course Grid */}
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {filteredCourses.map((course, index) => (
@@ -69,7 +67,7 @@ export const CourseList = () => {
                 </div>
               </div>
 
-              <div className="flex flex-1 flex-col p-6">
+              <div className="flex flex-1 flex-col p-4 sm:p-6">
                 <h3 className="mb-3 text-xl font-bold text-foreground transition-colors group-hover:text-accent">
                   {course.title}
                 </h3>

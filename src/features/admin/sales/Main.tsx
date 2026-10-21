@@ -132,8 +132,8 @@ export const SalesMain = () => {
         </Button>
       </div>
 
-      <div className="mb-4 grid grid-cols-1 gap-3 sm:mb-6 sm:grid-cols-2">
-        <div className="border border-border bg-card p-4">
+      <div className="mb-4 grid grid-cols-1 gap-3 sm:mb-6 sm:grid-cols-2 sm:gap-4">
+        <div className="border border-border bg-card p-3 sm:p-4">
           <p className="text-[10px] font-semibold uppercase tracking-wider text-foreground-second">
             Total Revenue
           </p>
@@ -142,7 +142,7 @@ export const SalesMain = () => {
           </p>
         </div>
 
-        <div className="border border-border bg-card p-4">
+        <div className="border border-border bg-card p-3 sm:p-4">
           <p className="text-[10px] font-semibold uppercase tracking-wider text-foreground-second">
             Total Sales
           </p>
@@ -155,7 +155,7 @@ export const SalesMain = () => {
       {loading ? (
         <SalesSkeleton />
       ) : sales.length === 0 ? (
-        <div className="border border-border bg-card p-12 text-center text-foreground-second">
+        <div className="border border-border bg-card p-8 text-center text-foreground-second sm:p-12">
           <p className="text-sm">No sales recorded yet.</p>
           <p className="mt-1 text-xs">
             Click &quot;Add Sale&quot; to record your first sale.
@@ -166,20 +166,22 @@ export const SalesMain = () => {
           <table className="w-full min-w-[900px] border-collapse text-left">
             <thead>
               <tr className="border-b border-border bg-background/50">
-                <th className="p-3 text-xs font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
                   Customer
                 </th>
-                <th className="p-3 text-xs font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
                   Courses
                 </th>
-                <th className="p-3 text-xs font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
                   Amount
                 </th>
-                <th className="p-3 text-xs font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
                   Contact
                 </th>
-                <th className="p-3 text-xs font-bold text-foreground">Date</th>
-                <th className="p-3 text-right text-xs font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
+                  Date
+                </th>
+                <th className="p-3 text-right text-xs font-bold text-foreground sm:p-4">
                   Actions
                 </th>
               </tr>
@@ -196,11 +198,11 @@ export const SalesMain = () => {
                     transition={{ duration: 0.2, delay: index * 0.03 }}
                     className="border-b border-border/50 transition-colors hover:bg-card-hover"
                   >
-                    <td className="whitespace-nowrap p-3 text-sm font-medium text-foreground">
+                    <td className="whitespace-nowrap p-3 text-sm font-medium text-foreground sm:p-4">
                       {sale.customerName}
                     </td>
 
-                    <td className="p-3">
+                    <td className="p-3 sm:p-4">
                       <div className="flex max-w-[280px] flex-wrap gap-1">
                         {sale.courses.map((course) => (
                           <Tag
@@ -215,11 +217,11 @@ export const SalesMain = () => {
                       </div>
                     </td>
 
-                    <td className="whitespace-nowrap p-3 text-sm font-bold text-accent">
+                    <td className="whitespace-nowrap p-3 text-sm font-bold text-accent sm:p-4">
                       {sale.amount}
                     </td>
 
-                    <td className="p-3">
+                    <td className="p-3 sm:p-4">
                       <div className="flex flex-col text-xs text-foreground-second">
                         {sale.phone && (
                           <span className="whitespace-nowrap">
@@ -235,11 +237,11 @@ export const SalesMain = () => {
                       </div>
                     </td>
 
-                    <td className="whitespace-nowrap p-3 text-xs text-foreground-second">
+                    <td className="whitespace-nowrap p-3 text-xs text-foreground-second sm:p-4">
                       {formatDate(sale.createdAt)}
                     </td>
 
-                    <td className="flex items-center justify-end gap-1 p-3">
+                    <td className="flex items-center justify-end gap-1 p-3 sm:p-4">
                       <Button
                         onClick={() => handleOpenForm(sale)}
                         size="icon"

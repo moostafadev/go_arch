@@ -18,7 +18,7 @@ export const DeleteDialog = ({ onConfirm, onCancel }: DeleteDialogProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-5 pt-2">
+    <div className="flex flex-col gap-4 pt-2 sm:gap-5">
       <p className="text-sm text-foreground-second">
         Are you sure you want to delete this category? This action cannot be
         undone.

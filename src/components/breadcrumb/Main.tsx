@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, Home } from "lucide-react"; // Changed to ChevronRight
+import { ChevronRight, Home } from "lucide-react";
 
 import { BreadcrumbProps } from "./types";
 import { usePathname } from "next/navigation";

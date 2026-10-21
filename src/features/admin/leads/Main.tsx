@@ -101,12 +101,12 @@ export const LeadsMain = () => {
 
   return (
     <div>
-      <div className="mb-4 sm:mb-6 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-between sm:mb-6">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
+          <h1 className="text-xl font-bold text-foreground sm:text-2xl">
             Leads Management
           </h1>
-          <p className="text-xs sm:text-sm text-foreground-second">
+          <p className="text-xs text-foreground-second sm:text-sm">
             {leads.length} {leads.length === 1 ? "lead" : "leads"} captured
           </p>
         </div>
@@ -115,7 +115,7 @@ export const LeadsMain = () => {
       {loading ? (
         <LeadsSkeleton />
       ) : leads.length === 0 ? (
-        <div className="border border-border bg-card p-12 text-center text-foreground-second">
+        <div className="border border-border bg-card p-8 text-center text-foreground-second sm:p-12">
           <p className="text-sm">No leads captured yet.</p>
           <p className="mt-1 text-xs">
             New inquiries from the contact form will appear here.
@@ -126,21 +126,25 @@ export const LeadsMain = () => {
           <table className="w-full text-left border-collapse min-w-225">
             <thead>
               <tr className="border-b border-border bg-background/50">
-                <th className="p-3 text-xs font-bold text-foreground">Name</th>
-                <th className="p-3 text-xs font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
+                  Name
+                </th>
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
                   Contact
                 </th>
-                <th className="p-3 text-xs font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
                   Course
                 </th>
-                <th className="p-3 text-xs font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
                   Message
                 </th>
-                <th className="p-3 text-xs font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
                   Status
                 </th>
-                <th className="p-3 text-xs font-bold text-foreground">Date</th>
-                <th className="p-3 text-xs font-bold text-foreground text-right">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4">
+                  Date
+                </th>
+                <th className="p-3 text-xs font-bold text-foreground text-right sm:p-4">
                   Actions
                 </th>
               </tr>
@@ -157,11 +161,11 @@ export const LeadsMain = () => {
                     transition={{ duration: 0.2, delay: index * 0.03 }}
                     className="border-b border-border/50 hover:bg-card-hover transition-colors"
                   >
-                    <td className="p-3 text-sm font-medium text-foreground whitespace-nowrap">
+                    <td className="p-3 text-sm font-medium text-foreground whitespace-nowrap sm:p-4">
                       {lead.name}
                     </td>
 
-                    <td className="p-3">
+                    <td className="p-3 sm:p-4">
                       <div className="flex flex-col text-xs text-foreground-second">
                         <span className="whitespace-nowrap">{lead.phone}</span>
                         {lead.email && (
@@ -172,18 +176,18 @@ export const LeadsMain = () => {
                       </div>
                     </td>
 
-                    <td className="p-3 text-xs text-foreground max-w-40 truncate">
+                    <td className="p-3 text-xs text-foreground max-w-40 truncate sm:p-4">
                       {lead.course}
                     </td>
 
                     <td
-                      className="p-3 text-xs text-foreground-second max-w-45 truncate"
+                      className="p-3 text-xs text-foreground-second max-w-45 truncate sm:p-4"
                       title={lead.message ?? ""}
                     >
                       {lead.message || "—"}
                     </td>
 
-                    <td className="p-3">
+                    <td className="p-3 sm:p-4">
                       <StatusBadge
                         status={lead.status}
                         locked={Boolean(lead.saleId)}
@@ -193,11 +197,11 @@ export const LeadsMain = () => {
                       />
                     </td>
 
-                    <td className="p-3 text-xs text-foreground-second whitespace-nowrap">
+                    <td className="p-3 text-xs text-foreground-second whitespace-nowrap sm:p-4">
                       {formatDate(lead.createdAt)}
                     </td>
 
-                    <td className="p-3">
+                    <td className="p-3 sm:p-4">
                       <LeadActions
                         lead={lead}
                         onDelete={() => handleDelete(lead.id)}

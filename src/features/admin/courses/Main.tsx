@@ -105,8 +105,8 @@ export const CoursesMain = () => {
 
   return (
     <div>
-      <div className="mb-4 sm:mb-6 flex items-center justify-between">
-        <h1 className="text-xl sm:text-2xl font-bold text-foreground">
+      <div className="mb-4 flex items-center justify-between sm:mb-6">
+        <h1 className="text-xl font-bold text-foreground sm:text-2xl">
           Manage Courses
         </h1>
         <Button
@@ -115,7 +115,7 @@ export const CoursesMain = () => {
           size="sm"
           className="bg-accent text-white sm:px-6 sm:py-2"
         >
-          <Plus className="size-3.5 sm:size-4 sm:mr-2" />
+          <Plus className="size-3.5 sm:mr-2 sm:size-4" />
           <span className="hidden sm:inline">Add Course</span>
         </Button>
       </div>
@@ -127,16 +127,16 @@ export const CoursesMain = () => {
           <table className="w-full text-left border-collapse min-w-[600px]">
             <thead>
               <tr className="border-b border-border bg-background/50">
-                <th className="p-2 sm:p-4 text-xs sm:text-sm font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4 sm:text-sm">
                   Course
                 </th>
-                <th className="p-2 sm:p-4 text-xs sm:text-sm font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4 sm:text-sm">
                   Category
                 </th>
-                <th className="p-2 sm:p-4 text-xs sm:text-sm font-bold text-foreground">
+                <th className="p-3 text-xs font-bold text-foreground sm:p-4 sm:text-sm">
                   Price
                 </th>
-                <th className="p-2 sm:p-4 text-xs sm:text-sm font-bold text-foreground text-right">
+                <th className="p-3 text-right text-xs font-bold text-foreground sm:p-4 sm:text-sm">
                   Actions
                 </th>
               </tr>
@@ -147,7 +147,7 @@ export const CoursesMain = () => {
                   <tr>
                     <td
                       colSpan={4}
-                      className="p-4 text-xs sm:text-sm text-center text-foreground-second"
+                      className="p-8 text-center text-xs text-foreground-second sm:p-12 sm:text-sm"
                     >
                       No courses found.
                     </td>
@@ -162,9 +162,9 @@ export const CoursesMain = () => {
                       transition={{ duration: 0.2, delay: index * 0.05 }}
                       className="border-b border-border/50 hover:bg-card-hover transition-colors"
                     >
-                      <td className="p-2 sm:p-4">
+                      <td className="p-3 sm:p-4">
                         <div className="flex items-center gap-3">
-                          <div className="relative size-10 sm:size-12 shrink-0 overflow-hidden border border-border bg-background">
+                          <div className="relative size-10 shrink-0 overflow-hidden border border-border bg-background sm:size-12">
                             {course.image && (
                               <Image
                                 src={course.image}
@@ -174,17 +174,17 @@ export const CoursesMain = () => {
                               />
                             )}
                           </div>
-                          <div className="max-w-[150px] sm:max-w-[250px] truncate">
-                            <p className="text-xs sm:text-sm font-medium text-foreground truncate">
+                          <div className="max-w-40 truncate sm:max-w-62.5">
+                            <p className="text-xs font-medium text-foreground truncate sm:text-sm">
                               {course.title}
                             </p>
-                            <p className="text-[10px] sm:text-xs text-foreground-second truncate">
+                            <p className="text-[10px] text-foreground-second truncate sm:text-xs">
                               {course.slug}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td className="p-2 sm:p-4">
+                      <td className="p-3 sm:p-4">
                         <Tag
                           variant="soft"
                           color="NEUTRAL"
@@ -194,30 +194,30 @@ export const CoursesMain = () => {
                           {course.category.name}
                         </Tag>
                       </td>
-                      <td className="p-2 sm:p-4">
+                      <td className="p-3 sm:p-4">
                         <div className="flex flex-col">
                           {course.discountPrice ? (
                             <>
-                              <span className="text-xs sm:text-sm font-bold text-accent">
+                              <span className="text-xs font-bold text-accent sm:text-sm">
                                 {course.discountPrice}
                               </span>
-                              <span className="text-[10px] sm:text-xs text-foreground-second line-through">
+                              <span className="text-[10px] text-foreground-second line-through sm:text-xs">
                                 {course.price}
                               </span>
                             </>
                           ) : (
-                            <span className="text-xs sm:text-sm font-medium text-foreground">
+                            <span className="text-xs font-medium text-foreground sm:text-sm">
                               {course.price}
                             </span>
                           )}
                         </div>
                       </td>
-                      <td className="p-2 sm:p-4 flex items-center justify-end gap-1 sm:gap-2">
+                      <td className="p-3 flex items-center justify-end gap-1 sm:p-4 sm:gap-2">
                         <Button
                           onClick={() => handleOpenForm(course)}
                           size="icon"
                           variant="ghost"
-                          className="size-7 sm:size-8 text-foreground-second hover:text-accent"
+                          className="size-7 text-foreground-second hover:text-accent sm:size-8"
                         >
                           <Edit className="size-3.5 sm:size-4" />
                         </Button>
@@ -225,7 +225,7 @@ export const CoursesMain = () => {
                           onClick={() => handleDelete(course.id)}
                           size="icon"
                           variant="ghost"
-                          className="size-7 sm:size-8 text-foreground-second hover:text-danger"
+                          className="size-7 text-foreground-second hover:text-danger sm:size-8"
                         >
                           <Trash2 className="size-3.5 sm:size-4" />
                         </Button>

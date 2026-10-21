@@ -143,8 +143,8 @@ export default function Home() {
           <Carousel>
             {testimonials.map((testimonial, idx) => (
               <CarouselItem key={idx}>
-                <div className="flex h-full flex-col border border-border bg-card p-6 lg:p-8">
-                  <p className="mb-8 flex-1 text-base italic text-foreground-second lg:text-lg">
+                <div className="flex h-full flex-col border border-border bg-card p-4 sm:p-6 md:p-8">
+                  <p className="mb-6 flex-1 text-base italic text-foreground-second sm:mb-8 lg:text-lg">
                     &quot;{testimonial.text}&quot;
                   </p>
                   <div>
@@ -174,7 +174,7 @@ export default function Home() {
                 value={`faq-${idx}`}
                 trigger={<span className="text-lg font-medium">{faq.q}</span>}
               >
-                <p className="p-6 text-foreground-second">{faq.a}</p>
+                <p className="p-4 text-foreground-second sm:p-6">{faq.a}</p>
               </AccordionItem>
             ))}
           </Accordion>

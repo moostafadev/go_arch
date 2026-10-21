@@ -11,10 +11,6 @@ import { AccordionContextValue, AccordionProps } from "./types";
 
 const AccordionContext = createContext<AccordionContextValue | null>(null);
 
-/**
- * Reusable accordion that manages its open state through context.
- * By default, only one item can be open at a time.
- */
 const Accordion = ({
   children,
   allowMultiple = false,
@@ -58,7 +54,7 @@ const Accordion = ({
 
   return (
     <AccordionContext.Provider value={contextValue}>
-      <div className={`flex flex-col gap-3 lg:gap-4 ${className}`}>
+      <div className={`flex flex-col gap-3 sm:gap-4 ${className}`}>
         {children}
       </div>
     </AccordionContext.Provider>

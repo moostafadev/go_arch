@@ -43,7 +43,7 @@ export const CategoryForm = ({ initialData, onSuccess }: CategoryFormProps) => {
         name: initialData?.name || "",
         slug: initialData?.slug || "",
       }}
-      className="flex flex-col gap-5 pt-2"
+      className="flex flex-col gap-4 pt-2 sm:gap-5"
     >
       <CategoryFormFields
         isSubmitting={isSubmitting}

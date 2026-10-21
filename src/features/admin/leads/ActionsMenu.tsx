@@ -34,7 +34,7 @@ export const ActionsMenu = ({ items }: ActionsMenuProps) => {
 
     const rect = triggerRef.current.getBoundingClientRect();
     const menuWidth = 180;
-    const menuHeight = items.length * 36 + 8;
+    const menuHeight = items.length * 40 + 8;
     const spaceBelow = window.innerHeight - rect.bottom;
 
     const top =
@@ -117,7 +117,7 @@ export const ActionsMenu = ({ items }: ActionsMenuProps) => {
                     key={index}
                     role="menuitem"
                     aria-disabled="true"
-                    className="flex w-full cursor-not-allowed items-center gap-2 px-3 py-2 text-xs text-foreground-second/40"
+                    className="flex w-full cursor-not-allowed items-center gap-2 p-3 text-xs text-foreground-second/40 sm:p-4"
                   >
                     <Icon className="size-4 shrink-0" />
                     <span>{item.label}</span>
@@ -134,7 +134,7 @@ export const ActionsMenu = ({ items }: ActionsMenuProps) => {
                     rel={item.rel}
                     role="menuitem"
                     onClick={() => setOpen(false)}
-                    className="flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-xs text-foreground transition-colors hover:bg-card-hover"
+                    className="flex w-full cursor-pointer items-center gap-2 p-3 text-xs text-foreground transition-colors hover:bg-card-hover sm:p-4"
                   >
                     <Icon className="size-4 shrink-0" />
                     <span>{item.label}</span>
@@ -151,7 +151,7 @@ export const ActionsMenu = ({ items }: ActionsMenuProps) => {
                     item.onClick?.();
                     setOpen(false);
                   }}
-                  className={`flex w-full cursor-pointer items-center gap-2 px-3 py-2 text-xs transition-colors ${
+                  className={`flex w-full cursor-pointer items-center gap-2 p-3 text-xs transition-colors sm:p-4 ${
                     item.danger
                       ? "text-danger hover:bg-danger/10"
                       : "text-foreground hover:bg-card-hover"

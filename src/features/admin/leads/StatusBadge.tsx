@@ -159,7 +159,7 @@ export const StatusBadge = ({
                 role="option"
                 aria-selected={option === status}
                 onClick={() => handleSelect(option)}
-                className={`flex w-full items-center justify-between px-3 py-2 text-start text-xs transition-colors hover:bg-card-hover ${
+                className={`flex w-full items-center justify-between p-3 text-start text-xs transition-colors hover:bg-card-hover sm:p-4 ${
                   option === status
                     ? "font-semibold text-accent"
                     : "text-foreground"

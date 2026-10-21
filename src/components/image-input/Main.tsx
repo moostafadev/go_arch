@@ -128,7 +128,7 @@ const ImageInput = <T extends FieldValues>({
 
             {imageUrl ? (
               <div className="relative overflow-hidden border border-border bg-background">
-                <div className="relative flex min-h-48 items-center justify-center bg-card p-3">
+                <div className="relative flex min-h-48 items-center justify-center bg-card p-3 sm:p-4">
                   <div className="relative h-64 w-full">
                     <Image
                       src={imageUrl}
@@ -161,7 +161,7 @@ const ImageInput = <T extends FieldValues>({
                   )}
                 </div>
 
-                <div className="flex items-center justify-between gap-2 border-t border-border p-2">
+                <div className="flex items-center justify-between gap-2 border-t border-border p-3 sm:p-4">
                   <span className="truncate text-xs text-foreground-second">
                     Uploaded successfully
                   </span>
@@ -183,7 +183,7 @@ const ImageInput = <T extends FieldValues>({
                 type="button"
                 disabled={disabled || uploading}
                 onClick={openFilePicker}
-                className={`flex min-h-36 w-full flex-col items-center justify-center gap-2 border border-dashed bg-background px-4 py-6 text-center outline-none transition-all duration-200 hover:border-accent/50 hover:bg-accent/5 focus:border-accent/60 focus:ring-2 focus:ring-accent/15 disabled:cursor-not-allowed disabled:opacity-50 ${error ? "border-danger" : "border-border"}`}
+                className={`flex min-h-36 w-full flex-col items-center justify-center gap-2 border border-dashed bg-background p-3 text-center outline-none transition-all duration-200 hover:border-accent/50 hover:bg-accent/5 focus:border-accent/60 focus:ring-2 focus:ring-accent/15 disabled:cursor-not-allowed disabled:opacity-50 sm:p-4 ${error ? "border-danger" : "border-border"}`}
               >
                 {uploading ? (
                   <>
