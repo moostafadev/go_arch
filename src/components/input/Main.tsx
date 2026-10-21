@@ -23,6 +23,7 @@ const Input = <T extends FieldValues>({
   type = "text",
   className,
   showIconLabel = false,
+  rules,
 }: IProps<T>) => {
   const { register, control } = useFormContext<T>();
 
@@ -51,7 +52,7 @@ const Input = <T extends FieldValues>({
         : null;
 
   const inputType = getInputType(type, showPassword);
-  const { onChange, ...registerProps } = register(name);
+  const { onChange, ...registerProps } = register(name, rules);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (isPhone) {
@@ -98,7 +99,9 @@ const Input = <T extends FieldValues>({
           placeholder={placeholder}
           inputMode={isPhone || isNumber ? "decimal" : undefined}
           autoComplete={isNumber ? "off" : undefined}
-          className={`relative w-full border border-border bg-card px-3 py-1.5 text-sm text-foreground placeholder:text-foreground-second outline-none transition-all duration-200 focus:border-accent focus:shadow-md focus:ring-2 focus:ring-accent/15 disabled:cursor-not-allowed disabled:opacity-50 ${isPassword ? "pl-11" : "px-3"} `}
+          className={`relative w-full border border-border bg-card px-3 py-1.5 text-sm text-foreground placeholder:text-foreground-second outline-none transition-all duration-200 focus:border-accent focus:shadow-md focus:ring-2 focus:ring-accent/15 disabled:cursor-not-allowed disabled:opacity-50 ${isPassword ? "pl-11" : "px-3"} ${
+            error ? "border-accent" : ""
+          }`}
           {...registerProps}
           onChange={handleChange}
         />

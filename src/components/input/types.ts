@@ -1,4 +1,4 @@
-import { FieldValues, Path } from "react-hook-form";
+import { FieldValues, Path, RegisterOptions } from "react-hook-form";
 
 export interface IProps<T extends FieldValues> {
   name: Path<T>;
@@ -7,4 +7,5 @@ export interface IProps<T extends FieldValues> {
   type?: React.HTMLInputTypeAttribute;
   className?: string;
   showIconLabel?: boolean;
+  rules?: RegisterOptions<T, Path<T>>;
 }

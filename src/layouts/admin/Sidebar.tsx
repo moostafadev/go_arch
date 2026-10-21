@@ -1,18 +1,21 @@
 "use client";
 
-import { SidebarProps } from "./types";
-import { Button } from "@/components/button";
-import { ChevronDown, Globe, LogOut, X } from "lucide-react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { sidebarData } from "./constants";
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ChevronDown, Globe, LogOut, X } from "lucide-react";
+
+import { Button } from "@/components/button";
+
+import { sidebarData } from "./constants";
 import SubItems from "./SubItems";
+import { SidebarProps } from "./types";
+import { useLogout } from "@/features/admin/auth";
 
 const SidebarAdmin = ({ isOpen, setIsOpen }: SidebarProps) => {
   const pathName = usePathname();
-  const router = useRouter();
   const [openItems, setOpenItems] = useState<string[]>([]);
+  const { handleLogout, isLoggingOut } = useLogout();
 
   const activeParents = sidebarData
     .filter((item) =>
@@ -29,12 +32,6 @@ const SidebarAdmin = ({ isOpen, setIsOpen }: SidebarProps) => {
         ? prev.filter((item) => item !== link)
         : [...prev, link],
     );
-  };
-
-  const handleLogout = async () => {
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/admin/login");
-    router.refresh();
   };
 
   const renderNav = () =>
@@ -101,7 +98,9 @@ const SidebarAdmin = ({ isOpen, setIsOpen }: SidebarProps) => {
   return (
     <>
       <div
-        className={`fixed inset-0 z-40 bg-black/50 transition-opacity lg:hidden ${isOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-40 bg-black/50 transition-opacity lg:hidden ${
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
         onClick={() => setIsOpen(false)}
       />
 
@@ -124,6 +123,7 @@ const SidebarAdmin = ({ isOpen, setIsOpen }: SidebarProps) => {
           <button
             onClick={() => setIsOpen(false)}
             className="flex size-8 items-center justify-center text-foreground lg:hidden"
+            aria-label="Close menu"
           >
             <X className="size-5" />
           </button>
@@ -134,7 +134,7 @@ const SidebarAdmin = ({ isOpen, setIsOpen }: SidebarProps) => {
         </nav>
 
         <div className="p-4 border-t border-border flex flex-col gap-2 shrink-0">
-          <Link href={"/"} target="_blank" onClick={() => setIsOpen(false)}>
+          <Link href="/" target="_blank" onClick={() => setIsOpen(false)}>
             <Button
               className="w-full justify-start"
               color="NEUTRAL"
@@ -145,8 +145,10 @@ const SidebarAdmin = ({ isOpen, setIsOpen }: SidebarProps) => {
               View Website
             </Button>
           </Link>
+
           <Button
             onClick={handleLogout}
+            loading={isLoggingOut}
             className="w-full justify-start"
             color="DANGER"
             variant="outline"
