@@ -1,7 +1,7 @@
 "use client";
 
 import { LoadingImage as Image } from "@/components/loading-image";
-import { ImagePlus, Loader2, X } from "lucide-react";
+import { AlertTriangle, ImagePlus, Loader2, X } from "lucide-react";
 import { useRef, useState } from "react";
 import {
   Controller,
@@ -12,6 +12,38 @@ import {
 
 import { Button } from "../button";
 import { IProps } from "./types";
+
+const MIN_RATIO = 1.5;
+const MAX_RATIO = 2.2;
+
+const readImageRatio = (file: File): Promise<number> =>
+  new Promise((resolve) => {
+    const url = URL.createObjectURL(file);
+    const img = new window.Image();
+    img.onload = () => {
+      const ratio = img.width / img.height;
+      URL.revokeObjectURL(url);
+      resolve(ratio);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(url);
+      resolve(0);
+    };
+    img.src = url;
+  });
+
+const getRatioWarning = (ratio: number): string | null => {
+  if (!ratio) return null;
+  if (ratio >= MIN_RATIO && ratio <= MAX_RATIO) return null;
+
+  if (ratio < 0.9) {
+    return "This image is portrait. Course cards will crop it to a horizontal strip — the top and bottom will be hidden. Landscape 16:9 works best.";
+  }
+  if (ratio < MIN_RATIO) {
+    return "This image is square-ish. Course cards will crop the sides. Landscape 16:9 works best.";
+  }
+  return "This image is very wide. The edges may be cropped on course cards. Landscape 16:9 works best.";
+};
 
 const ImageInput = <T extends FieldValues>({
   name,
@@ -27,6 +59,7 @@ const ImageInput = <T extends FieldValues>({
 
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const [ratioWarning, setRatioWarning] = useState("");
 
   const error = errors[name];
 
@@ -56,6 +89,7 @@ const ImageInput = <T extends FieldValues>({
           if (!file) return;
 
           setUploadError("");
+          setRatioWarning("");
 
           if (!file.type.startsWith("image/")) {
             setUploadError("Please select a valid image");
@@ -69,6 +103,10 @@ const ImageInput = <T extends FieldValues>({
             event.target.value = "";
             return;
           }
+
+          const ratio = await readImageRatio(file);
+          const warning = getRatioWarning(ratio);
+          if (warning) setRatioWarning(warning);
 
           setUploading(true);
 
@@ -103,6 +141,7 @@ const ImageInput = <T extends FieldValues>({
           field.onChange("");
           field.onBlur();
           setUploadError("");
+          setRatioWarning("");
         };
 
         return (
@@ -125,6 +164,24 @@ const ImageInput = <T extends FieldValues>({
               className="hidden"
               onChange={handleFileChange}
             />
+
+            {ratioWarning && (
+              <div className="flex items-start gap-2 border border-warning/30 bg-warning/10 p-3 text-xs text-warning sm:p-4">
+                <AlertTriangle className="mt-0.5 size-4 shrink-0" />
+                <div className="flex-1">
+                  <p className="font-semibold">Aspect ratio warning</p>
+                  <p className="mt-0.5 text-warning/90">{ratioWarning}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setRatioWarning("")}
+                  aria-label="Dismiss warning"
+                  className="flex size-6 shrink-0 items-center justify-center text-warning transition-colors hover:bg-warning/20"
+                >
+                  <X className="size-3.5" />
+                </button>
+              </div>
+            )}
 
             {imageUrl ? (
               <div className="relative overflow-hidden border border-border bg-background">
@@ -202,6 +259,9 @@ const ImageInput = <T extends FieldValues>({
                     </span>
                     <span className="text-xs text-foreground-second">
                       PNG, JPG, WEBP — max 5MB
+                    </span>
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-foreground-second/70">
+                      Best: landscape 16:9 · 1280×720+
                     </span>
                   </>
                 )}
