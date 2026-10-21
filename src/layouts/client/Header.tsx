@@ -118,7 +118,7 @@ export const Header = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-0 bottom-16 z-30 flex flex-col overflow-y-auto overscroll-none bg-background px-4 pb-4 pt-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-6 lg:hidden"
+            className="fixed inset-x-0 top-0 bottom-16 z-30 flex flex-col overflow-y-auto overscroll-none bg-background px-4 pb-4 pt-4 scrollbar-none [&::-webkit-scrollbar]:hidden sm:px-6 lg:hidden"
           >
             <nav className="flex flex-col gap-2 mt-2">
               {navLinks.map((link, i) => (
