@@ -2,18 +2,24 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Lock } from "lucide-react";
 
 import { Tag } from "@/components/tag";
+import { Tooltip } from "@/components/tooltip";
 
 import { LEAD_STATUSES, LeadStatus, statusColors } from "./types";
 
 interface StatusBadgeProps {
   status: LeadStatus;
   onChange: (status: LeadStatus) => Promise<void>;
+  locked?: boolean;
 }
 
-export const StatusBadge = ({ status, onChange }: StatusBadgeProps) => {
+export const StatusBadge = ({
+  status,
+  onChange,
+  locked = false,
+}: StatusBadgeProps) => {
   const [open, setOpen] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [position, setPosition] = useState<{
@@ -24,8 +30,10 @@ export const StatusBadge = ({ status, onChange }: StatusBadgeProps) => {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const isOpen = open && !locked;
+
   useLayoutEffect(() => {
-    if (!open || !triggerRef.current) return;
+    if (!isOpen || !triggerRef.current) return;
 
     const rect = triggerRef.current.getBoundingClientRect();
     const menuWidth = 140;
@@ -39,10 +47,10 @@ export const StatusBadge = ({ status, onChange }: StatusBadgeProps) => {
       top: Math.max(8, top),
       left: Math.min(rect.left, window.innerWidth - menuWidth - 8),
     });
-  }, [open]);
+  }, [isOpen]);
 
   useEffect(() => {
-    if (!open) return;
+    if (!isOpen) return;
 
     const handleMouseDown = (event: MouseEvent) => {
       if (
@@ -63,7 +71,7 @@ export const StatusBadge = ({ status, onChange }: StatusBadgeProps) => {
       document.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("scroll", closeOnScroll, true);
     };
-  }, [open]);
+  }, [isOpen]);
 
   const handleSelect = async (next: LeadStatus) => {
     if (next === status || updating) {
@@ -81,28 +89,55 @@ export const StatusBadge = ({ status, onChange }: StatusBadgeProps) => {
     }
   };
 
-  return (
-    <>
-      <button
-        ref={triggerRef}
-        type="button"
-        onClick={() => setOpen((prev) => !prev)}
-        disabled={updating}
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        className="flex cursor-pointer items-center gap-1 disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        <Tag color={statusColors[status]} variant="soft" size="sm">
-          {updating ? "Updating..." : status}
-        </Tag>
+  const handleClick = () => {
+    if (locked) return;
+    setOpen((prev) => !prev);
+  };
+
+  const trigger = (
+    <button
+      ref={triggerRef}
+      type="button"
+      onClick={handleClick}
+      disabled={locked || updating}
+      aria-haspopup={locked ? undefined : "listbox"}
+      aria-expanded={locked ? undefined : isOpen}
+      aria-label={locked ? `${status} (locked)` : `Change status: ${status}`}
+      className={`flex items-center gap-1 ${
+        locked ? "cursor-not-allowed" : "cursor-pointer"
+      } disabled:cursor-not-allowed disabled:opacity-60`}
+    >
+      <Tag color={statusColors[status]} variant="soft" size="sm">
+        {updating ? "Updating..." : status}
+      </Tag>
+      {locked ? (
+        <Lock className="size-3 text-foreground-second" />
+      ) : (
         <ChevronDown
           className={`size-3.5 text-foreground-second transition-transform ${
-            open ? "rotate-180" : ""
+            isOpen ? "rotate-180" : ""
           }`}
         />
-      </button>
+      )}
+    </button>
+  );
 
-      {open &&
+  if (locked) {
+    return (
+      <Tooltip
+        content="Delete the linked sale to change status"
+        focusable={false}
+      >
+        <span className="inline-flex">{trigger}</span>
+      </Tooltip>
+    );
+  }
+
+  return (
+    <>
+      {trigger}
+
+      {isOpen &&
         position &&
         typeof document !== "undefined" &&
         createPortal(

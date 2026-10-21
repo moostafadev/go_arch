@@ -8,4 +8,5 @@ export interface IProps<T extends FieldValues> {
   className?: string;
   showIconLabel?: boolean;
   rules?: RegisterOptions<T, Path<T>>;
+  onValueChange?: (value: string) => void;
 }

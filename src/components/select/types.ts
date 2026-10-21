@@ -1,4 +1,4 @@
-import { FieldValues, Path } from "react-hook-form";
+import { FieldValues, Path, RegisterOptions } from "react-hook-form";
 
 export interface SelectOption {
   value: string;
@@ -13,4 +13,5 @@ export interface IProps<T extends FieldValues> {
   className?: string;
   disabled?: boolean;
   onValueChange?: (value: string) => void;
+  rules?: RegisterOptions<T, Path<T>>;
 }

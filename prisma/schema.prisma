@@ -15,17 +15,31 @@ model Lead {
   course    String
   message   String?
   status    String   @default("New")
+  saleId    String?  @unique @db.ObjectId
+  sale      Sale?    @relation(fields: [saleId], references: [id])
   createdAt DateTime @default(now())
 }
 
 model Sale {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   customerName String
-  course       String
   amount       String
   phone        String?
   email        String?
-  createdAt    DateTime @default(now())
+  courses      SaleCourse[]
+  lead         Lead?
+  createdAt    DateTime     @default(now())
+}
+
+model SaleCourse {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  saleId   String @db.ObjectId
+  courseId String @db.ObjectId
+  sale     Sale   @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  course   Course @relation(fields: [courseId], references: [id])
+
+  @@unique([saleId, courseId])
+  @@index([courseId])
 }
 
 model Category {
@@ -38,16 +52,17 @@ model Category {
 }
 
 model Course {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
   title         String
-  slug          String   @unique
+  slug          String       @unique
   desc          String
   price         String
   discountPrice String?
   hours         String?
   image         String
-  categoryId    String   @db.ObjectId
-  category      Category @relation(fields: [categoryId], references: [id])
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  categoryId    String       @db.ObjectId
+  category      Category     @relation(fields: [categoryId], references: [id])
+  sales         SaleCourse[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 }

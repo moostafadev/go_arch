@@ -24,6 +24,7 @@ const Input = <T extends FieldValues>({
   className,
   showIconLabel = false,
   rules,
+  onValueChange,
 }: IProps<T>) => {
   const { register, control } = useFormContext<T>();
 
@@ -61,6 +62,7 @@ const Input = <T extends FieldValues>({
       event.target.value = sanitizeNumber(event.target.value);
     }
     onChange(event);
+    onValueChange?.(event.target.value);
   };
 
   return (

@@ -2,19 +2,24 @@
 
 import {
   BookOpen,
+  CheckCircle2,
   Mail,
   MessageCircle,
   Phone,
+  TrendingUp,
   type LucideIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/button";
+import { useDialog } from "@/components/dialog";
 import { Tag } from "@/components/tag";
+import { SaleForm } from "@/features/admin/sales";
 
 import { Lead, statusColors } from "./types";
 
 interface LeadDetailsProps {
   lead: Lead;
+  onConverted?: () => void;
 }
 
 interface DetailRowProps {
@@ -54,10 +59,34 @@ const DetailRow = ({ icon: Icon, label, value, href }: DetailRowProps) => (
   </div>
 );
 
-export const LeadDetails = ({ lead }: LeadDetailsProps) => {
+export const LeadDetails = ({ lead, onConverted }: LeadDetailsProps) => {
+  const { openDialog, closeDialog } = useDialog();
+
   const whatsappUrl = `https://wa.me/${lead.phone.replace(/\D/g, "")}?text=${encodeURIComponent(
     `Hello ${lead.name}, thank you for your interest in "${lead.course}". How can we help you?`,
   )}`;
+
+  const handleConvert = () => {
+    openDialog({
+      title: "Convert Lead to Sale",
+      size: "lg",
+      children: (
+        <SaleForm
+          prefillLead={{
+            id: lead.id,
+            name: lead.name,
+            phone: lead.phone,
+            email: lead.email ?? "",
+            course: lead.course,
+          }}
+          onSuccess={() => {
+            closeDialog();
+            onConverted?.();
+          }}
+        />
+      ),
+    });
+  };
 
   return (
     <div className="flex flex-col gap-4 pt-2">
@@ -101,6 +130,23 @@ export const LeadDetails = ({ lead }: LeadDetailsProps) => {
         </p>
       </div>
 
+      {lead.saleId ? (
+        <div className="flex items-center gap-2 border border-success/30 bg-success/10 p-3 text-sm text-success">
+          <CheckCircle2 className="size-4" />
+          This lead has been converted to a sale.
+        </div>
+      ) : (
+        <Button
+          onClick={handleConvert}
+          color="SUCCESS"
+          variant="solid"
+          className="w-full"
+        >
+          <TrendingUp className="mr-2 size-4" />
+          Convert to Sale
+        </Button>
+      )}
+
       <div className="flex items-center gap-2 border-t border-border pt-4">
         <a
           href={whatsappUrl}
@@ -108,7 +154,7 @@ export const LeadDetails = ({ lead }: LeadDetailsProps) => {
           rel="noopener noreferrer"
           className="flex-1"
         >
-          <Button color="SUCCESS" variant="solid" className="w-full">
+          <Button color="SUCCESS" variant="outline" className="w-full">
             <MessageCircle className="mr-2 size-4" />
             WhatsApp
           </Button>

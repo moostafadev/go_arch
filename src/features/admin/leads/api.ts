@@ -1,5 +1,10 @@
 import { Lead, LeadStatus } from "./types";
 
+const readError = async (res: Response, fallback: string) => {
+  const payload = await res.json().catch(() => null);
+  throw new Error(payload?.error ?? fallback);
+};
+
 export const getLeads = async (): Promise<Lead[]> => {
   const res = await fetch("/api/leads");
 
@@ -15,7 +20,7 @@ export const deleteLead = async (id: string): Promise<void> => {
   const res = await fetch(`/api/leads/${id}`, { method: "DELETE" });
 
   if (!res.ok) {
-    throw new Error("Failed to delete lead");
+    await readError(res, "Failed to delete lead");
   }
 };
 
@@ -30,6 +35,6 @@ export const updateLeadStatus = async (
   });
 
   if (!res.ok) {
-    throw new Error("Failed to update lead status");
+    await readError(res, "Failed to update lead status");
   }
 };

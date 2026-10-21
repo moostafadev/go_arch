@@ -19,6 +19,7 @@ const Select = <T extends FieldValues>({
   className,
   disabled = false,
   onValueChange,
+  rules,
 }: IProps<T>) => {
   const { control } = useFormContext<T>();
   const { errors } = useFormState({ control, name });
@@ -50,6 +51,7 @@ const Select = <T extends FieldValues>({
     <Controller
       name={name}
       control={control}
+      rules={rules}
       render={({ field }) => {
         const selectedOption = options.find(
           (option) => option.value === field.value,

@@ -1,23 +1,39 @@
 "use client";
 
-import { Eye, Mail, MessageCircle, Phone, Trash2 } from "lucide-react";
+import {
+  Eye,
+  Mail,
+  MessageCircle,
+  Phone,
+  Trash2,
+  TrendingUp,
+} from "lucide-react";
 
 import { Button } from "@/components/button";
 import { useDialog } from "@/components/dialog";
 import { Tooltip } from "@/components/tooltip";
+import { SaleForm } from "@/features/admin/sales";
 
+import { ActionsMenu, type MenuItem } from "./ActionsMenu";
 import { LeadDetails } from "./LeadDetails";
 import { Lead } from "./types";
 
 interface LeadActionsProps {
   lead: Lead;
   onDelete: () => void;
+  onConverted: () => void;
 }
 
 const sanitizePhone = (phone: string) => phone.replace(/\D/g, "");
 
-export const LeadActions = ({ lead, onDelete }: LeadActionsProps) => {
-  const { openDialog } = useDialog();
+export const LeadActions = ({
+  lead,
+  onDelete,
+  onConverted,
+}: LeadActionsProps) => {
+  const { openDialog, closeDialog } = useDialog();
+
+  const isLocked = Boolean(lead.saleId);
 
   const whatsappUrl = `https://wa.me/${sanitizePhone(lead.phone)}?text=${encodeURIComponent(
     `Hello ${lead.name}, thank you for your interest in "${lead.course}". How can we help you?`,
@@ -27,9 +43,64 @@ export const LeadActions = ({ lead, onDelete }: LeadActionsProps) => {
     openDialog({
       title: "Lead Details",
       size: "lg",
-      children: <LeadDetails lead={lead} />,
+      children: <LeadDetails lead={lead} onConverted={onConverted} />,
     });
   };
+
+  const handleConvert = () => {
+    openDialog({
+      title: "Convert Lead to Sale",
+      size: "lg",
+      children: (
+        <SaleForm
+          prefillLead={{
+            id: lead.id,
+            name: lead.name,
+            phone: lead.phone,
+            email: lead.email ?? "",
+            course: lead.course,
+          }}
+          onSuccess={() => {
+            closeDialog();
+            onConverted();
+          }}
+        />
+      ),
+    });
+  };
+
+  const menuItems: MenuItem[] = [
+    {
+      icon: Phone,
+      label: "Call",
+      href: `tel:${lead.phone}`,
+    },
+    ...(lead.email
+      ? [
+          {
+            icon: Mail,
+            label: "Send Email",
+            href: `mailto:${lead.email}`,
+          } as MenuItem,
+        ]
+      : []),
+    ...(!isLocked
+      ? [
+          {
+            icon: TrendingUp,
+            label: "Convert to Sale",
+            onClick: handleConvert,
+          } as MenuItem,
+        ]
+      : []),
+    {
+      icon: Trash2,
+      label: "Delete Lead",
+      onClick: onDelete,
+      danger: true,
+      disabled: isLocked,
+    },
+  ];
 
   return (
     <div className="flex items-center justify-end gap-1">
@@ -57,39 +128,7 @@ export const LeadActions = ({ lead, onDelete }: LeadActionsProps) => {
         </a>
       </Tooltip>
 
-      <Tooltip content="Call" focusable={false}>
-        <a
-          href={`tel:${lead.phone}`}
-          aria-label="Call"
-          className="flex size-8 items-center justify-center text-foreground-second transition-colors hover:text-accent"
-        >
-          <Phone className="size-4" />
-        </a>
-      </Tooltip>
-
-      {lead.email && (
-        <Tooltip content="Send Email" focusable={false}>
-          <a
-            href={`mailto:${lead.email}`}
-            aria-label="Email"
-            className="flex size-8 items-center justify-center text-foreground-second transition-colors hover:text-info"
-          >
-            <Mail className="size-4" />
-          </a>
-        </Tooltip>
-      )}
-
-      <Tooltip content="Delete Lead" focusable={false}>
-        <Button
-          onClick={onDelete}
-          size="icon"
-          variant="ghost"
-          aria-label="Delete"
-          className="size-8 text-foreground-second hover:text-danger"
-        >
-          <Trash2 className="size-4" />
-        </Button>
-      </Tooltip>
+      <ActionsMenu items={menuItems} />
     </div>
   );
 };

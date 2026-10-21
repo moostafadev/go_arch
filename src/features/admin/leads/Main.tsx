@@ -27,6 +27,15 @@ export const LeadsMain = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const reload = async () => {
+    try {
+      const data = await getLeads();
+      setLeads(data);
+    } catch {
+      toast.error("Failed to refresh leads");
+    }
+  };
+
   useEffect(() => {
     let ignore = false;
 
@@ -58,9 +67,11 @@ export const LeadsMain = () => {
     try {
       await updateLeadStatus(id, status);
       toast.success("Status updated");
-    } catch {
+    } catch (err) {
       setLeads(previous);
-      toast.error("Failed to update status");
+      toast.error(
+        err instanceof Error ? err.message : "Failed to update status",
+      );
     }
   };
 
@@ -77,8 +88,10 @@ export const LeadsMain = () => {
               setLeads((prev) => prev.filter((lead) => lead.id !== id));
               toast.success("Lead deleted successfully");
               closeDialog();
-            } catch {
-              toast.error("Failed to delete lead");
+            } catch (err) {
+              toast.error(
+                err instanceof Error ? err.message : "Failed to delete lead",
+              );
             }
           }}
         />
@@ -110,7 +123,7 @@ export const LeadsMain = () => {
         </div>
       ) : (
         <div className="border border-border bg-card overflow-x-auto w-full [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-border hover:[&::-webkit-scrollbar-thumb]:bg-foreground-second">
-          <table className="w-full text-left border-collapse min-w-[900px]">
+          <table className="w-full text-left border-collapse min-w-225">
             <thead>
               <tr className="border-b border-border bg-background/50">
                 <th className="p-3 text-xs font-bold text-foreground">Name</th>
@@ -152,19 +165,19 @@ export const LeadsMain = () => {
                       <div className="flex flex-col text-xs text-foreground-second">
                         <span className="whitespace-nowrap">{lead.phone}</span>
                         {lead.email && (
-                          <span className="max-w-[160px] truncate">
+                          <span className="max-w-40 truncate">
                             {lead.email}
                           </span>
                         )}
                       </div>
                     </td>
 
-                    <td className="p-3 text-xs text-foreground max-w-[160px] truncate">
+                    <td className="p-3 text-xs text-foreground max-w-40 truncate">
                       {lead.course}
                     </td>
 
                     <td
-                      className="p-3 text-xs text-foreground-second max-w-[180px] truncate"
+                      className="p-3 text-xs text-foreground-second max-w-45 truncate"
                       title={lead.message ?? ""}
                     >
                       {lead.message || "—"}
@@ -173,6 +186,7 @@ export const LeadsMain = () => {
                     <td className="p-3">
                       <StatusBadge
                         status={lead.status}
+                        locked={Boolean(lead.saleId)}
                         onChange={(status) =>
                           handleStatusChange(lead.id, status)
                         }
@@ -187,6 +201,7 @@ export const LeadsMain = () => {
                       <LeadActions
                         lead={lead}
                         onDelete={() => handleDelete(lead.id)}
+                        onConverted={reload}
                       />
                     </td>
                   </m.tr>

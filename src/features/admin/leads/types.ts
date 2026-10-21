@@ -16,5 +16,6 @@ export interface Lead {
   course: string;
   message?: string | null;
   status: LeadStatus;
+  saleId?: string | null;
   createdAt: string;
 }
