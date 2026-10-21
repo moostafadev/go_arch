@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { Prisma } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
 
@@ -85,12 +84,31 @@ export async function POST(req: Request) {
     }
 
     const sale = await prisma.$transaction(async (tx) => {
+      if (leadId) {
+        const existing = await tx.lead.findUnique({
+          where: { id: String(leadId) },
+          select: {
+            id: true,
+            sales: { take: 1, select: { id: true } },
+          },
+        });
+
+        if (!existing) {
+          throw new Error("LEAD_NOT_FOUND");
+        }
+
+        if (existing.sales.length > 0) {
+          throw new Error("LEAD_ALREADY_CONVERTED");
+        }
+      }
+
       const created = await tx.sale.create({
         data: {
           customerName: String(customerName).trim(),
           amount: String(amount).trim(),
           phone: phone ? String(phone).trim() : null,
           email: email ? String(email).trim() : null,
+          leadId: leadId ? String(leadId) : null,
           courses: {
             create: courseIds.map((courseId: unknown) => ({
               course: { connect: { id: String(courseId) } },
@@ -103,7 +121,7 @@ export async function POST(req: Request) {
       if (leadId) {
         await tx.lead.update({
           where: { id: String(leadId) },
-          data: { saleId: created.id, status: "Contacted" },
+          data: { status: "Contacted" },
         });
       }
 
@@ -115,27 +133,23 @@ export async function POST(req: Request) {
       { status: 201 },
     );
   } catch (err) {
-    if (
-      err instanceof Prisma.PrismaClientKnownRequestError &&
-      err.code === "P2002"
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "This lead has already been converted to a sale",
-        },
-        { status: 400 },
-      );
-    }
+    if (err instanceof Error) {
+      if (err.message === "LEAD_NOT_FOUND") {
+        return NextResponse.json(
+          { success: false, error: "Lead not found" },
+          { status: 404 },
+        );
+      }
 
-    if (
-      err instanceof Prisma.PrismaClientKnownRequestError &&
-      err.code === "P2025"
-    ) {
-      return NextResponse.json(
-        { success: false, error: "Lead not found" },
-        { status: 404 },
-      );
+      if (err.message === "LEAD_ALREADY_CONVERTED") {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "This lead has already been converted to a sale",
+          },
+          { status: 400 },
+        );
+      }
     }
 
     return NextResponse.json(

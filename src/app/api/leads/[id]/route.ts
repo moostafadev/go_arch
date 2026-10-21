@@ -33,6 +33,28 @@ export async function PATCH(
       );
     }
 
+    const existing = await prisma.lead.findUnique({
+      where: { id: resolved.id },
+      include: { _count: { select: { sales: true } } },
+    });
+
+    if (!existing) {
+      return NextResponse.json(
+        { success: false, error: "Lead not found" },
+        { status: 404 },
+      );
+    }
+
+    if (existing._count.sales > 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Delete the linked sale before changing this lead's status",
+        },
+        { status: 400 },
+      );
+    }
+
     const lead = await prisma.lead.update({
       where: { id: resolved.id },
       data: { status },
@@ -60,6 +82,29 @@ export async function DELETE(
 
   try {
     const resolved = await params;
+
+    const existing = await prisma.lead.findUnique({
+      where: { id: resolved.id },
+      include: { _count: { select: { sales: true } } },
+    });
+
+    if (!existing) {
+      return NextResponse.json(
+        { success: false, error: "Lead not found" },
+        { status: 404 },
+      );
+    }
+
+    if (existing._count.sales > 0) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Delete the linked sale before deleting this lead",
+        },
+        { status: 400 },
+      );
+    }
+
     await prisma.lead.delete({ where: { id: resolved.id } });
 
     return NextResponse.json({ success: true });

@@ -19,9 +19,27 @@ export async function GET() {
   try {
     const leads = await prisma.lead.findMany({
       orderBy: { createdAt: "desc" },
+      include: {
+        sales: {
+          take: 1,
+          select: { id: true },
+        },
+      },
     });
 
-    return NextResponse.json({ success: true, data: leads });
+    const data = leads.map((lead) => ({
+      id: lead.id,
+      name: lead.name,
+      phone: lead.phone,
+      email: lead.email,
+      course: lead.course,
+      message: lead.message,
+      status: lead.status,
+      createdAt: lead.createdAt,
+      saleId: lead.sales[0]?.id ?? null,
+    }));
+
+    return NextResponse.json({ success: true, data });
   } catch {
     return NextResponse.json(
       { success: false, error: "Failed to fetch leads" },
@@ -53,9 +71,14 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true, data: lead }, { status: 201 });
-  } catch {
+  } catch (err) {
+    console.error("LEAD_CREATE_ERROR:", err);
+
     return NextResponse.json(
-      { success: false, error: "Failed to create lead" },
+      {
+        success: false,
+        error: err instanceof Error ? err.message : "Failed to create lead",
+      },
       { status: 500 },
     );
   }

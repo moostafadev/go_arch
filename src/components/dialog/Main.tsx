@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { m } from "framer-motion";
 import { X } from "lucide-react";
 
 import { DialogOptions } from "./types";
@@ -8,7 +9,6 @@ import { Button } from "../button";
 
 interface Props extends DialogOptions {
   onClose: () => void;
-  closing?: boolean;
 }
 
 const sizes = {
@@ -17,13 +17,19 @@ const sizes = {
   xl: "max-w-xl",
 };
 
-const Dialog = ({
-  title,
-  children,
-  size = "md",
-  onClose,
-  closing = false,
-}: Props) => {
+const backdropVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+const contentVariants = {
+  hidden: { opacity: 0, scale: 0.96, y: 12 },
+  visible: { opacity: 1, scale: 1, y: 0 },
+  exit: { opacity: 0, scale: 0.96, y: 12 },
+};
+
+const Dialog = ({ title, children, size = "md", onClose }: Props) => {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -33,14 +39,23 @@ const Dialog = ({
   }, [onClose]);
 
   return (
-    <div
-      dir="ltr"
+    <m.div
+      variants={backdropVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      transition={{ duration: 0.2, ease: "easeOut" }}
       onMouseDown={onClose}
-      className={`fixed inset-0 z-9999 flex items-center justify-center bg-black/60 p-3 backdrop-blur-sm ${closing ? "animate-dialog-out" : "animate-dialog-in"}`}
+      className="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 p-3 backdrop-blur-sm"
     >
-      <div
+      <m.div
+        variants={contentVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
         onMouseDown={(e) => e.stopPropagation()}
-        className={`relative w-full shrink-0 ${sizes[size]} border border-border bg-card p-4 shadow-lg ${closing ? "animate-dialog-content-out" : "animate-dialog-content-in"}`}
+        className={`relative w-full shrink-0 ${sizes[size]} border border-border bg-card p-4 shadow-lg`}
       >
         {title && (
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3 lg:gap-4">
@@ -61,8 +76,8 @@ const Dialog = ({
         )}
 
         {children}
-      </div>
-    </div>
+      </m.div>
+    </m.div>
   );
 };
 

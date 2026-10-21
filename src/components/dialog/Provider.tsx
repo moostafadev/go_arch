@@ -10,6 +10,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { AnimatePresence } from "framer-motion";
 
 import { DialogContextValue, DialogOptions } from "./types";
 
@@ -23,19 +24,13 @@ interface Props {
 
 const DialogProvider = ({ children }: Props) => {
   const [dialog, setDialog] = useState<DialogOptions | null>(null);
-  const [closing, setClosing] = useState(false);
 
   const openDialog = useCallback((options: DialogOptions) => {
-    setClosing(false);
     setDialog(options);
   }, []);
 
   const closeDialog = useCallback(() => {
-    setClosing(true);
-    setTimeout(() => {
-      setDialog(null);
-      setClosing(false);
-    }, 200);
+    setDialog(null);
   }, []);
 
   const value = useMemo(
@@ -49,11 +44,13 @@ const DialogProvider = ({ children }: Props) => {
   return (
     <DialogContext.Provider value={value}>
       {children}
-      {dialog && (
-        <Suspense fallback={null}>
-          <Dialog {...dialog} closing={closing} onClose={closeDialog} />
-        </Suspense>
-      )}
+      <AnimatePresence>
+        {dialog && (
+          <Suspense fallback={null} key="dialog">
+            <Dialog {...dialog} onClose={closeDialog} />
+          </Suspense>
+        )}
+      </AnimatePresence>
     </DialogContext.Provider>
   );
 };

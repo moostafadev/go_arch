@@ -15,8 +15,7 @@ model Lead {
   course    String
   message   String?
   status    String   @default("New")
-  saleId    String?  @unique @db.ObjectId
-  sale      Sale?    @relation(fields: [saleId], references: [id])
+  sales     Sale[]
   createdAt DateTime @default(now())
 }
 
@@ -26,9 +25,12 @@ model Sale {
   amount       String
   phone        String?
   email        String?
+  leadId       String?      @db.ObjectId
+  lead         Lead?        @relation(fields: [leadId], references: [id], onDelete: Restrict)
   courses      SaleCourse[]
-  lead         Lead?
   createdAt    DateTime     @default(now())
+
+  @@index([leadId])
 }
 
 model SaleCourse {
