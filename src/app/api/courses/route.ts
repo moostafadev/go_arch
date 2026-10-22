@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   try {
@@ -31,6 +32,9 @@ export async function POST(req: Request) {
         categoryId: body.categoryId,
       },
     });
+
+    revalidatePath("/", "layout");
+
     return NextResponse.json(
       { success: true, data: newCourse },
       { status: 201 },

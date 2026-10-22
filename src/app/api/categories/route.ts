@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function GET() {
   try {
@@ -24,11 +25,11 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
     const newCategory = await prisma.category.create({
-      data: {
-        name: body.name,
-        slug: body.slug,
-      },
+      data: { name: body.name, slug: body.slug },
     });
+
+    revalidatePath("/", "layout");
+
     return NextResponse.json(
       { success: true, data: newCategory },
       { status: 201 },

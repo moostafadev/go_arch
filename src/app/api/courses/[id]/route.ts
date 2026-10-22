@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 
 export async function PUT(
@@ -21,6 +22,9 @@ export async function PUT(
         categoryId: body.categoryId,
       },
     });
+
+    revalidatePath("/", "layout");
+
     return NextResponse.json({ success: true, data: updatedCourse });
   } catch (error) {
     return NextResponse.json(
@@ -37,6 +41,9 @@ export async function DELETE(
   try {
     const resolvedParams = await params;
     await prisma.course.delete({ where: { id: resolvedParams.id } });
+
+    revalidatePath("/", "layout");
+
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json(

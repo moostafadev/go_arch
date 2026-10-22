@@ -15,7 +15,7 @@ export default async function CoursesPage() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-background">
       <CoursesHeader />
-      <div className="pt-12">
+      <div className="py-12">
         <CourseList courses={courses} />
       </div>
     </div>
