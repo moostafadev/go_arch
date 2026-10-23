@@ -31,7 +31,7 @@ export const Footer = async () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 mb-8">
           <div className="flex flex-col gap-4">
-            <Brand size="lg" animateOnView />
+            <Brand size="lg" />
 
             <p className="text-sm leading-relaxed text-foreground-second">
               The definitive A-Z program in architectural design. Master
@@ -49,7 +49,7 @@ export const Footer = async () => {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-foreground-second transition-colors hover:text-accent"
+                    className="text-sm text-foreground-second transition-colors hover:text-accent-text"
                   >
                     {link.label}
                   </Link>
@@ -67,7 +67,7 @@ export const Footer = async () => {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-foreground-second transition-colors hover:text-accent"
+                    className="text-sm text-foreground-second transition-colors hover:text-accent-text"
                   >
                     {link.label}
                   </Link>
@@ -84,7 +84,7 @@ export const Footer = async () => {
               <li>
                 <a
                   href={toMailHref(contact.email)}
-                  className="hover:text-accent transition-colors"
+                  className="hover:text-accent-text transition-colors"
                 >
                   {contact.email}
                 </a>
@@ -92,7 +92,7 @@ export const Footer = async () => {
               <li>
                 <a
                   href={toTelHref(contact.phone)}
-                  className="hover:text-accent transition-colors"
+                  className="hover:text-accent-text transition-colors"
                 >
                   {formatPhone(contact.phone)}
                 </a>

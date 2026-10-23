@@ -2,8 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  compress: true,
 
   experimental: {
+    optimizeCss: true,
     optimizePackageImports: ["lucide-react", "framer-motion", "react-icons"],
   },
 

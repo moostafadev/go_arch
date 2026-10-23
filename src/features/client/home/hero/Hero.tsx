@@ -1,52 +1,12 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
-import { m, type Variants } from "framer-motion";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
 import { PLACEHOLDER_IMAGE } from "@/constants/placeholders";
 
-const heroContainer: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
-  },
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const titleContainer: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.04, delayChildren: 0 },
-  },
-};
-
-const wordVariants: Variants = {
-  hidden: { opacity: 1, y: 12, filter: "blur(8px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const buttonGroup: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.06 } },
-};
-
 const line1Words = "Get ready to become".split(" ");
 const line2Words = "a Real Architect.".split(" ");
+const line2Base = line1Words.length * 40;
 
 interface HeroProps {
   image: string | null;
@@ -64,61 +24,53 @@ export const Hero = ({ image }: HeroProps) => {
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-12 px-4 sm:px-6 lg:flex-row lg:justify-between lg:gap-8 lg:px-8">
-        <m.div
-          variants={heroContainer}
-          initial="hidden"
-          animate="visible"
-          className="flex max-w-2xl flex-col items-center text-center lg:items-start lg:text-left"
-        >
-          <m.div
-            variants={itemVariants}
-            className="mb-6 flex items-center gap-2 border border-accent/30 bg-accent/5 px-3 py-1 backdrop-blur-sm"
+        <div className="flex max-w-2xl flex-col items-center text-center lg:items-start lg:text-left">
+          <div
+            className="mb-6 flex items-center gap-2 border border-accent/30 bg-accent/5 px-3 py-1 backdrop-blur-sm animate-[hero-fade-up_0.45s_cubic-bezier(0.22,1,0.36,1)_both]"
+            style={{ animationDelay: "0.05s" }}
           >
             <span className="flex h-2 w-2 animate-pulse bg-accent" />
-            <span className="text-xs font-semibold uppercase tracking-wider text-accent">
+            <span className="text-xs font-semibold uppercase tracking-wider text-accent-text">
               250+ Students Across 20 Countries
             </span>
-          </m.div>
+          </div>
 
-          <m.h1
-            variants={titleContainer}
-            className="mb-6 text-4xl font-black uppercase leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl"
-          >
-            {line1Words.map((word, index) => (
-              <m.span
-                key={`l1-${index}`}
-                variants={wordVariants}
-                className="inline-block mr-[0.25em]"
+          <h1 className="mb-6 text-4xl font-black uppercase leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
+            {line1Words.map((word, i) => (
+              <span
+                key={`l1-${i}`}
+                className="inline-block mr-[0.25em] animate-[hero-word-in_0.5s_cubic-bezier(0.22,1,0.36,1)_both]"
+                style={{ animationDelay: `${i * 40}ms` }}
               >
                 {word}
-              </m.span>
+              </span>
             ))}
             <br />
-            {line2Words.map((word, index) => (
-              <m.span
-                key={`l2-${index}`}
-                variants={wordVariants}
-                className="inline-block mr-[0.25em] last:mr-0 bg-clip-text text-transparent bg-linear-to-r from-accent to-red-400"
+            {line2Words.map((word, i) => (
+              <span
+                key={`l2-${i}`}
+                className="inline-block mr-[0.25em] last:mr-0 bg-clip-text text-transparent bg-linear-to-r from-accent to-red-400 animate-[hero-word-in_0.5s_cubic-bezier(0.22,1,0.36,1)_both]"
+                style={{ animationDelay: `${line2Base + i * 40}ms` }}
               >
                 {word}
-              </m.span>
+              </span>
             ))}
-          </m.h1>
+          </h1>
 
-          <m.p
-            variants={itemVariants}
-            className="mb-8 max-w-xl text-sm text-foreground-second sm:text-base lg:text-lg"
+          <p
+            className="mb-8 max-w-xl text-sm text-foreground-second sm:text-base lg:text-lg animate-[hero-fade-up_0.45s_cubic-bezier(0.22,1,0.36,1)_both]"
+            style={{ animationDelay: "0.3s" }}
           >
             The definitive A-Z program in architectural design. Master
             Competition Design, Photoshop, Rhino & Grasshopper through projects
             designed to shape the next generation of architects.
-          </m.p>
+          </p>
 
-          <m.div
-            variants={buttonGroup}
-            className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4"
-          >
-            <m.div variants={itemVariants} className="w-full sm:w-auto">
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
+            <div
+              className="w-full sm:w-auto animate-[hero-fade-up_0.45s_cubic-bezier(0.22,1,0.36,1)_both]"
+              style={{ animationDelay: "0.4s" }}
+            >
               <Link
                 href="/courses"
                 className="group flex w-full items-center justify-center gap-2 bg-accent px-8 py-3.5 text-sm font-bold text-white transition-all hover:bg-accent-hover sm:py-4"
@@ -126,9 +78,12 @@ export const Hero = ({ image }: HeroProps) => {
                 Get Full Courses
                 <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
               </Link>
-            </m.div>
+            </div>
 
-            <m.div variants={itemVariants} className="w-full sm:w-auto">
+            <div
+              className="w-full sm:w-auto animate-[hero-fade-up_0.45s_cubic-bezier(0.22,1,0.36,1)_both]"
+              style={{ animationDelay: "0.46s" }}
+            >
               <Link
                 href="/contact"
                 className="group flex w-full items-center justify-center gap-2 border border-border bg-background/50 backdrop-blur-sm px-8 py-3.5 text-sm font-bold text-foreground transition-all hover:bg-card sm:py-4"
@@ -136,9 +91,9 @@ export const Hero = ({ image }: HeroProps) => {
                 <MessageCircle className="size-4" />
                 Message Us
               </Link>
-            </m.div>
-          </m.div>
-        </m.div>
+            </div>
+          </div>
+        </div>
 
         <div className="relative w-full max-w-md lg:max-w-none lg:flex-1">
           <div className="absolute -inset-1 bg-linear-to-tr from-accent/30 to-transparent blur-sm" />

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
-import { m, AnimatePresence } from "framer-motion";
 
 import { Brand } from "@/components/brand";
 
@@ -57,8 +56,10 @@ export const Header = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-accent ${
-                    active ? "text-foreground" : "text-foreground/80"
+                  className={`text-sm font-medium transition-colors hover:text-accent-text ${
+                    active
+                      ? "text-foreground underline decoration-accent decoration-2 underline-offset-[6px]"
+                      : "text-foreground/90"
                   }`}
                 >
                   {link.label}
@@ -103,63 +104,52 @@ export const Header = () => {
         </div>
       </header>
 
-      <AnimatePresence>
-        {isOpen && (
-          <m.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-0 bottom-16 z-30 flex flex-col overflow-y-auto overscroll-none bg-background px-4 pb-4 pt-4 scrollbar-none [&::-webkit-scrollbar]:hidden sm:px-6 lg:hidden"
-          >
-            <nav className="flex flex-col gap-2 mt-2">
-              {navLinks.map((link, i) => (
-                <m.div
-                  key={link.href}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center justify-between border-b border-border/50 py-4 text-2xl font-bold uppercase tracking-tight transition-colors ${
-                      pathname === link.href
-                        ? "text-accent"
-                        : "text-foreground hover:text-accent"
-                    }`}
-                  >
-                    {link.label}
-                    <ArrowRight
-                      className={`size-5 transition-transform ${
-                        pathname === link.href
-                          ? "opacity-100"
-                          : "opacity-0 -translate-x-2"
-                      }`}
-                    />
-                  </Link>
-                </m.div>
-              ))}
-            </nav>
-
-            <m.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="mt-auto pt-6"
-            >
-              <Link
-                href="/courses"
-                onClick={() => setIsOpen(false)}
-                className="group flex w-full items-center justify-center gap-2 bg-accent px-5 py-4 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-accent-hover"
+      {isOpen && (
+        <div className="fixed inset-x-0 top-0 bottom-16 z-30 flex flex-col overflow-y-auto overscroll-none bg-background px-4 pb-4 pt-4 scrollbar-none [&::-webkit-scrollbar]:hidden sm:px-6 lg:hidden animate-[hero-fade-up_0.25s_cubic-bezier(0.22,1,0.36,1)_both]">
+          <nav className="flex flex-col gap-2 mt-2">
+            {navLinks.map((link, i) => (
+              <div
+                key={link.href}
+                className="animate-[hero-fade-up_0.25s_cubic-bezier(0.22,1,0.36,1)_both]"
+                style={{ animationDelay: `${i * 50}ms` }}
               >
-                Get Started
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </m.div>
-          </m.div>
-        )}
-      </AnimatePresence>
+                <Link
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center justify-between border-b border-border/50 py-4 text-2xl font-bold uppercase tracking-tight transition-colors ${
+                    pathname === link.href
+                      ? "text-foreground underline decoration-accent decoration-2 underline-offset-[6px]"
+                      : "text-foreground hover:text-accent-text"
+                  }`}
+                >
+                  {link.label}
+                  <ArrowRight
+                    className={`size-5 transition-transform ${
+                      pathname === link.href
+                        ? "opacity-100"
+                        : "opacity-0 -translate-x-2"
+                    }`}
+                  />
+                </Link>
+              </div>
+            ))}
+          </nav>
+
+          <div
+            className="mt-auto pt-6 animate-[hero-fade-up_0.3s_cubic-bezier(0.22,1,0.36,1)_both]"
+            style={{ animationDelay: "0.3s" }}
+          >
+            <Link
+              href="/courses"
+              onClick={() => setIsOpen(false)}
+              className="group flex w-full items-center justify-center gap-2 bg-accent px-5 py-4 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-accent-hover"
+            >
+              Get Started
+              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { m, type Variants } from "framer-motion";
 
 import { BrandProps, BrandSize } from "./types";
 
@@ -20,36 +19,6 @@ const LETTERS: BrandLetter[] = [
   { char: "C", tone: "accent" },
   { char: "H", tone: "accent" },
 ];
-
-const containerVariants: Variants = {
-  hidden: {},
-  visible: { transition: { delayChildren: 0.05, staggerChildren: 0.15 } },
-};
-
-const logoVariants: Variants = {
-  hidden: { opacity: 0.55, scale: 0.85, rotate: -10 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    rotate: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-  },
-};
-
-const lettersWrapperVariants: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.06 } },
-};
-
-const letterVariants: Variants = {
-  hidden: { opacity: 0, y: 4, filter: "blur(4px)" },
-  visible: {
-    opacity: 1,
-    y: 0,
-    filter: "blur(0px)",
-    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
-  },
-};
 
 const toneClass: Record<BrandLetter["tone"], string> = {
   foreground: "text-foreground",
@@ -72,29 +41,21 @@ const Brand = ({
   onNavigate,
   className = "",
   priority = false,
-  animateOnView = false,
 }: BrandProps) => {
   const styles = sizeMap[size];
 
-  const trigger = animateOnView
-    ? ({ whileInView: "visible" } as const)
-    : ({ animate: "visible" } as const);
-
   return (
-    <m.div
-      variants={containerVariants}
-      initial="hidden"
-      {...trigger}
-      viewport={animateOnView ? { once: true, amount: 0.4 } : undefined}
-      className={`inline-flex shrink-0 ${className}`}
-    >
+    <div className={`inline-flex shrink-0 ${className}`}>
       <Link
         href="/"
         onClick={onNavigate}
         aria-label="GO ARCH home"
         className={`inline-flex shrink-0 items-center ${styles.gap}`}
       >
-        <m.div variants={logoVariants} className="relative flex items-center">
+        <div
+          className="relative flex items-center animate-[brand-logo-in_0.6s_cubic-bezier(0.22,1,0.36,1)_both]"
+          style={{ animationDelay: "0.05s" }}
+        >
           <Image
             src="/logo.png"
             alt=""
@@ -103,26 +64,25 @@ const Brand = ({
             className={`${styles.logo} w-auto object-contain`}
             priority={priority}
           />
-        </m.div>
+        </div>
 
-        <m.span
-          variants={lettersWrapperVariants}
+        <span
           aria-label="GO ARCH"
           className={`inline-flex items-baseline gap-[0.02em] font-black uppercase leading-none ${styles.text}`}
         >
           {LETTERS.map((letter, index) => (
-            <m.span
+            <span
               key={index}
               aria-hidden="true"
-              variants={letterVariants}
-              className={`inline-block ${toneClass[letter.tone]} ${letter.isWordStart ? "ml-[0.15em]" : ""}`}
+              className={`inline-block animate-[brand-letter-in_0.35s_cubic-bezier(0.22,1,0.36,1)_both] ${toneClass[letter.tone]} ${letter.isWordStart ? "ml-[0.15em]" : ""}`}
+              style={{ animationDelay: `calc(0.25s + ${index} * 60ms)` }}
             >
               {letter.char}
-            </m.span>
+            </span>
           ))}
-        </m.span>
+        </span>
       </Link>
-    </m.div>
+    </div>
   );
 };
 

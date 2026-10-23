@@ -5,5 +5,4 @@ export interface BrandProps {
   onNavigate?: () => void;
   className?: string;
   priority?: boolean;
-  animateOnView?: boolean;
 }

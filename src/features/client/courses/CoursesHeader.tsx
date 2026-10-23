@@ -1,7 +1,3 @@
-"use client";
-
-import { m } from "framer-motion";
-
 export const CoursesHeader = () => {
   return (
     <section className="relative overflow-hidden border-b border-border bg-card py-16 pt-28 lg:py-24 lg:pt-32">
@@ -12,24 +8,20 @@ export const CoursesHeader = () => {
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-        <m.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-4 text-4xl font-black uppercase tracking-tight text-foreground sm:text-5xl lg:text-6xl"
+        <h1
+          className="mb-4 text-4xl font-black uppercase tracking-tight text-foreground sm:text-5xl lg:text-6xl animate-[hero-fade-up_0.5s_cubic-bezier(0.22,1,0.36,1)_both]"
+          style={{ animationDelay: "0.05s" }}
         >
-          Explore Our <span className="text-accent">Courses</span>
-        </m.h1>
+          Explore Our <span className="text-accent-text">Courses</span>
+        </h1>
 
-        <m.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mx-auto max-w-2xl text-base text-foreground-second lg:text-lg"
+        <p
+          className="mx-auto max-w-2xl text-base text-foreground-second lg:text-lg animate-[hero-fade-up_0.5s_cubic-bezier(0.22,1,0.36,1)_both]"
+          style={{ animationDelay: "0.15s" }}
         >
           Choose your path. Whether you want to master a single tool or become a
           complete professional architect, we have the right program for you.
-        </m.p>
+        </p>
       </div>
     </section>
   );
