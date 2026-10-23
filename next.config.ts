@@ -4,11 +4,9 @@ import { webpack } from "next/dist/compiled/webpack/webpack";
 const nextConfig: NextConfig = {
   reactCompiler: true,
   compress: true,
-
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion", "react-icons"],
   },
-
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 2592000,
@@ -20,27 +18,20 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
     ],
   },
-
   async headers() {
     const immutable = [
       { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
     ];
-
     return [
       { source: "/logo.png", headers: immutable },
       { source: "/placeholder.svg", headers: immutable },
     ];
   },
-
   turbopack: {
     rules: {
-      "*.css": {
-        loaders: ["@tailwindcss/turbopack"],
-        as: "*.css",
-      },
+      "*.css": { loaders: ["@tailwindcss/turbopack"] },
     },
   },
-
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.plugins.push(
