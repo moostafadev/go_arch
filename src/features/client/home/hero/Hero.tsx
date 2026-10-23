@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Fragment } from "react";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
 import { Badge } from "@/components/badge";
@@ -30,30 +31,30 @@ export const Hero = ({ image }: HeroProps) => {
             250+ Students Across 20 Countries
           </Badge>
 
-          <h1 className="text-4xl font-black uppercase leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
-            <span className="inline-flex flex-wrap gap-x-[0.25em]">
-              {line1Words.map((word, i) => (
+          <h1 className="text-3xl font-black uppercase leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
+            {line1Words.map((word, i) => (
+              <Fragment key={`l1-${i}`}>
                 <span
-                  key={`l1-${i}`}
                   className="inline-block animate-[hero-word-in_0.5s_cubic-bezier(0.22,1,0.36,1)_both]"
                   style={{ animationDelay: `${i * 40}ms` }}
                 >
                   {word}
                 </span>
-              ))}
-            </span>
+                {i < line1Words.length - 1 && " "}
+              </Fragment>
+            ))}
             <br />
-            <span className="inline-flex flex-wrap gap-x-[0.25em]">
-              {line2Words.map((word, i) => (
+            {line2Words.map((word, i) => (
+              <Fragment key={`l2-${i}`}>
                 <span
-                  key={`l2-${i}`}
                   className="inline-block bg-clip-text text-transparent bg-linear-to-r from-accent to-red-400 animate-[hero-word-in_0.5s_cubic-bezier(0.22,1,0.36,1)_both]"
                   style={{ animationDelay: `${line2Base + i * 40}ms` }}
                 >
                   {word}
                 </span>
-              ))}
-            </span>
+                {i < line2Words.length - 1 && " "}
+              </Fragment>
+            ))}
           </h1>
 
           <p
