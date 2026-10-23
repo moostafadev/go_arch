@@ -83,7 +83,7 @@ export default async function Home() {
                 key={item.num}
                 className="flex flex-col border-t border-border pt-6"
               >
-                <span className="mb-4 text-4xl font-light text-foreground-second/50">
+                <span className="mb-4 text-4xl font-light text-foreground-second">
                   {item.num}
                 </span>
                 <h3 className="mb-3 text-lg font-bold text-foreground">

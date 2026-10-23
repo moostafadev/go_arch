@@ -6,6 +6,7 @@ import { ArrowLeft, CheckCircle2, Clock } from "lucide-react";
 import { EnrollCard } from "@/features/client/courses/EnrollCard";
 import { toWhatsAppUrl } from "@/lib/contact";
 import { fetchClientCourseBySlug } from "@/lib/courses";
+import { absoluteUrl } from "@/lib/seo";
 import { fetchContactSettings } from "@/lib/site-settings";
 
 interface Props {
@@ -26,10 +27,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${course.title} | GO ARCH`,
     description: course.desc.slice(0, 160),
+    alternates: { canonical: absoluteUrl(`/courses/${id}`) },
     openGraph: {
       title: course.title,
       description: course.desc.slice(0, 160),
-      images: [{ url: course.image }],
+      images: [{ url: absoluteUrl(course.image) }],
     },
   };
 }

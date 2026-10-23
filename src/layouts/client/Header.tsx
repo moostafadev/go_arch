@@ -50,17 +50,21 @@ export const Header = () => {
           <Brand size="md" priority onNavigate={() => setIsOpen(false)} />
 
           <nav className="hidden lg:flex lg:gap-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-accent ${
-                  pathname === link.href ? "text-accent" : "text-foreground/80"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const active = pathname === link.href;
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors hover:text-accent ${
+                    active ? "text-foreground" : "text-foreground/80"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="hidden lg:flex">

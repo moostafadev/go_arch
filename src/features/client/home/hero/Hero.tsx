@@ -10,7 +10,7 @@ import { PLACEHOLDER_IMAGE } from "@/constants/placeholders";
 const heroContainer: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.2, delayChildren: 0.15 },
+    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
   },
 };
 
@@ -19,29 +19,30 @@ const itemVariants: Variants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const titleContainer: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.06, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.04, delayChildren: 0 },
   },
 };
 
 const wordVariants: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 1, y: 12, filter: "blur(8px)" },
   visible: {
     opacity: 1,
     y: 0,
+    filter: "blur(0px)",
     transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
   },
 };
 
 const buttonGroup: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.08 } },
+  visible: { transition: { staggerChildren: 0.06 } },
 };
 
 const line1Words = "Get ready to become".split(" ");
@@ -139,12 +140,7 @@ export const Hero = ({ image }: HeroProps) => {
           </m.div>
         </m.div>
 
-        <m.div
-          className="relative w-full max-w-md lg:max-w-none lg:flex-1"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className="relative w-full max-w-md lg:max-w-none lg:flex-1">
           <div className="absolute -inset-1 bg-linear-to-tr from-accent/30 to-transparent blur-sm" />
           <div className="relative aspect-4/3 w-full overflow-hidden border border-border bg-card sm:aspect-square lg:aspect-4/5 lg:max-h-[75vh]">
             <Image
@@ -154,10 +150,11 @@ export const Hero = ({ image }: HeroProps) => {
               sizes="(max-width: 1024px) 100vw, 45vw"
               className="object-cover grayscale transition-all duration-700 hover:grayscale-0 hover:scale-105"
               priority
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-background/20" />
           </div>
-        </m.div>
+        </div>
       </div>
     </section>
   );

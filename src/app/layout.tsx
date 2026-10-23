@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { preconnect, prefetchDNS } from "react-dom";
 import "./globals.css";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { DialogProvider } from "@/components/dialog";
@@ -20,6 +21,7 @@ const centuryGothic = localFont({
   ],
   variable: "--font-century-gothic",
   display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -28,6 +30,11 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
+  prefetchDNS("https://res.cloudinary.com");
+  prefetchDNS("https://images.unsplash.com");
+  preconnect("https://res.cloudinary.com", { crossOrigin: "anonymous" });
+  preconnect("https://images.unsplash.com", { crossOrigin: "anonymous" });
+
   return (
     <html
       lang="en"

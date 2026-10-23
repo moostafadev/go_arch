@@ -209,11 +209,12 @@ const ImageInput = <T extends FieldValues>({
                     type="button"
                     color="DANGER"
                     size="icon"
-                    className="absolute right-2 top-2 z-20 shadow-md text-white sm:w-auto sm:px-3 backdrop-blur-md bg-danger/50"
+                    className="absolute right-2 top-2 z-20 shadow-md text-white sm:w-auto sm:px-3"
                     disabled={disabled || uploading}
                     onClick={handleRemove}
                   >
                     <X aria-hidden="true" className="size-4" />
+                    <span className="hidden sm:inline sm:ml-1.5">Remove</span>
                   </Button>
 
                   {uploading && (
@@ -268,7 +269,7 @@ const ImageInput = <T extends FieldValues>({
                     <span className="text-xs text-foreground-second">
                       PNG, JPG, WEBP — max 5MB
                     </span>
-                    <span className="text-[10px] font-medium uppercase tracking-wider text-foreground-second/70">
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-foreground-second">
                       Best: {ratio.label}
                     </span>
                   </>
