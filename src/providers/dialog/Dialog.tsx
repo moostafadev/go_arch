@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { m } from "framer-motion";
 import { X } from "lucide-react";
 
 import { Button } from "@/components/button";
@@ -18,18 +17,6 @@ const sizes = {
   xl: "max-w-xl",
 };
 
-const backdropVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-const contentVariants = {
-  hidden: { opacity: 0, scale: 0.96, y: 12 },
-  visible: { opacity: 1, scale: 1, y: 0 },
-  exit: { opacity: 0, scale: 0.96, y: 12 },
-};
-
 const Dialog = ({ title, children, size = "md", onClose }: Props) => {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -40,23 +27,13 @@ const Dialog = ({ title, children, size = "md", onClose }: Props) => {
   }, [onClose]);
 
   return (
-    <m.div
-      variants={backdropVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      transition={{ duration: 0.2, ease: "easeOut" }}
+    <div
       onMouseDown={onClose}
-      className="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 p-3 backdrop-blur-sm"
+      className="fixed inset-0 z-9999 flex items-center justify-center bg-black/60 p-3 backdrop-blur-sm animate-[hero-fade-up_0.2s_cubic-bezier(0.22,1,0.36,1)_both]"
     >
-      <m.div
-        variants={contentVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+      <div
         onMouseDown={(e) => e.stopPropagation()}
-        className={`relative w-full shrink-0 ${sizes[size]} border border-border bg-card p-3 shadow-lg sm:p-4`}
+        className={`relative w-full shrink-0 ${sizes[size]} border border-border bg-card p-3 shadow-lg sm:p-4 animate-[hero-fade-up_0.2s_cubic-bezier(0.22,1,0.36,1)_both]`}
       >
         {title && (
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3 sm:mb-4 lg:gap-4">
@@ -77,8 +54,8 @@ const Dialog = ({ title, children, size = "md", onClose }: Props) => {
         )}
 
         {children}
-      </m.div>
-    </m.div>
+      </div>
+    </div>
   );
 };
 

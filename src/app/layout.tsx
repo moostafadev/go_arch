@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { DialogProvider } from "@/components/dialog";
-import { ToastProvider } from "@/components/toaster";
-import { MotionProvider } from "@/providers/motion";
+
+import { ClientProviders } from "@/providers";
 
 const centuryGothic = localFont({
   src: [
@@ -36,11 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${centuryGothic.variable} h-full antialiased`}
     >
       <body className="flex min-h-screen flex-col bg-background font-sans text-foreground overflow-x-hidden">
-        <MotionProvider>
-          <ToastProvider>
-            <DialogProvider>{children}</DialogProvider>
-          </ToastProvider>
-        </MotionProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );
