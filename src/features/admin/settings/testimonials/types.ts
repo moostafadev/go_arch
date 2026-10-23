@@ -14,5 +14,4 @@ export interface TestimonialFormData {
   role: string;
   text: string;
   image: string;
-  order: string;
 }

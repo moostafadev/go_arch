@@ -7,14 +7,14 @@ import { Edit, Plus, Quote, Trash2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { useDialog } from "@/components/dialog";
 import { LoadingImage as Image } from "@/components/loading-image";
-import { Tag } from "@/components/tag";
+import { ReorderButtons } from "@/components/reorder-buttons";
 import { useToast } from "@/components/toaster";
 import { PLACEHOLDER_IMAGE } from "@/constants/placeholders";
 
 import { DeleteDialog } from "./DeleteDialog";
 import { TestimonialForm } from "./Form";
 import { TestimonialsSkeleton } from "./Skeleton";
-import { deleteTestimonial, getTestimonials } from "./api";
+import { deleteTestimonial, getTestimonials, reorderTestimonials } from "./api";
 import type { Testimonial } from "./types";
 
 export const TestimonialsMain = () => {
@@ -23,6 +23,7 @@ export const TestimonialsMain = () => {
 
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
+  const [reordering, setReordering] = useState(false);
 
   const loadData = useCallback(async () => {
     try {
@@ -59,6 +60,35 @@ export const TestimonialsMain = () => {
       ignore = true;
     };
   }, [toast]);
+
+  const handleReorder = async (fromIndex: number, toIndex: number) => {
+    if (reordering) return;
+    if (fromIndex === toIndex) return;
+    if (toIndex < 0 || toIndex >= testimonials.length) return;
+
+    const previous = testimonials;
+    const next = [...testimonials];
+    const [moved] = next.splice(fromIndex, 1);
+
+    if (!moved) return;
+
+    next.splice(toIndex, 0, moved);
+
+    setTestimonials(next);
+    setReordering(true);
+
+    try {
+      const saved = await reorderTestimonials(next.map((item) => item.id));
+      setTestimonials(saved);
+    } catch (err) {
+      setTestimonials(previous);
+      toast.error(
+        err instanceof Error ? err.message : "Failed to reorder testimonials",
+      );
+    } finally {
+      setReordering(false);
+    }
+  };
 
   const handleDelete = (testimonial: Testimonial) => {
     openDialog({
@@ -174,9 +204,12 @@ export const TestimonialsMain = () => {
                     </div>
                   </div>
 
-                  <Tag variant="soft" color="NEUTRAL" size="xs">
-                    #{testimonial.order}
-                  </Tag>
+                  <ReorderButtons
+                    index={index}
+                    total={testimonials.length}
+                    disabled={reordering}
+                    onMove={(toIndex) => handleReorder(index, toIndex)}
+                  />
                 </div>
 
                 <p className="line-clamp-4 text-xs leading-relaxed text-foreground-second">

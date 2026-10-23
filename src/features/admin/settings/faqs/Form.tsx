@@ -75,13 +75,6 @@ export const FaqForm = ({ initialData, onSuccess }: FaqFormProps) => {
         }}
       />
 
-      <Input<FaqFormData>
-        name="order"
-        label="Display Order"
-        placeholder="0"
-        type="number"
-      />
-
       <Button
         type="submit"
         color="MAIN"

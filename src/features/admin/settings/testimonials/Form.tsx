@@ -104,13 +104,6 @@ export const TestimonialForm = ({
         ratio={TESTIMONIAL_IMAGE_RATIO}
       />
 
-      <Input<TestimonialFormData>
-        name="order"
-        label="Display Order"
-        placeholder="0"
-        type="number"
-      />
-
       <Button
         type="submit"
         color="MAIN"

@@ -10,11 +10,6 @@ const isAuthorized = async () => {
   return cookieStore.get("admin_token")?.value === "authorized";
 };
 
-const parseOrder = (value: unknown): number => {
-  const numeric = Number(value);
-  return Number.isFinite(numeric) ? Math.trunc(numeric) : 0;
-};
-
 export async function GET() {
   try {
     const testimonials = await prisma.testimonial.findMany({
@@ -75,8 +70,14 @@ export async function POST(req: Request) {
       );
     }
 
+    const last = await prisma.testimonial.findFirst({
+      orderBy: { order: "desc" },
+      select: { order: true },
+    });
+    const nextOrder = (last?.order ?? -1) + 1;
+
     const testimonial = await prisma.testimonial.create({
-      data: { name, role, text, image, order: parseOrder(body.order) },
+      data: { name, role, text, image, order: nextOrder },
     });
 
     revalidatePath("/", "layout");

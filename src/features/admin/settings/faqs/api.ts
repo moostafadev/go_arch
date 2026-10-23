@@ -49,3 +49,19 @@ export const deleteFaq = async (id: string): Promise<void> => {
     throw new Error(payload?.error ?? "Failed to delete FAQ");
   }
 };
+
+export const reorderFaqs = async (ids: string[]): Promise<Faq[]> => {
+  const res = await fetch("/api/faqs/reorder", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ids }),
+  });
+
+  const payload = await res.json().catch(() => null);
+
+  if (!res.ok || !payload?.success) {
+    throw new Error(payload?.error ?? "Failed to reorder FAQs");
+  }
+
+  return payload.data as Faq[];
+};

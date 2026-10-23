@@ -10,5 +10,4 @@ export interface StudentWorkItem {
 export interface StudentWorkFormData {
   title: string;
   image: string;
-  order: string;
 }

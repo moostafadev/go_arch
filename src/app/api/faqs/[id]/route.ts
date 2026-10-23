@@ -11,11 +11,6 @@ const isAuthorized = async () => {
   return cookieStore.get("admin_token")?.value === "authorized";
 };
 
-const parseOrder = (value: unknown): number => {
-  const numeric = Number(value);
-  return Number.isFinite(numeric) ? Math.trunc(numeric) : 0;
-};
-
 export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -52,7 +47,7 @@ export async function PUT(
 
     const faq = await prisma.faq.update({
       where: { id },
-      data: { question, answer, order: parseOrder(body.order) },
+      data: { question, answer },
     });
 
     revalidatePath("/", "layout");

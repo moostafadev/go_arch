@@ -7,14 +7,14 @@ import { Edit, ImagePlus, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { useDialog } from "@/components/dialog";
 import { LoadingImage as Image } from "@/components/loading-image";
-import { Tag } from "@/components/tag";
+import { ReorderButtons } from "@/components/reorder-buttons";
 import { useToast } from "@/components/toaster";
 import { STUDENT_WORK_RULES } from "@/constants/student-work";
 
 import { DeleteDialog } from "./DeleteDialog";
 import { StudentWorkForm } from "./Form";
 import { StudentWorkSkeleton } from "./Skeleton";
-import { deleteStudentWork, getStudentWork } from "./api";
+import { deleteStudentWork, getStudentWork, reorderStudentWork } from "./api";
 import type { StudentWorkItem } from "./types";
 
 export const StudentWorkMain = () => {
@@ -23,6 +23,7 @@ export const StudentWorkMain = () => {
 
   const [items, setItems] = useState<StudentWorkItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [reordering, setReordering] = useState(false);
 
   const loadData = useCallback(async () => {
     try {
@@ -59,6 +60,35 @@ export const StudentWorkMain = () => {
       ignore = true;
     };
   }, [toast]);
+
+  const handleReorder = async (fromIndex: number, toIndex: number) => {
+    if (reordering) return;
+    if (fromIndex === toIndex) return;
+    if (toIndex < 0 || toIndex >= items.length) return;
+
+    const previous = items;
+    const next = [...items];
+    const [moved] = next.splice(fromIndex, 1);
+
+    if (!moved) return;
+
+    next.splice(toIndex, 0, moved);
+
+    setItems(next);
+    setReordering(true);
+
+    try {
+      const saved = await reorderStudentWork(next.map((item) => item.id));
+      setItems(saved);
+    } catch (err) {
+      setItems(previous);
+      toast.error(
+        err instanceof Error ? err.message : "Failed to reorder student work",
+      );
+    } finally {
+      setReordering(false);
+    }
+  };
 
   const handleDelete = (item: StudentWorkItem) => {
     openDialog({
@@ -161,36 +191,38 @@ export const StudentWorkMain = () => {
                   />
                 </div>
 
-                <div className="flex items-center justify-between gap-3 p-3 sm:p-4">
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-bold text-foreground">
-                      {item.title}
-                    </p>
-                    <Tag variant="soft" color="NEUTRAL" size="xs">
-                      #{item.order}
-                    </Tag>
-                  </div>
+                <div className="flex items-center justify-between gap-3 border-b border-border/50 p-3 sm:p-4">
+                  <p className="min-w-0 truncate text-sm font-bold text-foreground">
+                    {item.title}
+                  </p>
 
-                  <div className="flex shrink-0 items-center gap-1">
-                    <Button
-                      onClick={() => handleOpenForm(item)}
-                      size="icon"
-                      variant="ghost"
-                      aria-label="Edit project"
-                      className="size-8 text-foreground-second hover:text-accent"
-                    >
-                      <Edit className="size-4" />
-                    </Button>
-                    <Button
-                      onClick={() => handleDelete(item)}
-                      size="icon"
-                      variant="ghost"
-                      aria-label="Delete project"
-                      className="size-8 text-foreground-second hover:text-danger"
-                    >
-                      <Trash2 className="size-4" />
-                    </Button>
-                  </div>
+                  <ReorderButtons
+                    index={index}
+                    total={items.length}
+                    disabled={reordering}
+                    onMove={(toIndex) => handleReorder(index, toIndex)}
+                  />
+                </div>
+
+                <div className="flex items-center justify-end gap-1 p-3 sm:p-4">
+                  <Button
+                    onClick={() => handleOpenForm(item)}
+                    size="icon"
+                    variant="ghost"
+                    aria-label="Edit project"
+                    className="size-8 text-foreground-second hover:text-accent"
+                  >
+                    <Edit className="size-4" />
+                  </Button>
+                  <Button
+                    onClick={() => handleDelete(item)}
+                    size="icon"
+                    variant="ghost"
+                    aria-label="Delete project"
+                    className="size-8 text-foreground-second hover:text-danger"
+                  >
+                    <Trash2 className="size-4" />
+                  </Button>
                 </div>
               </m.article>
             ))}

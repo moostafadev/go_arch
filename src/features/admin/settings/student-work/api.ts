@@ -51,3 +51,21 @@ export const deleteStudentWork = async (id: string): Promise<void> => {
     throw new Error(payload?.error ?? "Failed to delete item");
   }
 };
+
+export const reorderStudentWork = async (
+  ids: string[],
+): Promise<StudentWorkItem[]> => {
+  const res = await fetch("/api/student-work/reorder", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ids }),
+  });
+
+  const payload = await res.json().catch(() => null);
+
+  if (!res.ok || !payload?.success) {
+    throw new Error(payload?.error ?? "Failed to reorder student work");
+  }
+
+  return payload.data as StudentWorkItem[];
+};

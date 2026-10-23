@@ -10,5 +10,4 @@ export interface Faq {
 export interface FaqFormData {
   question: string;
   answer: string;
-  order: string;
 }

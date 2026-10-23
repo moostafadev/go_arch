@@ -51,3 +51,21 @@ export const deleteTestimonial = async (id: string): Promise<void> => {
     throw new Error(payload?.error ?? "Failed to delete testimonial");
   }
 };
+
+export const reorderTestimonials = async (
+  ids: string[],
+): Promise<Testimonial[]> => {
+  const res = await fetch("/api/testimonials/reorder", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ids }),
+  });
+
+  const payload = await res.json().catch(() => null);
+
+  if (!res.ok || !payload?.success) {
+    throw new Error(payload?.error ?? "Failed to reorder testimonials");
+  }
+
+  return payload.data as Testimonial[];
+};

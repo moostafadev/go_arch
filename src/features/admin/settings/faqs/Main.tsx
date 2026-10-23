@@ -6,14 +6,14 @@ import { Edit, MessageCircleQuestion, Plus, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/button";
 import { useDialog } from "@/components/dialog";
-import { Tag } from "@/components/tag";
+import { ReorderButtons } from "@/components/reorder-buttons";
 import { useToast } from "@/components/toaster";
 import { FAQ_RULES } from "@/constants/faqs";
 
 import { DeleteDialog } from "./DeleteDialog";
 import { FaqForm } from "./Form";
 import { FaqsSkeleton } from "./Skeleton";
-import { deleteFaq, getFaqs } from "./api";
+import { deleteFaq, getFaqs, reorderFaqs } from "./api";
 import type { Faq } from "./types";
 
 export const FaqsMain = () => {
@@ -22,6 +22,7 @@ export const FaqsMain = () => {
 
   const [faqs, setFaqs] = useState<Faq[]>([]);
   const [loading, setLoading] = useState(true);
+  const [reordering, setReordering] = useState(false);
 
   const loadData = useCallback(async () => {
     try {
@@ -58,6 +59,35 @@ export const FaqsMain = () => {
       ignore = true;
     };
   }, [toast]);
+
+  const handleReorder = async (fromIndex: number, toIndex: number) => {
+    if (reordering) return;
+    if (fromIndex === toIndex) return;
+    if (toIndex < 0 || toIndex >= faqs.length) return;
+
+    const previous = faqs;
+    const next = [...faqs];
+    const [moved] = next.splice(fromIndex, 1);
+
+    if (!moved) return;
+
+    next.splice(toIndex, 0, moved);
+
+    setFaqs(next);
+    setReordering(true);
+
+    try {
+      const saved = await reorderFaqs(next.map((item) => item.id));
+      setFaqs(saved);
+    } catch (err) {
+      setFaqs(previous);
+      toast.error(
+        err instanceof Error ? err.message : "Failed to reorder FAQs",
+      );
+    } finally {
+      setReordering(false);
+    }
+  };
 
   const handleDelete = (faq: Faq) => {
     openDialog({
@@ -148,19 +178,21 @@ export const FaqsMain = () => {
                 className="flex flex-col gap-3 border border-border bg-card p-3 sm:p-4"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0 flex-1">
-                    <p className="text-sm font-bold text-foreground">
-                      {faq.question}
-                    </p>
-                    <p className="mt-1 line-clamp-3 text-xs leading-relaxed text-foreground-second">
-                      {faq.answer}
-                    </p>
-                  </div>
+                  <p className="min-w-0 flex-1 text-sm font-bold text-foreground">
+                    {faq.question}
+                  </p>
 
-                  <Tag variant="soft" color="NEUTRAL" size="xs">
-                    #{faq.order}
-                  </Tag>
+                  <ReorderButtons
+                    index={index}
+                    total={faqs.length}
+                    disabled={reordering}
+                    onMove={(toIndex) => handleReorder(index, toIndex)}
+                  />
                 </div>
+
+                <p className="line-clamp-3 text-xs leading-relaxed text-foreground-second">
+                  {faq.answer}
+                </p>
 
                 <div className="flex items-center justify-end gap-1 border-t border-border/50 pt-3">
                   <Button

@@ -10,11 +10,6 @@ const isAuthorized = async () => {
   return cookieStore.get("admin_token")?.value === "authorized";
 };
 
-const parseOrder = (value: unknown): number => {
-  const numeric = Number(value);
-  return Number.isFinite(numeric) ? Math.trunc(numeric) : 0;
-};
-
 const isHttpUrl = (value: string) => /^https?:\/\//i.test(value);
 
 export async function GET() {
@@ -81,8 +76,14 @@ export async function POST(req: Request) {
       );
     }
 
+    const last = await prisma.studentWork.findFirst({
+      orderBy: { order: "desc" },
+      select: { order: true },
+    });
+    const nextOrder = (last?.order ?? -1) + 1;
+
     const item = await prisma.studentWork.create({
-      data: { title, image, order: parseOrder(body.order) },
+      data: { title, image, order: nextOrder },
     });
 
     revalidatePath("/", "layout");

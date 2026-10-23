@@ -76,13 +76,6 @@ export const StudentWorkForm = ({
         ratio={STUDENT_WORK_IMAGE_RATIO}
       />
 
-      <Input<StudentWorkFormData>
-        name="order"
-        label="Display Order"
-        placeholder="0"
-        type="number"
-      />
-
       <Button
         type="submit"
         color="MAIN"
