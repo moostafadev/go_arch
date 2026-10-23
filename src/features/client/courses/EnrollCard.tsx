@@ -13,6 +13,7 @@ interface EnrollCardProps {
   price: string;
   discountPrice?: string | null;
   courseId: string;
+  whatsappUrl: string;
 }
 
 export const EnrollCard = ({
@@ -20,6 +21,7 @@ export const EnrollCard = ({
   price,
   discountPrice,
   courseId,
+  whatsappUrl,
 }: EnrollCardProps) => {
   const { openDialog, closeDialog } = useDialog();
 
@@ -57,6 +59,15 @@ export const EnrollCard = ({
         <MessageCircle className="mr-2 size-4" />
         Buy via WhatsApp
       </Button>
+
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mb-3 flex w-full items-center justify-center gap-2 border border-border px-6 py-2 text-sm font-medium text-foreground transition-colors hover:bg-card-hover"
+      >
+        Chat with us directly
+      </a>
 
       <p className="text-center text-xs text-foreground-second">
         Fill a quick form. Our team will contact you to complete the payment.

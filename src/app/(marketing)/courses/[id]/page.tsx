@@ -4,7 +4,9 @@ import type { Metadata } from "next";
 import { ArrowLeft, CheckCircle2, Clock } from "lucide-react";
 
 import { EnrollCard } from "@/features/client/courses/EnrollCard";
+import { toWhatsAppUrl } from "@/lib/contact";
 import { fetchClientCourseBySlug } from "@/lib/courses";
+import { fetchContactSettings } from "@/lib/site-settings";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -34,7 +36,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CourseDetailsPage({ params }: Props) {
   const { id } = await params;
-  const course = await fetchClientCourseBySlug(id);
+  const [course, contact] = await Promise.all([
+    fetchClientCourseBySlug(id),
+    fetchContactSettings(),
+  ]);
 
   if (!course) {
     return (
@@ -55,6 +60,11 @@ export default async function CourseDetailsPage({ params }: Props) {
       </div>
     );
   }
+
+  const whatsappUrl = toWhatsAppUrl(
+    contact.phone,
+    `Hello, I am interested in "${course.title}".`,
+  );
 
   return (
     <div className="min-h-screen bg-background py-8 lg:py-10">
@@ -128,6 +138,7 @@ export default async function CourseDetailsPage({ params }: Props) {
               price={course.price}
               discountPrice={course.discountPrice}
               courseId={course.id}
+              whatsappUrl={whatsappUrl}
             />
           </div>
         </div>

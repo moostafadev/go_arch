@@ -10,6 +10,7 @@ const Textarea = <T extends FieldValues>({
   rows = 3,
   className,
   disabled = false,
+  rules,
 }: IProps<T>) => {
   const { register, control } = useFormContext<T>();
   const { errors } = useFormState({ control, name });
@@ -40,7 +41,7 @@ const Textarea = <T extends FieldValues>({
         placeholder={placeholder}
         disabled={disabled}
         className={`w-full resize-none border border-border bg-background px-3 py-2 text-sm text-foreground placeholder:text-foreground-second outline-none transition-all duration-200 focus:border-accent focus:shadow-md focus:ring-2 focus:ring-accent/15 disabled:cursor-not-allowed disabled:opacity-50`}
-        {...register(name)}
+        {...register(name, rules)}
       />
 
       {errorMessage && (

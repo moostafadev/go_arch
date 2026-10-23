@@ -5,16 +5,21 @@ import { AlertTriangle, ImagePlus, Loader2, X } from "lucide-react";
 import { useRef, useState } from "react";
 import {
   Controller,
+  FieldError,
   FieldValues,
+  get,
   useFormContext,
   useFormState,
 } from "react-hook-form";
 
 import { Button } from "../button";
-import { IProps } from "./types";
+import { IProps, ImageRatioRule } from "./types";
 
-const MIN_RATIO = 1.5;
-const MAX_RATIO = 2.2;
+const DEFAULT_RATIO: ImageRatioRule = {
+  min: 1.5,
+  max: 2.2,
+  label: "landscape 16:9 · 1280×720+",
+};
 
 const readImageRatio = (file: File): Promise<number> =>
   new Promise((resolve) => {
@@ -32,17 +37,20 @@ const readImageRatio = (file: File): Promise<number> =>
     img.src = url;
   });
 
-const getRatioWarning = (ratio: number): string | null => {
+const getRatioWarning = (
+  ratio: number,
+  rule: ImageRatioRule,
+): string | null => {
   if (!ratio) return null;
-  if (ratio >= MIN_RATIO && ratio <= MAX_RATIO) return null;
+  if (ratio >= rule.min && ratio <= rule.max) return null;
 
-  if (ratio < 0.9) {
-    return "This image is portrait. Course cards will crop it to a horizontal strip — the top and bottom will be hidden. Landscape 16:9 works best.";
+  const current = `${ratio.toFixed(2)}:1`;
+
+  if (ratio < rule.min) {
+    return `This image is narrower than recommended (${current}). The sides or top and bottom may be cropped. Best: ${rule.label}.`;
   }
-  if (ratio < MIN_RATIO) {
-    return "This image is square-ish. Course cards will crop the sides. Landscape 16:9 works best.";
-  }
-  return "This image is very wide. The edges may be cropped on course cards. Landscape 16:9 works best.";
+
+  return `This image is wider than recommended (${current}). The edges may be cropped. Best: ${rule.label}.`;
 };
 
 const ImageInput = <T extends FieldValues>({
@@ -51,6 +59,7 @@ const ImageInput = <T extends FieldValues>({
   placeholder = "Select an image from your device",
   className,
   disabled = false,
+  ratio = DEFAULT_RATIO,
 }: IProps<T>) => {
   const { control } = useFormContext<T>();
   const { errors } = useFormState({ control, name });
@@ -61,7 +70,7 @@ const ImageInput = <T extends FieldValues>({
   const [uploadError, setUploadError] = useState("");
   const [ratioWarning, setRatioWarning] = useState("");
 
-  const error = errors[name];
+  const error = get(errors, name) as FieldError | undefined;
 
   const errorMessage =
     typeof error?.message === "string" && error.message
@@ -104,8 +113,8 @@ const ImageInput = <T extends FieldValues>({
             return;
           }
 
-          const ratio = await readImageRatio(file);
-          const warning = getRatioWarning(ratio);
+          const fileRatio = await readImageRatio(file);
+          const warning = getRatioWarning(fileRatio, ratio);
           if (warning) setRatioWarning(warning);
 
           setUploading(true);
@@ -200,12 +209,11 @@ const ImageInput = <T extends FieldValues>({
                     type="button"
                     color="DANGER"
                     size="icon"
-                    className="absolute right-2 top-2 z-20 shadow-md text-white sm:w-auto sm:px-3"
+                    className="absolute right-2 top-2 z-20 shadow-md text-white sm:w-auto sm:px-3 backdrop-blur-md bg-danger/50"
                     disabled={disabled || uploading}
                     onClick={handleRemove}
                   >
                     <X aria-hidden="true" className="size-4" />
-                    <span className="hidden sm:inline sm:ml-1.5">Remove</span>
                   </Button>
 
                   {uploading && (
@@ -261,7 +269,7 @@ const ImageInput = <T extends FieldValues>({
                       PNG, JPG, WEBP — max 5MB
                     </span>
                     <span className="text-[10px] font-medium uppercase tracking-wider text-foreground-second/70">
-                      Best: landscape 16:9 · 1280×720+
+                      Best: {ratio.label}
                     </span>
                   </>
                 )}

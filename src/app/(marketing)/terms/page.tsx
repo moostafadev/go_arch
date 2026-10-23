@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Terms & Conditions | GO ARCH",
-  description:
-    "Read the terms and conditions for using GO ARCH's platform and enrolling in our architectural courses.",
-};
+import { buildPageMetadata } from "@/lib/seo";
+
+export const generateMetadata = (): Promise<Metadata> =>
+  buildPageMetadata("terms");
 
 export default function TermsConditionsPage() {
   return (
     <div className="min-h-screen bg-background pb-24 pt-32">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="mb-12 border-b border-border pb-8">
           <h1 className="mb-4 text-3xl font-black uppercase tracking-tight text-foreground sm:text-4xl">
             Terms & Conditions
@@ -18,7 +16,6 @@ export default function TermsConditionsPage() {
           <p className="text-foreground-second">Last updated: October 2026</p>
         </div>
 
-        {/* Content */}
         <div className="space-y-8 text-sm leading-relaxed text-foreground-second sm:text-base">
           <section>
             <h2 className="mb-3 text-xl font-bold text-foreground">

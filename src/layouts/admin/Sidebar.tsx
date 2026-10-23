@@ -9,22 +9,43 @@ import { Button } from "@/components/button";
 
 import { sidebarData } from "./constants";
 import SubItems from "./SubItems";
-import { SidebarProps } from "./types";
+import { SidebarItem, SidebarProps } from "./types";
 import { useLogout } from "@/features/admin/auth";
+
+const isPathActive = (path: string, pathName: string) =>
+  pathName === path || pathName.startsWith(`${path}/`);
+
+const hasActiveDescendant = (node: SidebarItem, pathName: string): boolean =>
+  node.items.some(
+    (child) =>
+      isPathActive(child.link, pathName) ||
+      hasActiveDescendant(child, pathName),
+  );
+
+const collectActiveAncestors = (
+  items: SidebarItem[],
+  pathName: string,
+): string[] => {
+  const result: string[] = [];
+
+  const walk = (node: SidebarItem) => {
+    if (node.items.length > 0 && hasActiveDescendant(node, pathName)) {
+      result.push(node.link);
+    }
+    node.items.forEach(walk);
+  };
+
+  items.forEach(walk);
+
+  return result;
+};
 
 const SidebarAdmin = ({ isOpen, setIsOpen }: SidebarProps) => {
   const pathName = usePathname();
   const [openItems, setOpenItems] = useState<string[]>([]);
   const { handleLogout, isLoggingOut } = useLogout();
 
-  const activeParents = sidebarData
-    .filter((item) =>
-      item.items.some(
-        (subItem) =>
-          pathName === subItem.link || pathName.startsWith(`${subItem.link}/`),
-      ),
-    )
-    .map((item) => item.link);
+  const activeParents = collectActiveAncestors(sidebarData, pathName);
 
   const toggleItem = (link: string) => {
     setOpenItems((prev) =>
@@ -40,10 +61,7 @@ const SidebarAdmin = ({ isOpen, setIsOpen }: SidebarProps) => {
       const isOpenItem =
         openItems.includes(link) || activeParents.includes(link);
       const isCurrent = pathName === link;
-      const hasActiveChild = items.some(
-        (item) =>
-          pathName === item.link || pathName.startsWith(`${item.link}/`),
-      );
+      const hasActiveChild = activeParents.includes(link);
 
       const navControl = hasItems ? (
         <button
@@ -89,7 +107,13 @@ const SidebarAdmin = ({ isOpen, setIsOpen }: SidebarProps) => {
         <li key={link} className="w-full">
           {navControl}
           {hasItems && isOpenItem && (
-            <SubItems items={items} setIsOpen={setIsOpen} />
+            <SubItems
+              items={items}
+              setIsOpen={setIsOpen}
+              openItems={openItems}
+              activeParents={activeParents}
+              onToggle={toggleItem}
+            />
           )}
         </li>
       );

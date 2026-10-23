@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 
 import { CourseList, CoursesHeader } from "@/features/client/courses";
 import { fetchClientCourses } from "@/lib/courses";
+import { buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Courses & Diplomas | GO ARCH",
-  description:
-    "Master architectural design, parametric tools, and visualization through our professional courses and diplomas.",
-};
+export const generateMetadata = (): Promise<Metadata> =>
+  buildPageMetadata("courses");
 
 export default async function CoursesPage() {
   const courses = await fetchClientCourses();

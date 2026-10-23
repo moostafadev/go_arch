@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type SocialLink {
+  platform String
+  url      String
+  label    String?
+}
+
 model Lead {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
@@ -80,4 +86,65 @@ model PageView {
   @@index([createdAt])
   @@index([path])
   @@index([ipHash, path, createdAt])
+}
+
+model SeoSetting {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  pageKey     String   @unique
+  title       String
+  description String
+  keywords    String[]
+  image       String?
+  updatedAt   DateTime @updatedAt
+}
+
+model SiteSetting {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  key       String       @unique
+  phone     String?
+  email     String?
+  socials   SocialLink[]
+  updatedAt DateTime     @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  role      String
+  text      String
+  image     String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+model SiteImage {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  key       String   @unique
+  url       String?
+  updatedAt DateTime @updatedAt
+}
+
+model StudentWork {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  image     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+model Faq {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  question  String
+  answer    String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
 }

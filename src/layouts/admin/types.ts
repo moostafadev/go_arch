@@ -18,6 +18,10 @@ export interface SidebarProps {
 export interface SubItemsProps {
   items: SidebarItem[];
   setIsOpen: Dispatch<SetStateAction<boolean>>;
+  openItems: string[];
+  activeParents: string[];
+  onToggle: (link: string) => void;
+  depth?: number;
 }
 
 export interface SidebarItem {

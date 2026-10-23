@@ -6,15 +6,18 @@ import {
   ContactInfo,
 } from "@/features/client/contact";
 import { fetchCourseOptions } from "@/lib/courses";
+import { buildPageMetadata } from "@/lib/seo";
+import { fetchContactSettings, fetchSocialLinks } from "@/lib/site-settings";
 
-export const metadata: Metadata = {
-  title: "Contact Us | GO ARCH",
-  description:
-    "Get in touch with GO ARCH. Ask about our architecture courses, mentorship programs, or general inquiries.",
-};
+export const generateMetadata = (): Promise<Metadata> =>
+  buildPageMetadata("contact");
 
 export default async function ContactPage() {
-  const courses = await fetchCourseOptions();
+  const [courses, contact, socials] = await Promise.all([
+    fetchCourseOptions(),
+    fetchContactSettings(),
+    fetchSocialLinks(),
+  ]);
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-background">
@@ -28,7 +31,11 @@ export default async function ContactPage() {
             </div>
 
             <div className="order-1 lg:order-2">
-              <ContactInfo />
+              <ContactInfo
+                phone={contact.phone}
+                email={contact.email}
+                socials={socials}
+              />
             </div>
           </div>
         </div>

@@ -1,11 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 import { Accordion, AccordionItem } from "@/components/accordion";
 import { Carousel, CarouselItem } from "@/components/carousel";
+import { PLACEHOLDER_IMAGE } from "@/constants/placeholders";
+import { STUDENT_WORK_PLACEHOLDER_COUNT } from "@/constants/student-work";
 import { Hero } from "@/features/client/home/hero";
 import { FeaturedCourses } from "@/features/client/home/FeaturedCourses";
 import { fetchClientCourses } from "@/lib/courses";
+import { fetchFaqs } from "@/lib/faqs";
+import { fetchSectionImages } from "@/lib/images";
+import { buildPageMetadata } from "@/lib/seo";
+import { fetchStudentWork } from "@/lib/student-work";
+import { fetchTestimonials } from "@/lib/testimonials";
+
+export const generateMetadata = (): Promise<Metadata> =>
+  buildPageMetadata("home");
 
 const features = [
   {
@@ -30,54 +41,28 @@ const features = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Ahmed Hassan",
-    role: "Architecture Student",
-    text: "This program completely changed how I approach architectural design. The parametric design modules are top-notch.",
-  },
-  {
-    name: "Sarah Smith",
-    role: "Junior Architect",
-    text: "The best investment I've made in my career. The competition workshop helped me land my first international internship.",
-  },
-  {
-    name: "Omar Khaled",
-    role: "Freelance Designer",
-    text: "The AI rendering techniques taught here saved me hours of work and elevated the quality of my presentations.",
-  },
-  {
-    name: "Laila Mahmoud",
-    role: "Architecture Student",
-    text: "Having an actual practicing architect as a mentor is a game-changer. The feedback is incredibly valuable.",
-  },
-];
-
-const faqs = [
-  {
-    q: "Are the courses in Arabic or English?",
-    a: "All courses are taught in a mix of Arabic and English, focusing on the technical terminology used globally in the architecture industry.",
-  },
-  {
-    q: "What's the difference between a diploma, a bundle, and a course?",
-    a: "A course focuses on one specific skill (like Photoshop). A bundle combines related courses at a discount. A diploma is a comprehensive program covering all aspects of architectural design.",
-  },
-  {
-    q: "Is access really for life?",
-    a: "Yes, once you enroll, you get lifetime access to the course materials, including any future updates.",
-  },
-  {
-    q: "Who teaches the courses?",
-    a: "Courses are taught by practicing architects with years of experience in winning international competitions and real-world projects.",
-  },
-];
-
 export default async function Home() {
-  const courses = await fetchClientCourses();
+  const [courses, testimonials, heroImages, studentWork, faqs] =
+    await Promise.all([
+      fetchClientCourses(),
+      fetchTestimonials(),
+      fetchSectionImages("hero"),
+      fetchStudentWork(),
+      fetchFaqs(),
+    ]);
+
+  const studentWorkDisplay =
+    studentWork.length > 0
+      ? studentWork
+      : Array.from({ length: STUDENT_WORK_PLACEHOLDER_COUNT }, (_, index) => ({
+          id: `placeholder-${index}`,
+          title: "Student work",
+          image: PLACEHOLDER_IMAGE,
+        }));
 
   return (
     <div className="flex flex-col w-full bg-background">
-      <Hero />
+      <Hero image={heroImages.hero} />
 
       <section className="border-t border-border bg-card py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -121,14 +106,14 @@ export default async function Home() {
             Students&apos; work
           </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
+            {studentWorkDisplay.map((item) => (
               <div
-                key={i}
+                key={item.id}
                 className="relative aspect-4/3 w-full overflow-hidden border border-border bg-background"
               >
                 <Image
-                  src={`https://images.unsplash.com/photo-${i === 1 ? "1487958449943-2429e8be8625" : i === 2 ? "1511818966892-d7d671e672a2" : "1600585154340-be6161a56a0c"}?q=80&w=800&auto=format&fit=crop`}
-                  alt={`Student Project ${i}`}
+                  src={item.image}
+                  alt={item.title}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover grayscale transition-all duration-500 hover:grayscale-0"
@@ -145,19 +130,32 @@ export default async function Home() {
             What students say
           </h2>
           <Carousel>
-            {testimonials.map((testimonial, idx) => (
-              <CarouselItem key={idx}>
+            {testimonials.map((testimonial) => (
+              <CarouselItem key={testimonial.id}>
                 <div className="flex h-full flex-col border border-border bg-card p-4 sm:p-6 md:p-8">
                   <p className="mb-6 flex-1 text-base italic text-foreground-second sm:mb-8 lg:text-lg">
                     &quot;{testimonial.text}&quot;
                   </p>
-                  <div>
-                    <p className="font-bold text-foreground">
-                      {testimonial.name}
-                    </p>
-                    <p className="text-sm text-foreground-second">
-                      {testimonial.role}
-                    </p>
+
+                  <div className="flex items-center gap-3 border-t border-border pt-4">
+                    <div className="relative size-10 shrink-0 overflow-hidden border border-border bg-background">
+                      <Image
+                        src={testimonial.image || PLACEHOLDER_IMAGE}
+                        alt={testimonial.name}
+                        fill
+                        sizes="40px"
+                        className="object-cover"
+                      />
+                    </div>
+
+                    <div className="min-w-0">
+                      <p className="truncate font-bold text-foreground">
+                        {testimonial.name}
+                      </p>
+                      <p className="truncate text-sm text-foreground-second">
+                        {testimonial.role}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </CarouselItem>
@@ -172,13 +170,17 @@ export default async function Home() {
             Frequently asked
           </h2>
           <Accordion allowMultiple={false}>
-            {faqs.map((faq, idx) => (
+            {faqs.map((faq) => (
               <AccordionItem
-                key={idx}
-                value={`faq-${idx}`}
-                trigger={<span className="text-lg font-medium">{faq.q}</span>}
+                key={faq.id}
+                value={`faq-${faq.id}`}
+                trigger={
+                  <span className="text-lg font-medium">{faq.question}</span>
+                }
               >
-                <p className="p-4 text-foreground-second sm:p-6">{faq.a}</p>
+                <p className="p-4 text-foreground-second sm:p-6">
+                  {faq.answer}
+                </p>
               </AccordionItem>
             ))}
           </Accordion>

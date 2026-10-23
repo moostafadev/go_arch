@@ -4,7 +4,13 @@ import { m } from "framer-motion";
 import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 
-export const AboutInstructor = () => {
+import { PLACEHOLDER_IMAGE } from "@/constants/placeholders";
+
+interface AboutInstructorProps {
+  image: string | null;
+}
+
+export const AboutInstructor = ({ image }: AboutInstructorProps) => {
   return (
     <section className="border-t border-border bg-card py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -17,7 +23,7 @@ export const AboutInstructor = () => {
             className="relative aspect-4/5 w-full border border-border"
           >
             <Image
-              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop"
+              src={image || PLACEHOLDER_IMAGE}
               alt="Founder and Lead Architect"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

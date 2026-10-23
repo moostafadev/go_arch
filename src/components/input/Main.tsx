@@ -2,7 +2,13 @@
 
 import { Eye, EyeOff, Hash, LockKeyhole, Phone } from "lucide-react";
 import { useState } from "react";
-import { FieldValues, useFormContext, useFormState } from "react-hook-form";
+import {
+  FieldError,
+  FieldValues,
+  get,
+  useFormContext,
+  useFormState,
+} from "react-hook-form";
 
 import { Button } from "../button";
 import { Tooltip } from "../tooltip";
@@ -32,7 +38,7 @@ const Input = <T extends FieldValues>({
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const error = errors[name];
+  const error = get(errors, name) as FieldError | undefined;
 
   const errorMessage =
     typeof error?.message === "string" && error.message

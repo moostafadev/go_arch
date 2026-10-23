@@ -3,7 +3,13 @@
 import { m } from "framer-motion";
 import Image from "next/image";
 
-export const AboutMission = () => {
+import { PLACEHOLDER_IMAGE } from "@/constants/placeholders";
+
+interface AboutMissionProps {
+  image: string | null;
+}
+
+export const AboutMission = ({ image }: AboutMissionProps) => {
   return (
     <section className="overflow-hidden py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -62,7 +68,7 @@ export const AboutMission = () => {
             className="relative aspect-square w-full border border-border"
           >
             <Image
-              src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1000&auto=format&fit=crop"
+              src={image || PLACEHOLDER_IMAGE}
               alt="Architectural sketching and design"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

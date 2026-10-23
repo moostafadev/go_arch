@@ -5,6 +5,8 @@ import Image from "next/image";
 import { m, type Variants } from "framer-motion";
 import { ArrowRight, MessageCircle } from "lucide-react";
 
+import { PLACEHOLDER_IMAGE } from "@/constants/placeholders";
+
 const heroContainer: Variants = {
   hidden: {},
   visible: {
@@ -45,7 +47,11 @@ const buttonGroup: Variants = {
 const line1Words = "Get ready to become".split(" ");
 const line2Words = "a Real Architect.".split(" ");
 
-export const Hero = () => {
+interface HeroProps {
+  image: string | null;
+}
+
+export const Hero = ({ image }: HeroProps) => {
   return (
     <section className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden border-b border-border bg-background py-12 lg:py-0">
       <div className="absolute inset-0 pointer-events-none">
@@ -142,10 +148,10 @@ export const Hero = () => {
           <div className="absolute -inset-1 bg-linear-to-tr from-accent/30 to-transparent blur-sm" />
           <div className="relative aspect-4/3 w-full overflow-hidden border border-border bg-card sm:aspect-square lg:aspect-4/5 lg:max-h-[75vh]">
             <Image
-              src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop"
+              src={image || PLACEHOLDER_IMAGE}
               alt="Modern Architectural Design"
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 1024px) 100vw, 45vw"
               className="object-cover grayscale transition-all duration-700 hover:grayscale-0 hover:scale-105"
               priority
             />

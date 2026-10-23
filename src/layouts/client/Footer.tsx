@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { FaInstagram, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+
+import { SocialLinks } from "@/components/social-links";
+import { formatPhone, toMailHref, toTelHref } from "@/lib/contact";
+import { fetchContactSettings, fetchSocialLinks } from "@/lib/site-settings";
+
 import { CopyrightYear } from "./CopyrightYear";
 
 const platformLinks = [
@@ -15,13 +19,12 @@ const legalLinks = [
   { label: "Contact Us", href: "/contact" },
 ];
 
-const socialLinks = [
-  { icon: FaInstagram, href: "#", label: "Instagram" },
-  { icon: FaLinkedin, href: "#", label: "LinkedIn" },
-  { icon: FaXTwitter, href: "#", label: "Twitter (X)" },
-];
+export const Footer = async () => {
+  const [contact, socials] = await Promise.all([
+    fetchContactSettings(),
+    fetchSocialLinks(),
+  ]);
 
-export const Footer = () => {
   return (
     <footer className="border-t border-border bg-card pt-10 pb-24 lg:pb-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -37,21 +40,7 @@ export const Footer = () => {
               The definitive A-Z program in architectural design. Master
               Competition Design, Photoshop, Rhino & Grasshopper.
             </p>
-            <div className="flex gap-3 mt-2">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.label}
-                    href={social.href}
-                    aria-label={social.label}
-                    className="flex size-9 items-center justify-center border border-border bg-background text-foreground-second transition-all hover:border-accent hover:bg-accent hover:text-white"
-                  >
-                    <Icon className="size-4" />
-                  </a>
-                );
-              })}
-            </div>
+            <SocialLinks links={socials} size="sm" className="mt-2" />
           </div>
 
           <div className="flex flex-col gap-4">
@@ -97,18 +86,18 @@ export const Footer = () => {
             <ul className="flex flex-col gap-3 text-sm text-foreground-second">
               <li>
                 <a
-                  href="mailto:hello@goarch.academy"
+                  href={toMailHref(contact.email)}
                   className="hover:text-accent transition-colors"
                 >
-                  hello@goarch.academy
+                  {contact.email}
                 </a>
               </li>
               <li>
                 <a
-                  href="tel:+201234567890"
+                  href={toTelHref(contact.phone)}
                   className="hover:text-accent transition-colors"
                 >
-                  +20 123 456 7890
+                  {formatPhone(contact.phone)}
                 </a>
               </li>
               <li>Cairo, Egypt (Global Online)</li>
