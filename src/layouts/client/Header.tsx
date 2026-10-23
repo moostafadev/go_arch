@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { m, AnimatePresence } from "framer-motion";
+
+import { Brand } from "@/components/brand";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -46,20 +47,7 @@ export const Header = () => {
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-          <Link
-            href="/"
-            onClick={() => setIsOpen(false)}
-            className="flex shrink-0 items-center gap-2"
-          >
-            <Image
-              src="/logo.png"
-              alt="GO ARCH"
-              width={150}
-              height={40}
-              className="h-8 w-auto object-contain"
-              priority
-            />
-          </Link>
+          <Brand size="md" priority onNavigate={() => setIsOpen(false)} />
 
           <nav className="hidden lg:flex lg:gap-8">
             {navLinks.map((link) => (

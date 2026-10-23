@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 
+import { Brand } from "@/components/brand";
 import { SocialLinks } from "@/components/social-links";
 import { formatPhone, toMailHref, toTelHref } from "@/lib/contact";
 import { fetchContactSettings, fetchSocialLinks } from "@/lib/site-settings";
@@ -30,12 +31,8 @@ export const Footer = async () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8 mb-8">
           <div className="flex flex-col gap-4">
-            <Link
-              href="/"
-              className="text-2xl font-black uppercase tracking-tight text-foreground"
-            >
-              GO ARCH
-            </Link>
+            <Brand size="lg" animateOnView />
+
             <p className="text-sm leading-relaxed text-foreground-second">
               The definitive A-Z program in architectural design. Master
               Competition Design, Photoshop, Rhino & Grasshopper.
