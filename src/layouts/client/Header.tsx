@@ -48,7 +48,7 @@ export const Header = () => {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
           <Brand size="md" priority onNavigate={() => setIsOpen(false)} />
 
-          <nav className="hidden lg:flex lg:gap-8">
+          <nav className="hidden lg:flex lg:items-center lg:gap-8">
             {navLinks.map((link) => {
               const active = pathname === link.href;
 
@@ -56,10 +56,11 @@ export const Header = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`text-sm font-medium transition-colors hover:text-accent-text ${
+                  aria-current={active ? "page" : undefined}
+                  className={`text-sm transition-all duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent ${
                     active
-                      ? "text-foreground underline decoration-accent decoration-2 underline-offset-[6px]"
-                      : "text-foreground/90"
+                      ? "font-bold text-foreground"
+                      : "font-medium text-foreground/90 hover:-translate-y-0.5 hover:text-foreground"
                   }`}
                 >
                   {link.label}
@@ -107,32 +108,37 @@ export const Header = () => {
       {isOpen && (
         <div className="fixed inset-x-0 top-0 bottom-16 z-30 flex flex-col overflow-y-auto overscroll-none bg-background px-4 pb-4 pt-4 scrollbar-none [&::-webkit-scrollbar]:hidden sm:px-6 lg:hidden animate-[hero-fade-up_0.25s_cubic-bezier(0.22,1,0.36,1)_both]">
           <nav className="flex flex-col gap-2 mt-2">
-            {navLinks.map((link, i) => (
-              <div
-                key={link.href}
-                className="animate-[hero-fade-up_0.25s_cubic-bezier(0.22,1,0.36,1)_both]"
-                style={{ animationDelay: `${i * 50}ms` }}
-              >
-                <Link
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center justify-between border-b border-border/50 py-4 text-2xl font-bold uppercase tracking-tight transition-colors ${
-                    pathname === link.href
-                      ? "text-foreground underline decoration-accent decoration-2 underline-offset-[6px]"
-                      : "text-foreground hover:text-accent-text"
-                  }`}
+            {navLinks.map((link, i) => {
+              const active = pathname === link.href;
+
+              return (
+                <div
+                  key={link.href}
+                  className="animate-[hero-fade-up_0.25s_cubic-bezier(0.22,1,0.36,1)_both]"
+                  style={{ animationDelay: `${i * 50}ms` }}
                 >
-                  {link.label}
-                  <ArrowRight
-                    className={`size-5 transition-transform ${
-                      pathname === link.href
-                        ? "opacity-100"
-                        : "opacity-0 -translate-x-2"
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    className={`group flex items-center justify-between border-b border-border/50 py-4 text-2xl uppercase tracking-tight transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                      active
+                        ? "font-black text-accent-text"
+                        : "font-bold text-foreground/90 hover:text-foreground"
                     }`}
-                  />
-                </Link>
-              </div>
-            ))}
+                  >
+                    {link.label}
+                    <ArrowRight
+                      className={`size-5 transition-all duration-200 ${
+                        active
+                          ? "translate-x-0 text-accent-text opacity-100"
+                          : "-translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+                      }`}
+                    />
+                  </Link>
+                </div>
+              );
+            })}
           </nav>
 
           <div
