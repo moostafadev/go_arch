@@ -26,15 +26,6 @@ export const allCourses = [
     image:
       "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop",
   },
-  {
-    id: "full-diploma",
-    title: "The A-Z Architecture Diploma",
-    desc: "The complete path from beginner to professional architect. Includes all courses, workshops, and direct mentorship.",
-    category: "Diploma",
-    price: "8,000 EGP",
-    image:
-      "https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=800&auto=format&fit=crop",
-  },
 ];
 
 export const courseCategories = [

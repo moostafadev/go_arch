@@ -2,6 +2,8 @@
 
 import { m } from "framer-motion";
 
+import { Badge } from "@/components/badge";
+
 export const AboutHero = () => {
   return (
     <section className="relative overflow-hidden border-b border-border bg-card py-16 pt-28 lg:py-24 lg:pt-32">
@@ -12,17 +14,9 @@ export const AboutHero = () => {
       </div>
 
       <div className="relative z-10 mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-        <m.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="mb-6 inline-flex items-center gap-2 border border-accent/30 bg-accent/10 px-3 py-1"
-        >
-          <span className="flex h-2 w-2 bg-accent" />
-          <span className="text-xs font-semibold uppercase tracking-wider text-accent">
-            Our Story
-          </span>
-        </m.div>
+        <Badge delay={100} className="mb-6">
+          Our Story
+        </Badge>
 
         <m.h1
           initial={{ opacity: 0, y: 20 }}

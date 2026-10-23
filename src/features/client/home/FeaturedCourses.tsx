@@ -36,11 +36,11 @@ export const FeaturedCourses = ({ courses }: FeaturedCoursesProps) => {
 
   if (courses.length === 0) {
     return (
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
-            <h2 className="mb-2 text-3xl font-bold text-foreground sm:text-4xl">
-              Diplomas & courses
+      <section className="py-14 lg:py-18">
+        <div className="container flex flex-col gap-6 lg:gap-8">
+          <div className="max-w-3xl flex flex-col gap-3 lg:gap-4">
+            <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+              Our Courses
             </h2>
             <p className="text-foreground-second">
               New courses are on the way.
@@ -67,19 +67,19 @@ export const FeaturedCourses = ({ courses }: FeaturedCoursesProps) => {
   }
 
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-10">
-          <h2 className="mb-2 text-3xl font-bold text-foreground sm:text-4xl">
-            Diplomas & courses
+    <section className="py-14 lg:py-18">
+      <div className="container flex flex-col gap-6 lg:gap-8">
+        <div className="max-w-3xl flex flex-col gap-3 lg:gap-4">
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+            Our Courses
           </h2>
           <p className="text-foreground-second">
-            Diplomas & courses give you the full path, courses let you pick one
-            topic.
+            Focused, practical courses taught by a practicing architect. Pick
+            the topic you need most.
           </p>
         </div>
 
-        <div className="mb-12 flex w-full flex-col gap-2 sm:flex-row">
+        <div className="flex w-full flex-col gap-2 sm:flex-row">
           {tabs.map((tab) => (
             <Button
               key={tab}
@@ -99,7 +99,7 @@ export const FeaturedCourses = ({ courses }: FeaturedCoursesProps) => {
 
         <div
           key={activeTab}
-          className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+          className="grid grid-cols-1 gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3"
         >
           {filteredCourses.map((course, index) => (
             <div

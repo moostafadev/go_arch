@@ -37,28 +37,26 @@ export const CourseList = ({ courses }: CourseListProps) => {
 
   if (courses.length === 0) {
     return (
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="border border-border bg-card p-8 text-center sm:p-12">
-          <p className="mb-2 text-lg font-bold text-foreground">
-            No courses available yet
-          </p>
-          <p className="text-sm text-foreground-second">
-            Our team is preparing new courses. Check back soon — or{" "}
-            <Link
-              href="/contact"
-              className="text-accent-text underline underline-offset-2 hover:text-accent-hover"
-            >
-              get in touch
-            </Link>{" "}
-            to hear first.
-          </p>
-        </div>
+      <div className="border border-border bg-card p-8 text-center sm:p-12">
+        <p className="mb-2 text-lg font-bold text-foreground">
+          No courses available yet
+        </p>
+        <p className="text-sm text-foreground-second">
+          Our team is preparing new courses. Check back soon — or{" "}
+          <Link
+            href="/contact"
+            className="text-accent-text underline underline-offset-2 hover:text-accent-hover"
+          >
+            get in touch
+          </Link>{" "}
+          to hear first.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col gap-6 lg:gap-8">
+    <div className="flex flex-col gap-6 lg:gap-8">
       <div className="flex flex-wrap gap-3">
         {categories.map((category) => (
           <Button
@@ -79,7 +77,7 @@ export const CourseList = ({ courses }: CourseListProps) => {
 
       <div
         key={activeCategory}
-        className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+        className="grid grid-cols-1 gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3"
       >
         {filteredCourses.map((course, index) => (
           <div

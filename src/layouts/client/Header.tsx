@@ -41,11 +41,11 @@ export const Header = () => {
   return (
     <>
       <header
-        className={`fixed bottom-0 z-40 w-full border-t border-border backdrop-blur-md lg:top-0 lg:bottom-auto lg:border-t-0 lg:border-b ${
+        className={`fixed bottom-0 z-40 w-full backdrop-blur-md lg:top-0 lg:bottom-auto ${
           isOpen ? "bg-background" : "bg-background/60"
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
+        <div className="container flex h-16 items-center justify-between gap-3">
           <Brand size="md" priority onNavigate={() => setIsOpen(false)} />
 
           <nav className="hidden lg:flex lg:items-center lg:gap-8">
@@ -82,7 +82,7 @@ export const Header = () => {
             {!isOpen && (
               <Link
                 href="/courses"
-                className="bg-accent px-4 py-2 text-xs font-bold text-white transition-colors hover:bg-accent-hover sm:px-5 sm:text-sm"
+                className="flex h-10 items-center justify-center bg-accent px-3 text-xs font-bold text-white transition-colors hover:bg-accent-hover sm:px-4 sm:text-sm"
               >
                 Get Started
               </Link>
@@ -106,7 +106,7 @@ export const Header = () => {
       </header>
 
       {isOpen && (
-        <div className="fixed inset-x-0 top-0 bottom-16 z-30 flex flex-col overflow-y-auto overscroll-none bg-background px-4 pb-4 pt-4 scrollbar-none [&::-webkit-scrollbar]:hidden sm:px-6 lg:hidden animate-[hero-fade-up_0.25s_cubic-bezier(0.22,1,0.36,1)_both]">
+        <div className="fixed inset-x-0 top-0 bottom-16 z-30 flex flex-col justify-between overflow-y-auto overscroll-none bg-background px-4 pb-4 pt-4 scrollbar-none [&::-webkit-scrollbar]:hidden sm:px-6 lg:hidden animate-[hero-fade-up_0.25s_cubic-bezier(0.22,1,0.36,1)_both]">
           <nav className="flex flex-col gap-2 mt-2">
             {navLinks.map((link, i) => {
               const active = pathname === link.href;
@@ -142,7 +142,7 @@ export const Header = () => {
           </nav>
 
           <div
-            className="mt-auto pt-6 animate-[hero-fade-up_0.3s_cubic-bezier(0.22,1,0.36,1)_both]"
+            className="pt-6 animate-[hero-fade-up_0.3s_cubic-bezier(0.22,1,0.36,1)_both]"
             style={{ animationDelay: "0.3s" }}
           >
             <Link

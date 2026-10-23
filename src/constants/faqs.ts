@@ -16,10 +16,9 @@ export const FAQ_DEFAULTS: FaqData[] = [
       "All courses are taught in a mix of Arabic and English, focusing on the technical terminology used globally in the architecture industry.",
   },
   {
-    question:
-      "What's the difference between a diploma, a bundle, and a course?",
+    question: "What's the difference between a single course and a bundle?",
     answer:
-      "A course focuses on one specific skill (like Photoshop). A bundle combines related courses at a discount. A diploma is a comprehensive program covering all aspects of architectural design.",
+      "A single course focuses on one specific skill like Photoshop or Rhino. A bundle combines several related courses together so you can build a broader skillset at a better price.",
   },
   {
     question: "Is access really for life?",

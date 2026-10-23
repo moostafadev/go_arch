@@ -1,7 +1,5 @@
 "use client";
 
-import { m } from "framer-motion";
-
 const stats = [
   { value: "250+", label: "Students Enrolled" },
   { value: "20+", label: "Countries Represented" },
@@ -11,16 +9,12 @@ const stats = [
 
 export const AboutStats = () => {
   return (
-    <section className="border-t border-border py-10">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 sm:gap-8">
-          {stats.map((stat, index) => (
-            <m.div
+    <section className="border-t border-border py-14 lg:py-18">
+      <div className="container">
+        <div className="grid grid-cols-2 gap-6 lg:gap-8 md:grid-cols-4">
+          {stats.map((stat) => (
+            <div
               key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="flex flex-col items-center justify-center border-l border-border pl-3 text-center sm:pl-6 md:border-none md:pl-0"
             >
               <div className="mb-2 text-4xl font-black text-foreground sm:text-5xl">
@@ -29,7 +23,7 @@ export const AboutStats = () => {
               <div className="text-xs font-medium uppercase tracking-wider text-foreground-second sm:text-sm">
                 {stat.label}
               </div>
-            </m.div>
+            </div>
           ))}
         </div>
       </div>

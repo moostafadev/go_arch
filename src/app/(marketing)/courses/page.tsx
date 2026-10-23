@@ -13,9 +13,12 @@ export default async function CoursesPage() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-background">
       <CoursesHeader />
-      <div className="py-12">
-        <CourseList courses={courses} />
-      </div>
+
+      <section className="py-14 lg:py-18">
+        <div className="container flex flex-col gap-6 lg:gap-8">
+          <CourseList courses={courses} />
+        </div>
+      </section>
     </div>
   );
 }

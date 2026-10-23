@@ -64,10 +64,10 @@ export default async function Home() {
     <div className="flex flex-col w-full bg-background">
       <Hero image={heroImages.hero} />
 
-      <section className="border-t border-border bg-card py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 max-w-3xl">
-            <h2 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">
+      <section className="border-t border-border bg-card py-14 lg:py-18">
+        <div className="container flex flex-col gap-6 lg:gap-8">
+          <div className="max-w-3xl flex flex-col gap-3 lg:gap-4">
+            <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
               Taught by someone who actually practices
             </h2>
             <p className="text-foreground-second">
@@ -77,11 +77,11 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-4">
             {features.map((item) => (
               <div
                 key={item.num}
-                className="flex flex-col border-t border-border pt-6"
+                className="flex flex-col border-t border-border pt-4 lg:pt-6"
               >
                 <span className="mb-4 text-4xl font-light text-foreground-second">
                   {item.num}
@@ -100,12 +100,13 @@ export default async function Home() {
 
       <FeaturedCourses courses={courses} />
 
-      <section className="border-t border-border bg-card py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="mb-10 text-3xl font-bold text-foreground sm:text-4xl">
+      <section className="border-t border-border bg-card py-14 lg:py-18">
+        <div className="container flex flex-col gap-6 lg:gap-8">
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
             Students&apos; work
           </h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+          <div className="grid grid-cols-1 gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3">
             {studentWorkDisplay.map((item) => (
               <div
                 key={item.id}
@@ -124,11 +125,12 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="mb-10 text-3xl font-bold text-foreground sm:text-4xl">
+      <section className="py-14 lg:py-18">
+        <div className="container flex flex-col gap-6 lg:gap-8">
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
             What students say
           </h2>
+
           <Carousel>
             {testimonials.map((testimonial) => (
               <CarouselItem key={testimonial.id}>
@@ -164,58 +166,63 @@ export default async function Home() {
         </div>
       </section>
 
-      <section className="border-t border-border py-24">
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <h2 className="mb-10 text-3xl font-bold text-foreground sm:text-4xl">
-            Frequently asked
-          </h2>
-          <Accordion allowMultiple={false}>
-            {faqs.map((faq) => (
-              <AccordionItem
-                key={faq.id}
-                value={`faq-${faq.id}`}
-                trigger={
-                  <span className="text-lg font-medium">{faq.question}</span>
-                }
-              >
-                <p className="p-4 text-foreground-second sm:p-6">
-                  {faq.answer}
-                </p>
-              </AccordionItem>
-            ))}
-          </Accordion>
+      <section className="border-t border-border py-14 lg:py-18">
+        <div className="container flex flex-col gap-6 lg:gap-8">
+          <div className="mx-auto w-full max-w-3xl flex flex-col gap-6 lg:gap-8">
+            <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
+              Frequently asked
+            </h2>
+
+            <Accordion allowMultiple={false}>
+              {faqs.map((faq) => (
+                <AccordionItem
+                  key={faq.id}
+                  value={`faq-${faq.id}`}
+                  trigger={
+                    <span className="text-lg font-medium">{faq.question}</span>
+                  }
+                >
+                  <p className="p-4 text-foreground-second sm:p-6">
+                    {faq.answer}
+                  </p>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-t border-border bg-card py-24 text-center">
+      <section className="relative overflow-hidden border-t border-border bg-card py-14 lg:py-18 text-center">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-0 left-1/2 h-px w-3/4 -translate-x-1/2 bg-linear-to-r from-transparent via-accent/50 to-transparent" />
           <div className="absolute inset-0 bg-arch-grid-fade" />
           <div className="absolute left-1/2 top-0 h-75 w-150 -translate-x-1/2 bg-accent/10 blur-[100px] animate-[float-glow_12s_ease-in-out_infinite_alternate]" />
         </div>
 
-        <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <h2 className="mb-6 text-4xl font-black text-foreground sm:text-5xl">
-            Start becoming a real architect.
-          </h2>
-          <p className="mb-10 text-lg text-foreground-second sm:text-xl">
-            Join 250+ students across 20 countries. Master Photoshop,
-            Competition Design, Rhino & Grasshopper through professional courses
-            designed to shape the next generation of architects.
-          </p>
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href="/courses"
-              className="w-full bg-white px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-gray-200 sm:w-auto"
-            >
-              Get full courses
-            </Link>
-            <Link
-              href="/contact"
-              className="w-full border border-border bg-background px-8 py-4 text-sm font-bold text-foreground transition-colors hover:bg-card-hover sm:w-auto"
-            >
-              Message Us Before you buy
-            </Link>
+        <div className="relative z-10 container">
+          <div className="mx-auto flex max-w-3xl flex-col gap-6 lg:gap-8">
+            <h2 className="text-4xl font-black text-foreground sm:text-5xl">
+              Start becoming a real architect.
+            </h2>
+            <p className="text-lg text-foreground-second sm:text-xl">
+              Join 250+ students across 20 countries. Master Photoshop,
+              Competition Design, Rhino & Grasshopper through professional
+              courses designed to shape the next generation of architects.
+            </p>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link
+                href="/courses"
+                className="w-full bg-white px-8 py-4 text-sm font-bold text-black transition-colors hover:bg-gray-200 sm:w-auto"
+              >
+                Get full courses
+              </Link>
+              <Link
+                href="/contact"
+                className="w-full border border-border bg-background px-8 py-4 text-sm font-bold text-foreground transition-colors hover:bg-card-hover sm:w-auto"
+              >
+                Message Us Before you buy
+              </Link>
+            </div>
           </div>
         </div>
       </section>

@@ -23,9 +23,9 @@ export default async function ContactPage() {
     <div className="flex min-h-screen w-full flex-col bg-background">
       <ContactHero />
 
-      <section className="py-24">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+      <section className="py-14 lg:py-18">
+        <div className="container">
+          <div className="grid grid-cols-1 gap-6 lg:gap-8 lg:grid-cols-2">
             <div className="order-2 lg:order-1">
               <ContactForm courses={courses} />
             </div>

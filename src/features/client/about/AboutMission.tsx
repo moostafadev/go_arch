@@ -1,6 +1,5 @@
 "use client";
 
-import { m } from "framer-motion";
 import Image from "next/image";
 
 import { PLACEHOLDER_IMAGE } from "@/constants/placeholders";
@@ -11,19 +10,15 @@ interface AboutMissionProps {
 
 export const AboutMission = ({ image }: AboutMissionProps) => {
   return (
-    <section className="overflow-hidden py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-          <m.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="mb-6 text-3xl font-bold text-foreground sm:text-4xl">
+    <section className="py-14 lg:py-18">
+      <div className="container flex flex-col gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 items-center gap-6 lg:gap-8 lg:grid-cols-2">
+          <div className="flex flex-col gap-6 lg:gap-8">
+            <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
               Why we exist
             </h2>
-            <div className="space-y-6 text-foreground-second">
+
+            <div className="flex flex-col gap-3 lg:gap-4 text-foreground-second">
               <p>
                 Traditional architecture schools often focus heavily on history
                 and theory, leaving students unprepared for the fast-paced,
@@ -44,7 +39,7 @@ export const AboutMission = ({ image }: AboutMissionProps) => {
               </p>
             </div>
 
-            <div className="mt-8 grid grid-cols-2 gap-4 border-t border-border pt-8">
+            <div className="grid grid-cols-2 gap-6 lg:gap-8 border-t border-border pt-4 lg:pt-6">
               <div>
                 <h4 className="text-2xl font-bold text-foreground">100%</h4>
                 <p className="text-sm text-foreground-second">
@@ -58,15 +53,9 @@ export const AboutMission = ({ image }: AboutMissionProps) => {
                 <p className="text-sm text-foreground-second">Project Based</p>
               </div>
             </div>
-          </m.div>
+          </div>
 
-          <m.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative aspect-square w-full border border-border"
-          >
+          <div className="relative aspect-square w-full border border-border">
             <Image
               src={image || PLACEHOLDER_IMAGE}
               alt="Architectural sketching and design"
@@ -75,7 +64,7 @@ export const AboutMission = ({ image }: AboutMissionProps) => {
               className="object-cover grayscale transition-all duration-700 hover:grayscale-0"
             />
             <div className="absolute inset-0 bg-background/10" />
-          </m.div>
+          </div>
         </div>
       </div>
     </section>

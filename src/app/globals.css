@@ -21,6 +21,10 @@
   --warning-foreground: #000000;
   --info: #3b82f6;
   --info-foreground: #ffffff;
+
+  --container-pad-mobile: 1rem;
+  --container-pad-md: 1.5rem;
+  --container-pad-xl: 2rem;
 }
 
 @theme inline {
@@ -53,6 +57,43 @@ body {
   font-family: var(--font-century-gothic);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--container-pad-mobile);
+
+  @media (width >= 40rem) {
+    max-width: 40rem;
+  }
+
+  @media (width >= 48rem) {
+    max-width: 48rem;
+    padding-inline: var(--container-pad-md);
+  }
+
+  @media (width >= 64rem) {
+    max-width: 64rem;
+  }
+
+  @media (width >= 80rem) {
+    max-width: 1240px;
+    padding-inline: var(--container-pad-xl);
+  }
+
+  @media (width >= 96rem) {
+    max-width: 1320px;
+  }
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 @utility bg-arch-grid-fade {
