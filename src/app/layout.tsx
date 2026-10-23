@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { preconnect, prefetchDNS } from "react-dom";
 import "./globals.css";
-import { LazyMotion } from "framer-motion";
 import { DialogProvider } from "@/components/dialog";
 import { ToastProvider } from "@/components/toaster";
+import { MotionProvider } from "@/providers/motion";
 
 const centuryGothic = localFont({
   src: [
@@ -24,9 +24,6 @@ const centuryGothic = localFont({
   preload: true,
 });
 
-const loadFeatures = () =>
-  import("framer-motion").then((mod) => mod.domAnimation);
-
 export const metadata: Metadata = {
   title: "GO ARCH - Architecture Academy",
   description: "Master Architecture & Parametric Design",
@@ -45,11 +42,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${centuryGothic.variable} h-full antialiased`}
     >
       <body className="flex min-h-screen flex-col bg-background font-sans text-foreground overflow-x-hidden">
-        <LazyMotion features={loadFeatures} strict>
+        <MotionProvider>
           <ToastProvider>
             <DialogProvider>{children}</DialogProvider>
           </ToastProvider>
-        </LazyMotion>
+        </MotionProvider>
       </body>
     </html>
   );

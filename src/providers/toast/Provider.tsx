@@ -14,7 +14,7 @@ import {
 
 import { Toast, ToastContextValue, ToastOptions, ToastType } from "./types";
 
-const Toaster = lazy(() => import("./Main"));
+const Toaster = lazy(() => import("./Toaster"));
 
 const ToastContext = createContext<ToastContextValue | null>(null);
 

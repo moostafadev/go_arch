@@ -1,4 +1,5 @@
 export type ToastType = "success" | "error" | "warning" | "info" | "loading";
+
 export interface Toast {
   id: string;
   type: ToastType;
@@ -7,9 +8,11 @@ export interface Toast {
   paused?: boolean;
   closing?: boolean;
 }
+
 export interface ToastOptions {
   duration?: number;
 }
+
 export interface ToastContextValue {
   toast: {
     success: (message: string, options?: ToastOptions) => void;

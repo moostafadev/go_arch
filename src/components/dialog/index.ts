@@ -1,2 +1,1 @@
-export { default as DialogProvider, useDialog } from "./Provider";
-export * from "./types";
+export * from "@/providers/dialog";

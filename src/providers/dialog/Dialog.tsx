@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { m } from "framer-motion";
 import { X } from "lucide-react";
 
+import { Button } from "@/components/button";
+
 import { DialogOptions } from "./types";
-import { Button } from "../button";
 
 interface Props extends DialogOptions {
   onClose: () => void;

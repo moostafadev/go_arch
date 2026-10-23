@@ -14,7 +14,7 @@ import { AnimatePresence } from "framer-motion";
 
 import { DialogContextValue, DialogOptions } from "./types";
 
-const Dialog = lazy(() => import("./Main"));
+const Dialog = lazy(() => import("./Dialog"));
 
 const DialogContext = createContext<DialogContextValue | null>(null);
 
