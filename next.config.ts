@@ -1,11 +1,11 @@
 import type { NextConfig } from "next";
+import { webpack } from "next/dist/compiled/webpack/webpack";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
   compress: true,
 
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ["lucide-react", "framer-motion", "react-icons"],
   },
 
@@ -33,16 +33,24 @@ const nextConfig: NextConfig = {
   },
 
   turbopack: {
-    resolveAlias: {
-      "@next/polyfill-module": "./src/lib/empty.ts",
-      "@next/polyfill-nomodule": "./src/lib/empty.ts",
-    },
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],
         as: "*.css",
       },
     },
+  },
+
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(
+          /next[\\/]dist[\\/]build[\\/]polyfills[\\/]polyfill-(?:no)?module/,
+          require.resolve("./src/lib/empty.ts"),
+        ),
+      );
+    }
+    return config;
   },
 };
 
