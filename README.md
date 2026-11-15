@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# go_arch
 
-## Getting Started
+A Next.js application repository with Prisma integration and supporting scripts.
 
-First, run the development server:
+> **Important note about the name:**  
+> Despite the repository name `go_arch`, this project is **not** a Go architecture template or Go boilerplate. The current codebase is a **Next.js web application**. If you are looking for a Go project scaffold, this repository is not the right fit.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`go_arch` is a web application built on **Next.js**. The repository includes a standard Next.js project structure, a `prisma` directory for database schema and migrations, a `scripts` directory for utility tasks, and a `src` directory for application code.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The original README was the default `create-next-app` template, so the product-specific purpose and feature set are not yet fully documented. This README describes the repository structure, setup process, and common development workflows based on what is currently present in the codebase.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Area | Technology |
+| --- | --- |
+| Framework | Next.js |
+| UI | React |
+| Database / ORM | Prisma |
+| Runtime | Node.js |
+| Package manager | npm |
+| Deployment | Vercel (recommended for Next.js) |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> The exact language configuration (JavaScript or TypeScript) and additional libraries should be confirmed in `package.json` and the source files.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Repository Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+go_arch/
+├── prisma/          # Prisma schema, migrations, and database configuration
+├── public/          # Static assets
+├── scripts/         # Utility and automation scripts
+├── src/             # Application source code
+├── package.json     # Project dependencies and npm scripts
+└── README.md
